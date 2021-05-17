@@ -5,6 +5,7 @@ public class Student {
     int stud_id;
     String last_name;
     String first_name;
+
     String father_name;//not ordinary
     int recordbook_no;//not ordinary
 //with all

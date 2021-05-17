@@ -1,10 +1,18 @@
 
+import Entities.Teacher;
+
 import java.io.IOException;
 import java.sql.*;
 
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
         System.out.println("Hello");
+        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
+        System.out.println(  t.toString());
+
+        Teacher t1 = new Teacher(2, "kate2", "bl2avt", "volod",null,null,"prof");
+        System.out.println(t1.toString());
+
 //        String databaseURL = "jdbc:ucanaccess://C://Users//Member//Downloads//marks_data_new_final.accdb";
 //
 //        try (Connection connection = DriverManager.getConnection(databaseURL)) {
