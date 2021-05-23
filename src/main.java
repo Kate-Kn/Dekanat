@@ -1,9 +1,9 @@
-
 import Entities.Student;
+import Entities.Subject;
 import Entities.Teacher;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.SQLException;
 
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
@@ -52,7 +52,11 @@ public class main {
         checker.checkAndCreate();
         //test for insert statement
         //can be executed only once, because of recordbook is unique
+        Subject sb =new Subject(1,"ds","sd","sd");
         Student st = new Student(2,"Bondar","Taras","",332);
         insertStatements.insertStudent(st);
+        deleteStatements.deleteStudent(st);
+        //can't do this because in group: ON DELETE NO ACTION
+        //deleteStatements.deleteSubject(sb);
     }
 }
