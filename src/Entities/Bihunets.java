@@ -1,16 +1,16 @@
 package Entities;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Bihunets {
     int id_bih;
-    LocalDate date;
-    LocalDate ok_till; //not ordinary
+    Date date;
+    Date ok_till; //not ordinary
     String reason;
     String control;
     int id_teacher;
 //with all parametrs
-    public Bihunets(int id_bih, LocalDate date, LocalDate ok_till, String reason, String control, int id_teacher) {
+    public Bihunets(int id_bih, Date date, Date ok_till, String reason, String control, int id_teacher) {
         this.id_bih = id_bih;
         this.date = date;
         this.ok_till = ok_till;
@@ -19,7 +19,7 @@ public class Bihunets {
         this.id_teacher = id_teacher;
     }
 //without till_ok parametr (it is neobovazkovyy)
-    public Bihunets(int id_bih, LocalDate date, String reason, String control, int id_teacher) {
+    public Bihunets(int id_bih, Date date, String reason, String control, int id_teacher) {
         this.id_bih = id_bih;
         this.date = date;
         this.reason = reason;
@@ -35,19 +35,19 @@ public class Bihunets {
         this.id_bih = id_bih;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public LocalDate getOk_till() {
+    public Date getOk_till() {
         return ok_till;
     }
 
-    public void setOk_till(LocalDate ok_till) {
+    public void setOk_till(Date ok_till) {
         this.ok_till = ok_till;
     }
 

@@ -1,6 +1,6 @@
 package Entities;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Data_exam {
     int id_data_exam;
@@ -8,11 +8,11 @@ public class Data_exam {
     int num_absent;
     int num_not_allowed;
     String type_control;
-    LocalDate date_exam;
+    Date date_exam;
     int id_group;
     int id_teacher;
 
-    public Data_exam(int id_data_exam, int num_present, int num_absent, int num_not_allowed, String type_control, LocalDate date_exam, int id_group, int id_teacher) {
+    public Data_exam(int id_data_exam, int num_present, int num_absent, int num_not_allowed, String type_control, Date date_exam, int id_group, int id_teacher) {
         this.id_data_exam = id_data_exam;
         this.num_present = num_present;
         this.num_absent = num_absent;
@@ -63,11 +63,11 @@ public class Data_exam {
         this.type_control = type_control;
     }
 
-    public LocalDate getDate_exam() {
+    public Date getDate_exam() {
         return date_exam;
     }
 
-    public void setDate_exam(LocalDate date_exam) {
+    public void setDate_exam(Date date_exam) {
         this.date_exam = date_exam;
     }
 

@@ -1,4 +1,5 @@
 
+import Entities.Student;
 import Entities.Teacher;
 
 import java.io.IOException;
@@ -49,5 +50,9 @@ public class main {
 //            ex.printStackTrace();
 //        }
         checker.checkAndCreate();
+        //test for insert statement
+        //can be executed only once, because of recordbook is unique
+        Student st = new Student(2,"Bondar","Taras","",332);
+        insertStatements.insertStudent(st);
     }
 }
