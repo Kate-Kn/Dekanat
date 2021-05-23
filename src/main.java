@@ -3,6 +3,7 @@ import Entities.Subject;
 import Entities.Teacher;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main {
@@ -54,8 +55,14 @@ public class main {
         //can be executed only once, because of recordbook is unique
         Subject sb =new Subject(1,"ds","sd","sd");
         Student st = new Student(2,"Bondar","Taras","",332);
-        insertStatements.insertStudent(st);
-        deleteStatements.deleteStudent(st);
+        //insertStatements.insertStudent(st);
+        //deleteStatements.deleteStudent(st);
+        ResultSet result =  sqlRequests.getStudentsBySubject("y");
+        while (result.next()) {
+                int id = result.getInt("id_subject");
+                String name = result.getString("name_subject");
+                System.out.println(id + ", " + name);
+            }
         //can't do this because in group: ON DELETE NO ACTION
         //deleteStatements.deleteSubject(sb);
     }
