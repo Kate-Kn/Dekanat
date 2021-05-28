@@ -11,10 +11,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AdvancedDb2ExcelExporter {
+public class accessToExcel {
 
     public static void main(String[] args) throws IOException, SQLException {
-        AdvancedDb2ExcelExporter exporter = new AdvancedDb2ExcelExporter();
+        accessToExcel exporter = new accessToExcel();
         //exporter.export("student");
         exporter.exportFromResultSet(sqlRequests.getNumOfNedForGroup(1));
     }
