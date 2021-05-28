@@ -7,48 +7,48 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class deleteStatements{
-    public static void deleteStudent(Student student) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
-        String sql = "DELETE FROM student\n" +
-                "WHERE last_name = ? AND first_name = ?;";
-        PreparedStatement st = connection.prepareStatement (sql);
-        st.setString(1, student.getLast_name());
-        st.setString(2, student.getFirst_name());
-        st.executeUpdate();
-    }
-    public static void deleteSubject(Subject subject) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
-        String sql = "DELETE FROM subject\n" +
-                "WHERE id_subject = ?;";
-        PreparedStatement st = connection.prepareStatement (sql);
-        st.setInt(1, subject.getId_subject());
-        st.executeUpdate();
-    }
-    //can`t do (need to talk about)
-    public static void deleteGroup(Group_st gr) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
-        String sql = "DELETE FROM group_st\n" +
-                "WHERE id_group = ?;";
-        PreparedStatement st = connection.prepareStatement (sql);
-        st.setInt(1, gr.getId_group());
-        st.executeUpdate();
-    }
-    public static void deleteTeacher(Teacher tc) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
-        String sql = "DELETE FROM group_st\n" +
-                "WHERE id_teacher = ?;";
-        PreparedStatement st = connection.prepareStatement (sql);
-        st.setInt(1, tc.getId_teacher());
-        st.executeUpdate();
-    }
+//    public static void deleteStudent(Student student) throws IOException, SQLException {
+//        insertStatements.checkPath();
+//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+//        Connection connection = DriverManager.getConnection(d);
+//        String sql = "DELETE FROM student\n" +
+//                "WHERE last_name = ? AND first_name = ?;";
+//        PreparedStatement st = connection.prepareStatement (sql);
+//        st.setString(1, student.getLast_name());
+//        st.setString(2, student.getFirst_name());
+//        st.executeUpdate();
+//    }
+//    public static void deleteSubject(Subject subject) throws IOException, SQLException {
+//        insertStatements.checkPath();
+//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+//        Connection connection = DriverManager.getConnection(d);
+//        String sql = "DELETE FROM subject\n" +
+//                "WHERE id_subject = ?;";
+//        PreparedStatement st = connection.prepareStatement (sql);
+//        st.setInt(1, subject.getId_subject());
+//        st.executeUpdate();
+//    }
+//    //can`t do (need to talk about)
+//    public static void deleteGroup(Group_st gr) throws IOException, SQLException {
+//        insertStatements.checkPath();
+//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+//        Connection connection = DriverManager.getConnection(d);
+//        String sql = "DELETE FROM group_st\n" +
+//                "WHERE id_group = ?;";
+//        PreparedStatement st = connection.prepareStatement (sql);
+//        st.setInt(1, gr.getId_group());
+//        st.executeUpdate();
+//    }
+//    public static void deleteTeacher(Teacher tc) throws IOException, SQLException {
+//        insertStatements.checkPath();
+//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+//        Connection connection = DriverManager.getConnection(d);
+//        String sql = "DELETE FROM group_st\n" +
+//                "WHERE id_teacher = ?;";
+//        PreparedStatement st = connection.prepareStatement (sql);
+//        st.setInt(1, tc.getId_teacher());
+//        st.executeUpdate();
+//    }
     public static void deleteVid(Data_exam de) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;

@@ -26,8 +26,7 @@ public class sqlRequests {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
-        String sql = "PARAMETERS [group_] INTEGER;\n" +
-                "SELECT stud_id, first_name+' '+last_name AS name_surname\n" +
+        String sql = "SELECT stud_id, first_name+' '+last_name AS name_surname\n" +
                 "FROM student\n" +
                 "WHERE stud_id IN\n" +
                 "(SELECT stud_id\n" +
@@ -325,7 +324,7 @@ public class sqlRequests {
                 "AND id_data_exam IN\n" +
                 "(SELECT id_data_exam\n" +
                 "FROM data_exam\n" +
-                "WHERE id_group = ?\n" ;
+                "WHERE id_group = ?))\n" ;
         PreparedStatement st = connection.prepareStatement (sql);
         st.setInt(1, g);
         return st.executeQuery();

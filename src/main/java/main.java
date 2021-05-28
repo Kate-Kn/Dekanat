@@ -56,7 +56,7 @@ public class main {
         Subject sb =new Subject(1,"ds","sd","sd");
         Student st = new Student(2,"Bondar","Taras","",332);
         //insertStatements.insertStudent(st);
-        //deleteStatements.deleteStudent(st);
+
         ResultSet result =  sqlRequests.getStudentsBySubject(1);
         while (result.next()) {
                 int id = result.getInt("id_subject");
