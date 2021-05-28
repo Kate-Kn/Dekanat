@@ -59,6 +59,16 @@ public class deleteStatements{
         st.setInt(1, de.getId_data_exam());
         st.executeUpdate();
     }
+    public static void deleteBih(Bihunets de) throws IOException, SQLException {
+        insertStatements.checkPath();
+        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+        Connection connection = DriverManager.getConnection(d);
+        String sql = "DELETE FROM bihunets\n" +
+                "WHERE id_bih = ?;";
+        PreparedStatement st = connection.prepareStatement (sql);
+        st.setInt(1, de.getId_bih());
+        st.executeUpdate();
+    }
     public static void deleteStFromGroup(Student stu, Group_st g) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
