@@ -12,13 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class accessToExcel {
-
     public static void main(String[] args) throws IOException, SQLException {
         accessToExcel exporter = new accessToExcel();
-        //exporter.export("student");
+        exporter.export("student");
         exporter.exportFromResultSet(sqlRequests.getNumOfNedForGroup(1));
     }
-
     private String getFileName(String baseName) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String dateTimeInfo = dateFormat.format(new Date());
@@ -53,7 +51,6 @@ public class accessToExcel {
          workbook.close();
         st.close();
     }
-
     private void writeHeaderLine(ResultSet result, XSSFSheet sheet) throws SQLException {
         ResultSetMetaData metaData = result.getMetaData();
         int numberOfColumns = metaData.getColumnCount();
@@ -64,7 +61,6 @@ public class accessToExcel {
             headerCell.setCellValue(columnName);
         }
     }
-
     private void writeDataLines(ResultSet result, XSSFWorkbook workbook, XSSFSheet sheet)
             throws SQLException {
         ResultSetMetaData metaData = result.getMetaData();
