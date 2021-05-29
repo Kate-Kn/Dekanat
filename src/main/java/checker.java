@@ -1,7 +1,6 @@
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Database.FileFormat;
 import com.healthmarketscience.jackcess.DatabaseBuilder;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
