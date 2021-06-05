@@ -1,9 +1,15 @@
+import Entities.Data_exam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.apache.pdfbox.pdfparser.PDFParser.load;
 
@@ -19,10 +25,50 @@ public  class MyParser {
         PDFTextStripper pdfStripper = new PDFTextStripper();
 
         String text = pdfStripper.getText(document);
+
+       // String s=StringUtils.substringBetween(text,"ВІДОМІСТЬ", "рівень");
+        String edu=StringUtils.substringBetween(text,"рівень", "Факультет");
+
+        String fac=StringUtils.substringBetween(text,"Факультет", "Рік");
+        String grouup =StringUtils.substringBetween(text,"Група", "Дисципліна");
+        String sub =StringUtils.substringBetween(text,"Дисципліна", "Семестр");
+        String sem =StringUtils.substringBetween(text,"Семестр", "Залікові");
+        String contr =StringUtils.substringBetween(text,"контролю:", "Дата");
+        String dat =StringUtils.substringBetween(text,"Дата", "р.");
+        String teach =StringUtils.substringBetween(text,"р.", "Прізвище");
+        String teachname =StringUtils.substringBefore(teach,",");
+        String teachzv =StringUtils.substringBetween(teach,",",",");
+        String teachpos =StringUtils.substringAfterLast(teach,",");
+
         System.out.println(text);
-        String[] words = text.split("[ _]");
+        System.out.println("edu\n"+edu);
+        System.out.println("fac\n"+fac);
+        System.out.println("group\n"+grouup);
+        System.out.println("sub\n"+sub);
+        System.out.println("sem\n"+sem);
+        System.out.println("contr\n"+contr);
+        System.out.println("dat\n"+dat);
+        System.out.println("teach\n"+teach);
+        System.out.println("teach\n"+teachname);
+        System.out.println("teach\n"+teachzv);
+        System.out.println("teach\n"+teachpos);
+
+        String marks =StringUtils.substringBetween(text,"викладача","*");
+        String end =StringUtils.substringBetween(text,"*","Декан");
+
+        System.out.println("marks\n"+marks);
+        System.out.println("end\n"+end);
+
+
+        String[] words = text.split("[ _,.]"+Character.toString((char)13));
         System.out.println(Arrays.toString(words));
 
+//        String[] head = Arrays.copyOfRange(words, 3,11);
+//        String[] body = Arrays.copyOfRange(words, 36,48);
+//        String[] end = Arrays.copyOfRange(words, 49,53);
+//        System.out.println("head\n"+Arrays.toString(head));
+//        System.out.println("body\n"+Arrays.toString(body));
+//        System.out.println("end\n"+Arrays.toString(end));
         String vidomist_id;
         String eduLevel;
         String year_study;
@@ -31,25 +77,9 @@ public  class MyParser {
         String semester;
         String control;
         String date;
-        // List<String> list = Arrays.asList(words);
-        // List<String> bad = new ArrayList<>();
-        // bad.add("s");
-        // System.out.println(list.size());
-        //   System.out.println("["+(int)list.get(8).charAt(0)+"]");
-//        for (int i =0; i<list.size();i++)
-//        {
-//           // System.out.println(i + ". ."+list.get(i));
-//           // list.removeAll(bad);
-////            if (list.get(i).charAt(0)==13||list.get(i).){
-////                list.set(i,"s");
-////            }
-//           // System.out.println(i + ". ."+list.get(i));
-//
-//        }
-        // System.out.println(list.size());
 
-        //   System.out.println("\n\nlist\n\n|"+list.get(10)+"|");
-        //   System.out.println("\n\nlist2\n\n"+list);
+
+
         for (int i =0; i<words.length;i++)
         {
             if (words[i].equals("№")){
