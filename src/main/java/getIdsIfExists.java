@@ -1,13 +1,10 @@
-import Entities.Group_st;
-import Entities.Student;
-import Entities.Subject;
-import Entities.Teacher;
+import Entities.*;
 
 import java.io.IOException;
 import java.sql.*;
 
 public class getIdsIfExists {
-    public int getTeacherId(Teacher t) throws IOException, SQLException {
+    public static int getTeacherId(Teacher t) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
@@ -16,7 +13,7 @@ public class getIdsIfExists {
                 "WHERE first_name=? AND last_name=?;";
         PreparedStatement st = connection.prepareStatement (sql);
         st.setString(1, t.getFirst_name());
-        st.setString(1, t.getLast_name());
+        st.setString(2, t.getLast_name());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
@@ -24,7 +21,7 @@ public class getIdsIfExists {
             }
         return id;
     }
-    public int getStudentId(Student t) throws IOException, SQLException {
+    public static int getStudentId(Student t) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
@@ -33,7 +30,7 @@ public class getIdsIfExists {
                 "WHERE first_name=? AND last_name=?;";
         PreparedStatement st = connection.prepareStatement (sql);
         st.setString(1, t.getFirst_name());
-        st.setString(1, t.getLast_name());
+        st.setString(2, t.getLast_name());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
@@ -41,7 +38,7 @@ public class getIdsIfExists {
         }
         return id;
     }
-    public int getGroupId(Group_st t) throws IOException, SQLException {
+    public static int getGroupId(Group_st t) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
@@ -60,7 +57,7 @@ public class getIdsIfExists {
         }
         return id;
     }
-    public int getSubjectId(Subject t) throws IOException, SQLException {
+    public static int getSubjectId(Subject t) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
@@ -75,6 +72,75 @@ public class getIdsIfExists {
         int id =0;
         while (result.next()) {
             id = result.getInt("id_subject");
+        }
+        return id;
+    }
+    public static int getDataExemId(Data_exam t) throws IOException, SQLException {
+        insertStatements.checkPath();
+        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+        Connection connection = DriverManager.getConnection(d);
+        String sql = "SELECT id_data_exam\n" +
+                "FROM data_exam\n" +
+                "WHERE date_exam=? AND id_group=? AND id_teacher=?;";
+        PreparedStatement st = connection.prepareStatement (sql);
+        st.setDate(1, t.getDate_exam());
+        st.setInt(2, t.getId_group());
+        st.setInt(3, t.getId_teacher());
+        ResultSet result = st.executeQuery();
+        int id =0;
+        while (result.next()) {
+            id = result.getInt("id_teacher");
+        }
+        return id;
+    }
+    public static int getBihId(Bihunets t) throws IOException, SQLException {
+        insertStatements.checkPath();
+        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+        Connection connection = DriverManager.getConnection(d);
+        String sql = "SELECT id_bih\n" +
+                "FROM bihunets\n" +
+                "WHERE date_taken=? AND id_teacher=?;";
+        PreparedStatement st = connection.prepareStatement (sql);
+        st.setDate(1, t.getDate());
+        st.setInt(2, t.getId_teacher());
+        ResultSet result = st.executeQuery();
+        int id =0;
+        while (result.next()) {
+            id = result.getInt("id_teacher");
+        }
+        return id;
+    }
+    public static int getMarkBih(Mark_bih t) throws IOException, SQLException {
+        insertStatements.checkPath();
+        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+        Connection connection = DriverManager.getConnection(d);
+        String sql = "SELECT id_mark_bih\n" +
+                "FROM mark_bih\n" +
+                "WHERE id_bih=? AND id_mark_vid=?;";
+        PreparedStatement st = connection.prepareStatement (sql);
+        st.setInt(1, t.getId_bih());
+        st.setInt(2, t.getId_mark_bih());
+        ResultSet result = st.executeQuery();
+        int id =0;
+        while (result.next()) {
+            id = result.getInt("id_teacher");
+        }
+        return id;
+    }
+    public static int getMarkVid(Mark_vid t) throws IOException, SQLException {
+        insertStatements.checkPath();
+        String d = "jdbc:ucanaccess://"+ insertStatements.path;
+        Connection connection = DriverManager.getConnection(d);
+        String sql = "SELECT id_mark_vid\n" +
+                "FROM mark_vid\n" +
+                "WHERE stud_id=? AND id_data_exam=?;";
+        PreparedStatement st = connection.prepareStatement (sql);
+        st.setInt(1, t.getStud_id());
+        st.setInt(2, t.getId_data_exam());
+        ResultSet result = st.executeQuery();
+        int id =0;
+        while (result.next()) {
+            id = result.getInt("id_teacher");
         }
         return id;
     }
