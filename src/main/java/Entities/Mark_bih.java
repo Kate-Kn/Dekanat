@@ -20,7 +20,15 @@ public class Mark_bih {
         this.id_mark_vid = id_mark_vid;
         this.id_bih = id_bih;
     }
-
+    public Mark_bih(int mark_sem, int mark_check, int mark_raz, String mark_nat, String mark_ekts, int id_mark_vid, int id_bih) {
+        this.mark_sem = mark_sem;
+        this.mark_check = mark_check;
+        this.mark_raz = mark_raz;
+        this.mark_nat = mark_nat;
+        this.mark_ekts = mark_ekts;
+        this.id_mark_vid = id_mark_vid;
+        this.id_bih = id_bih;
+    }
     public int getId_mark_bih() {
         return id_mark_bih;
     }

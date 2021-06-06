@@ -15,6 +15,12 @@ public class Student {
         this.father_name = father_name;
         this.recordbook_no = recordbook_no;
     }
+    public Student(String last_name, String first_name, String father_name, int recordbook_no) {
+        this.last_name = last_name;
+        this.first_name = first_name;
+        this.father_name = father_name;
+        this.recordbook_no = recordbook_no;
+    }
 //without recordbook_no
     public Student(int stud_id, String last_name, String first_name, String father_name) {
         this.stud_id = stud_id;

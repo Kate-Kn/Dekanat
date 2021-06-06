@@ -18,6 +18,13 @@ public class Bihunets {
         this.control = control;
         this.id_teacher = id_teacher;
     }
+    public Bihunets( Date date, Date ok_till, String reason, String control, int id_teacher) {
+        this.date = date;
+        this.ok_till = ok_till;
+        this.reason = reason;
+        this.control = control;
+        this.id_teacher = id_teacher;
+    }
 //without till_ok parametr (it is neobovazkovyy)
     public Bihunets(int id_bih, Date date, String reason, String control, int id_teacher) {
         this.id_bih = id_bih;
