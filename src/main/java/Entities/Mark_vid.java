@@ -21,6 +21,15 @@ public class Mark_vid {
         this.stud_id = stud_id;
         this.id_data_exam = id_data_exam;
     }
+    public Mark_vid( int mark_sem, int mark_check, int mark_raz, String mark_nat, String mark_ekts, int stud_id, int id_data_exam) {
+        this.mark_sem = mark_sem;
+        this.mark_check = mark_check;
+        this.mark_raz = mark_raz;
+        this.mark_nat = mark_nat;
+        this.mark_ekts = mark_ekts;
+        this.stud_id = stud_id;
+        this.id_data_exam = id_data_exam;
+    }
 
     public int getId_mark_vid() {
         return id_mark_vid;

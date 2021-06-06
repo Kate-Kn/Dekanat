@@ -25,6 +25,15 @@ public class Teacher {
         this.science_degree = science_degree;
         this.academ_status = academ_status;
     }
+    public Teacher( String first_name, String last_name, String father_name, String position, String science_degree, String academ_status) {
+
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.father_name = father_name;
+        this.position = position;
+        this.science_degree = science_degree;
+        this.academ_status = academ_status;
+    }
 
 ////without 1 academ_status EROOOR!!!!!!!!!!!!
 //    public Teacher(int id_teacher, String first_name, String last_name, String father_name, String position, String science_degree) {
