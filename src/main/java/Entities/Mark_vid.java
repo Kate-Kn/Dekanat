@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.ArrayList;
+
 public class Mark_vid {
 
     int id_mark_vid;
@@ -92,5 +94,18 @@ public class Mark_vid {
 
     public void setId_data_exam(int id_data_exam) {
         this.id_data_exam = id_data_exam;
+    }
+
+    public void validateManual() throws Exception {
+        if(mark_sem == -1 || mark_check == -1 || mark_raz == -1)
+        {
+            throw new Exception(Teacher.exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }

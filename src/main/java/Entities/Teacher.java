@@ -1,9 +1,10 @@
 package Entities;
-
 import org.jetbrains.annotations.Nullable;
 
-public class Teacher {
+import java.util.ArrayList;
 
+public class Teacher {
+    static String exeptions[] = {"manual","autofill"};
     int id_teacher;
     String first_name;
     String last_name;
@@ -133,5 +134,18 @@ public class Teacher {
                 ", science_degree='" + science_degree + '\'' +
                 ", academ_status='" + academ_status + '\'' +
                 '}';
+    }
+    //no processing after such mistakes
+    public void validateManual() throws Exception {
+        if(last_name == "" || first_name == "")
+        {
+            throw new Exception(exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }

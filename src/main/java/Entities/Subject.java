@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.ArrayList;
+
 public class Subject {
     int id_subject;
     String name_subject;
@@ -48,5 +50,17 @@ public class Subject {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
+    }
+    public void validateManual() throws Exception {
+        if(edu_level == "")
+        {
+            throw new Exception(Teacher.exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }
