@@ -1,0 +1,153 @@
+Index: Dekanat.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule=\"true\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_11\">\r\n    <output url=\"file://$MODULE_DIR$/target/classes\" />\r\n    <output-test url=\"file://$MODULE_DIR$/target/test-classes\" />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/java\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/resources\" type=\"java-resource\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/test/java\" isTestSource=\"true\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/target\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"commons-lang3-3.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"commons-logging-1.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"hsqldb-2.5.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"jackcess-3.0.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"ucanaccess-5.0.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"commons-lang3-3.8.1\" level=\"application\" />\r\n    <orderEntry type=\"module-library\">\r\n      <library>\r\n        <CLASSES>\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"module-library\">\r\n      <library>\r\n        <CLASSES>\r\n          <root url=\"jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.poi:poi-ooxml:4.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.poi:poi:4.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: commons-codec:commons-codec:1.12\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-collections4:4.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-math3:3.6.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.poi:poi-ooxml-schemas:4.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.xmlbeans:xmlbeans:3.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-compress:1.18\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.github.virtuald:curvesapi:1.06\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Dekanat.iml b/Dekanat.iml
+--- a/Dekanat.iml	(revision 16a1a3ab14e4c0a85b5a5100f8aa0bae840ad0da)
++++ b/Dekanat.iml	(date 1622195295302)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
++  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
+     <output url="file://$MODULE_DIR$/target/classes" />
+     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+     <content url="file://$MODULE_DIR$">
+@@ -9,7 +9,7 @@
+       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+       <excludeFolder url="file://$MODULE_DIR$/target" />
+     </content>
+-    <orderEntry type="inheritedJdk" />
++    <orderEntry type="jdk" jdkName="13" jdkType="JavaSDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+     <orderEntry type="library" name="commons-lang3-3.8.1" level="project" />
+     <orderEntry type="library" name="commons-logging-1.2" level="project" />
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <annotationProcessing>\r\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\r\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\r\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\r\n        <outputRelativeToContentRoot value=\"true\" />\r\n        <module name=\"Dekanat\" />\r\n      </profile>\r\n    </annotationProcessing>\r\n    <bytecodeTargetLevel>\r\n      <module name=\"Dekanat\" target=\"11\" />\r\n    </bytecodeTargetLevel>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision 16a1a3ab14e4c0a85b5a5100f8aa0bae840ad0da)
++++ b/.idea/compiler.xml	(date 1622195295443)
+@@ -10,7 +10,7 @@
+       </profile>
+     </annotationProcessing>
+     <bytecodeTargetLevel>
+-      <module name="Dekanat" target="11" />
++      <module name="Dekanat" target="1.5" />
+     </bytecodeTargetLevel>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1622195295458)
++++ b/.idea/jarRepositories.xml	(date 1622195295458)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="https://repo.maven.apache.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/Parser.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Parser.java b/src/Parser.java
+new file mode 100644
+--- /dev/null	(date 1622193192465)
++++ b/src/Parser.java	(date 1622193192465)
+@@ -0,0 +1,21 @@
++import com.itextpdf.kernel.pdf.*;
++import com.itextpdf.layout.Document;
++import com.itextpdf.layout.element.Paragraph;
++import java.io.*;
++
++public class Parser {
++    public static void readDoc(String[] args) throws IOException {
++        // считаем, что программе передается один аргумент - имя файла
++        PdfReader reader = new PdfReader(args[0]);
++
++        // не забываем, что нумерация страниц в PDF начинается с единицы.
++        for (int i = 1; i <= reader.getNumberOfPages(); ++i) {
++            TextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
++            String text = PdfTextExtractor.getTextFromPage(reader, i, strategy);
++            System.out.println(text);
++        }
++
++        // убираем за собой
++        reader.close();
++    }
++}
+Index: .idea/libraries/commons_lang3_3_8_1__2_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/commons_lang3_3_8_1__2_.xml b/.idea/libraries/commons_lang3_3_8_1__2_.xml
+new file mode 100644
+--- /dev/null	(date 1622193175433)
++++ b/.idea/libraries/commons_lang3_3_8_1__2_.xml	(date 1622193175433)
+@@ -0,0 +1,13 @@
++<component name="libraryTable">
++  <library name="commons-lang3-3.8.1 (2)">
++    <CLASSES>
++      <root url="jar://$PROJECT_DIR$/libs/commons-lang3-3.8.1.jar!/" />
++      <root url="jar://$PROJECT_DIR$/libs/commons-logging-1.2.jar!/" />
++      <root url="jar://$PROJECT_DIR$/libs/hsqldb-2.5.0.jar!/" />
++      <root url="jar://$PROJECT_DIR$/libs/jackcess-3.0.1.jar!/" />
++      <root url="jar://$PROJECT_DIR$/libs/ucanaccess-5.0.1.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"false\" project-jdk-name=\"11.0.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 16a1a3ab14e4c0a85b5a5100f8aa0bae840ad0da)
++++ b/.idea/misc.xml	(date 1622195295427)
+@@ -7,7 +7,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="11.0.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="true" project-jdk-name="13" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
