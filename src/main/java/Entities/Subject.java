@@ -12,6 +12,11 @@ public class Subject {
         this.edu_level = edu_level;
         this.faculty = faculty;
     }
+    public Subject(String name_subject, String edu_level, String faculty) {
+        this.name_subject = name_subject;
+        this.edu_level = edu_level;
+        this.faculty = faculty;
+    }
 
     public int getId_subject() {
         return id_subject;

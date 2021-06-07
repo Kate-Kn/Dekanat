@@ -22,6 +22,17 @@ public class Data_exam {
         this.id_group = id_group;
         this.id_teacher = id_teacher;
     }
+    public Data_exam( int num_present, int num_absent, int num_not_allowed, String type_control, Date date_exam, int id_group, int id_teacher) {
+
+        this.num_present = num_present;
+        this.num_absent = num_absent;
+        this.num_not_allowed = num_not_allowed;
+        this.type_control = type_control;
+        this.date_exam = date_exam;
+        this.id_group = id_group;
+        this.id_teacher = id_teacher;
+    }
+
 
     public int getId_data_exam() {
         return id_data_exam;

@@ -61,12 +61,12 @@ public class main {
         Student st = new Student(2,"Bondar","Taras","",332);
         //insertStatements.insertStudent(st);
 
-        ResultSet result =  sqlRequests.getStudentsBySubject(1);
-        while (result.next()) {
-                int id = result.getInt("id_subject");
-                String name = result.getString("name_subject");
-                System.out.println(id + ", " + name);
-            }
+//        ResultSet result =  sqlRequests.getStudentsBySubject(1);
+//        while (result.next()) {
+//                int id = result.getInt("id_subject");
+//                String name = result.getString("name_subject");
+//                System.out.println(id + ", " + name);
+//            }
         //can't do this because in group: ON DELETE NO ACTION
         //deleteStatements.deleteSubject(sb);
     }

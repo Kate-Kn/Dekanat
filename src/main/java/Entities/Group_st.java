@@ -16,6 +16,14 @@ public class Group_st {
         this.year_student = year_student;
         this.id_subject = id_subject;
     }
+    public Group_st( String name_group, int year_study, int semester, int year_student, int id_subject) {
+
+        this.name_group = name_group;
+        this.year_study = year_study;
+        this.semester = semester;
+        this.year_student = year_student;
+        this.id_subject = id_subject;
+    }
 
     public int getId_group() {
         return id_group;

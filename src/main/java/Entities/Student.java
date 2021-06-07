@@ -6,9 +6,9 @@ public class Student {
     String last_name;
     String first_name;
     String father_name;//not ordinary
-    int recordbook_no;//not ordinary
+    String recordbook_no;//not ordinary
 //with all
-    public Student(int stud_id, String last_name, String first_name, String father_name, int recordbook_no) {
+    public Student(int stud_id, String last_name, String first_name, String father_name, String recordbook_no) {
         this.stud_id = stud_id;
         this.last_name = last_name;
         this.first_name = first_name;
@@ -22,19 +22,24 @@ public class Student {
         this.first_name = first_name;
         this.father_name = father_name;
     }
-//wihout father name
-    public Student(int stud_id, String last_name, String first_name, int recordbook_no) {
-        this.stud_id = stud_id;
+    public Student( String last_name, String first_name, String father_name, String recordbook_no) {
         this.last_name = last_name;
         this.first_name = first_name;
-        this.recordbook_no = recordbook_no;
+        this.father_name = father_name;
     }
-//without fathername and recordbook
-    public Student(int stud_id, String last_name, String first_name) {
-        this.stud_id = stud_id;
-        this.last_name = last_name;
-        this.first_name = first_name;
-    }
+////wihout father name
+//    public Student(int stud_id, String last_name, String first_name, String recordbook_no) {
+//        this.stud_id = stud_id;
+//        this.last_name = last_name;
+//        this.first_name = first_name;
+//        this.recordbook_no = recordbook_no;
+//    }
+////without fathername and recordbook
+//    public Student(int stud_id, String last_name, String first_name) {
+//        this.stud_id = stud_id;
+//        this.last_name = last_name;
+//        this.first_name = first_name;
+//    }
 
     public int getStud_id() {
         return stud_id;
@@ -68,11 +73,11 @@ public class Student {
         this.father_name = father_name;
     }
 
-    public int getRecordbook_no() {
+    public String  getRecordbook_no() {
         return recordbook_no;
     }
 
-    public void setRecordbook_no(int recordbook_no) {
+    public void setRecordbook_no(String recordbook_no) {
         this.recordbook_no = recordbook_no;
     }
 }
