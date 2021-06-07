@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.ArrayList;
+
 public class Student {
 
     int stud_id;
@@ -10,6 +12,12 @@ public class Student {
 //with all
     public Student(int stud_id, String last_name, String first_name, String father_name, String recordbook_no) {
         this.stud_id = stud_id;
+        this.last_name = last_name;
+        this.first_name = first_name;
+        this.father_name = father_name;
+        this.recordbook_no = recordbook_no;
+    }
+    public Student(String last_name, String first_name, String father_name, int recordbook_no) {
         this.last_name = last_name;
         this.first_name = first_name;
         this.father_name = father_name;
@@ -79,5 +87,17 @@ public class Student {
 
     public void setRecordbook_no(String recordbook_no) {
         this.recordbook_no = recordbook_no;
+    }
+    public void validateManual() throws Exception {
+        if(last_name == "" || first_name == "")
+        {
+            throw new Exception(Teacher.exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }

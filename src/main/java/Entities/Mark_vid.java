@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.ArrayList;
+
 public class Mark_vid {
 
     int id_mark_vid;
@@ -11,8 +13,8 @@ public class Mark_vid {
     int stud_id;
     int id_data_exam;
 
-    public Mark_vid(int id_mark_vid, int mark_sem, int mark_check, int mark_raz, String mark_nat, String mark_ekts, int stud_id, int id_data_exam) {
-        this.id_mark_vid = id_mark_vid;
+    public Mark_vid(int id,int mark_sem, int mark_check, int mark_raz, String mark_nat, String mark_ekts, int stud_id, int id_data_exam) {
+        this.id_data_exam = id;
         this.mark_sem = mark_sem;
         this.mark_check = mark_check;
         this.mark_raz = mark_raz;
@@ -93,5 +95,18 @@ public class Mark_vid {
 
     public void setId_data_exam(int id_data_exam) {
         this.id_data_exam = id_data_exam;
+    }
+
+    public void validateManual() throws Exception {
+        if(mark_sem == -1 || mark_check == -1 || mark_raz == -1|| mark_ekts.equals("") || mark_nat.equals(""))
+        {
+            throw new Exception(Teacher.exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }

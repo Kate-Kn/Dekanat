@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,27 +17,39 @@ public class mainWindow  extends JFrame {
 
     public mainWindow() {
         super("Simple Example");
-        this.setBounds(100,100,1200,700);
+        this.setSize(1200,700);
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         btnLoadPdf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
+                FileFilter filter = new FileNameExtensionFilter("PDF File","pdf");
+                fileChooser.setFileFilter(filter);
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(body);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    String dbp = "";
+                    try{
+                        dbp = checker.checkAndCreate();
+                    } catch (Exception ex) {
+                        //...
+                    }
                     JOptionPane.showMessageDialog(null,
                             "Hi eartherners, your elected file: " + selectedFile.getAbsolutePath(),
                             "Output",
                             JOptionPane.PLAIN_MESSAGE);
+                    try {
+                        MyParser prs = new MyParser(selectedFile.getPath());
+                    } catch (Exception exc) {
+
+                    }
                 }
 
             }
         });
-        body.setBackground(new Color(0x8080EF));
-        queryHead.setBackground(new Color(0xEF9F80));
 
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);

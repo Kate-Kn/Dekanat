@@ -10,14 +10,14 @@ public class main {
     public static void main(String[] args) throws IOException, SQLException {
 
 
-        MyParser parser= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\new.pdf");
-
-        System.out.println("Hello");
-        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
-        System.out.println(  t.toString());
-
-        Teacher t1 = new Teacher(2, "kate2", "bl2avt", "volod",null,null,"prof");
-        System.out.println(t1.toString());
+//        MyParser parser= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\new.pdf");
+//
+//        System.out.println("Hello");
+//        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
+//        System.out.println(  t.toString());
+//
+//        Teacher t1 = new Teacher(2, "kate2", "bl2avt", "volod",null,null,"prof");
+//        System.out.println(t1.toString());
 
 //        String databaseURL = "jdbc:ucanaccess://C://Users//Member//Downloads//marks_data_new_final.accdb";
 //
@@ -55,12 +55,15 @@ public class main {
 //            ex.printStackTrace();
 //        }
         checker.checkAndCreate();
+        Subject s = new Subject("sfd", "df", "f");
+        insertStatements.insertSubject(s);
+        System.out.println(getIdsIfExists.getSubjectId(s));
         //test for insert statement
         //can be executed only once, because of recordbook is unique
-        Subject sb =new Subject(1,"ds","sd","sd");
-        Student st = new Student(2,"Bondar","Taras","",332);
-        //insertStatements.insertStudent(st);
-
+//        Subject sb =new Subject(1,"ds","sd","sd");
+//        Student st = new Student(2,"Bondar","Taras","",332);
+//        //insertStatements.insertStudent(st);
+//
 //        ResultSet result =  sqlRequests.getStudentsBySubject(1);
 //        while (result.next()) {
 //                int id = result.getInt("id_subject");

@@ -1,6 +1,7 @@
 package Entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Data_exam {
     int id_data_exam;
@@ -22,17 +23,6 @@ public class Data_exam {
         this.id_group = id_group;
         this.id_teacher = id_teacher;
     }
-    public Data_exam( int num_present, int num_absent, int num_not_allowed, String type_control, Date date_exam, int id_group, int id_teacher) {
-
-        this.num_present = num_present;
-        this.num_absent = num_absent;
-        this.num_not_allowed = num_not_allowed;
-        this.type_control = type_control;
-        this.date_exam = date_exam;
-        this.id_group = id_group;
-        this.id_teacher = id_teacher;
-    }
-
 
     public int getId_data_exam() {
         return id_data_exam;
@@ -96,5 +86,18 @@ public class Data_exam {
 
     public void setId_teacher(int id_teacher) {
         this.id_teacher = id_teacher;
+    }
+
+    public void validateManual() throws Exception {
+        if(num_absent == -1 || num_not_allowed==-1 || num_present==-1)
+        {
+            throw new Exception(Teacher.exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }

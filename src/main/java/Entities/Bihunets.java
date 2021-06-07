@@ -1,6 +1,7 @@
 package Entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Bihunets {
     int id_bih;
@@ -12,6 +13,13 @@ public class Bihunets {
 //with all parametrs
     public Bihunets(int id_bih, Date date, Date ok_till, String reason, String control, int id_teacher) {
         this.id_bih = id_bih;
+        this.date = date;
+        this.ok_till = ok_till;
+        this.reason = reason;
+        this.control = control;
+        this.id_teacher = id_teacher;
+    }
+    public Bihunets( Date date, Date ok_till, String reason, String control, int id_teacher) {
         this.date = date;
         this.ok_till = ok_till;
         this.reason = reason;
@@ -73,5 +81,17 @@ public class Bihunets {
 
     public void setId_teacher(int id_teacher) {
         this.id_teacher = id_teacher;
+    }
+    public void validateManual() throws Exception {
+        if(reason == "")
+        {
+            throw new Exception(Teacher.exeptions[0]);
+        }
+    }
+    //processing after such mistakes must be conducted and saved to gave a list of them
+    public ArrayList<String> validateAutofill() throws Exception
+    {
+        ArrayList<String> res = new ArrayList<>();
+        return res;
     }
 }
