@@ -83,8 +83,10 @@ public class QueryPanel implements ItemListener
         cards.add(cardBihunets, BIHUNETSPANEL);
         cards.add(cardBihunets, MARKBIHPANEL);
 
+        JButton sendBtn = new JButton("Знайти");
         container.add(cbPanel, BorderLayout.PAGE_START);
-        container.add(cards  , BorderLayout.CENTER    );
+        container.add(cards, BorderLayout.CENTER);
+        container.add(sendBtn, BorderLayout.PAGE_END);
     }
     public void itemStateChanged(ItemEvent event)
     {

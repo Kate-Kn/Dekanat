@@ -12,8 +12,8 @@ public class mainWindow  extends JFrame {
     private JPanel queryHead = new JPanel();
     private JPanel body = new JPanel();
     private JPanel sideBtnPanel = new JPanel();
-    private JButton btnLoadPdf = new JButton("Load PDF");
-    private JButton btnExportExcel = new JButton("Export to Excel");
+    private JButton btnLoadPdf = new JButton("Завантажити PDF");
+    private JButton btnExportExcel = new JButton("Експорт у Excel");
     private JTable data = new JTable();
     private JScrollPane scr = new JScrollPane();
 
@@ -51,11 +51,6 @@ public class mainWindow  extends JFrame {
                 }
             }
         });
-
-        /*String tables[] = { "предмети", "групи", "відомості", "викладачі", "оцінки відомості", "студенти", "бігунці", "оцінки бігунця"};
-        JComboBox tabChoose = new JComboBox(tables);
-        tabChoose.setEditable(false);
-        tabChoose.addItemListener(this );*/
 
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
