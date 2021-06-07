@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class checker {
-    static void checkAndCreate() throws IOException, SQLException {
+    static String checkAndCreate() throws IOException, SQLException {
         File accessReposit = new File("accessRep.txt");
         Scanner accessRep = null;
         String path = null;
@@ -141,5 +141,6 @@ public class checker {
             statement.executeUpdate(sql);
         }
         System.out.println(path);
+        return path;
     }
 }
