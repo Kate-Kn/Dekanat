@@ -13,7 +13,8 @@ public class Mark_vid {
     int stud_id;
     int id_data_exam;
 
-    public Mark_vid(int mark_sem, int mark_check, int mark_raz, String mark_nat, String mark_ekts, int stud_id, int id_data_exam) {
+    public Mark_vid(int id,int mark_sem, int mark_check, int mark_raz, String mark_nat, String mark_ekts, int stud_id, int id_data_exam) {
+        this.id_data_exam = id;
         this.mark_sem = mark_sem;
         this.mark_check = mark_check;
         this.mark_raz = mark_raz;
@@ -97,7 +98,7 @@ public class Mark_vid {
     }
 
     public void validateManual() throws Exception {
-        if(mark_sem == -1 || mark_check == -1 || mark_raz == -1)
+        if(mark_sem == -1 || mark_check == -1 || mark_raz == -1|| mark_ekts.equals("") || mark_nat.equals(""))
         {
             throw new Exception(Teacher.exeptions[0]);
         }
