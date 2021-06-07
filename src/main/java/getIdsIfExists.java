@@ -42,8 +42,8 @@ public class getIdsIfExists {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
-        String sql = "SELECT id_teacher\n" +
-                "FROM teacher\n" +
+        String sql = "SELECT id_group\n" +
+                "FROM group_st\n" +
                 "WHERE name_group=? AND year_study=? AND id_subject = ? AND semester = ?;";
         PreparedStatement st = connection.prepareStatement (sql);
         st.setString(1, t.getName_group());
@@ -61,8 +61,8 @@ public class getIdsIfExists {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
-        String sql = "SELECT id_teacher\n" +
-                "FROM teacher\n" +
+        String sql = "SELECT id_subject\n" +
+                "FROM subject\n" +
                 "WHERE name_subject = ? AND edu_level = ? AND faculty = ?;";
         PreparedStatement st = connection.prepareStatement (sql);
         st.setString(1, t.getName_subject());
