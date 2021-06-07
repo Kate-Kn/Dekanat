@@ -4,6 +4,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 
 public class mainWindow  extends JFrame {
@@ -47,9 +49,13 @@ public class mainWindow  extends JFrame {
 
                     }
                 }
-
             }
         });
+
+        /*String tables[] = { "предмети", "групи", "відомості", "викладачі", "оцінки відомості", "студенти", "бігунці", "оцінки бігунця"};
+        JComboBox tabChoose = new JComboBox(tables);
+        tabChoose.setEditable(false);
+        tabChoose.addItemListener(this );*/
 
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -63,6 +69,7 @@ public class mainWindow  extends JFrame {
         body.add(scr);
         body.add(sideBtnPanel);
 
+        QueryPanel head = new QueryPanel(queryHead);
         Container container2 = this.getContentPane();
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
         container2.add(queryHead);
