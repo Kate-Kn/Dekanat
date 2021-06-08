@@ -1,0 +1,104 @@
+<changelist name="Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]" date="1623135518896" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 08-Jun-21 9:58 AM [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/sqlRequests.class" />
+    <option name="AFTER_PATH" value="target/classes/sqlRequests.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/sqlRequests.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Subject.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Subject.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Subject.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Student.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Student.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Student.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/mainWindow$1.class" />
+    <option name="AFTER_PATH" value="target/classes/mainWindow$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/mainWindow$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/main.class" />
+    <option name="AFTER_PATH" value="target/classes/main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/main.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Mark_bih.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Mark_bih.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Mark_bih.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/mainWindow.class" />
+    <option name="AFTER_PATH" value="target/classes/mainWindow.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/mainWindow.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="dekanat_database.laccdb" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/QueryPanel.class" />
+    <option name="AFTER_PATH" value="target/classes/QueryPanel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/QueryPanel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/sqlRequestsForInterface.class" />
+    <option name="AFTER_PATH" value="target/classes/sqlRequestsForInterface.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/sqlRequestsForInterface.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/deleteStatements.class" />
+    <option name="AFTER_PATH" value="target/classes/deleteStatements.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/deleteStatements.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Group_st.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Group_st.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Group_st.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Mark_vid.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Mark_vid.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Mark_vid.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Data_exam.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Data_exam.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Data_exam.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/accessToExcel.class" />
+    <option name="AFTER_PATH" value="target/classes/accessToExcel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/accessToExcel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Teacher.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Teacher.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Teacher.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Entities/Bihunets.class" />
+    <option name="AFTER_PATH" value="target/classes/Entities/Bihunets.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/Bihunets.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/MyParser.class" />
+    <option name="AFTER_PATH" value="target/classes/MyParser.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/MyParser.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/getIdsIfExists.class" />
+    <option name="AFTER_PATH" value="target/classes/getIdsIfExists.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/getIdsIfExists.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/checker.class" />
+    <option name="AFTER_PATH" value="target/classes/checker.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_08-Jun-21_9_58_AM_[Default_Changelist]/checker.class" />
+  </binary>
+</changelist>

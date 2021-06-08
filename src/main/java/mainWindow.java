@@ -14,7 +14,7 @@ public class mainWindow  extends JFrame {
     private JPanel sideBtnPanel = new JPanel();
     private JButton btnLoadPdf = new JButton("Завантажити PDF");
     private JButton btnExportExcel = new JButton("Експорт у Excel");
-    private JTable data = new JTable();
+    private JList data = new JList();
     private JScrollPane scr = new JScrollPane();
 
     public mainWindow() {
@@ -45,8 +45,13 @@ public class mainWindow  extends JFrame {
                             JOptionPane.PLAIN_MESSAGE);
                     try {
                         MyParser prs = new MyParser(selectedFile.getPath());
+                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
+                        //System.out.println(sqlRequestsForInterface.getTeachers().toArray());
+                        data = new JList(sqlRequestsForInterface.getTeachers().toArray());
                     } catch (Exception exc) {
-
+                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
+                        System.out.println(exc.getMessage());
+                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
                     }
                 }
             }
