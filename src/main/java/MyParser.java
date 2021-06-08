@@ -225,7 +225,6 @@ public  class MyParser {
              mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
         }
 
-
         document.close();
     }
 }
