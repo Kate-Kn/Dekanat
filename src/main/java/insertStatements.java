@@ -32,7 +32,7 @@ public class insertStatements {
         st.setString(1, student.getLast_name());
         st.setString(2, student.getFirst_name());
         st.setString(3, student.getFather_name());
-        st.setInt(4, student.getRecordbook_no());
+        st.setString(4, student.getRecordbook_no());
         st.executeUpdate();
         }
     public static void insertTeacher(Teacher teacher) throws IOException, SQLException {

@@ -10,7 +10,7 @@ public class main {
     public static void main(String[] args) throws IOException, SQLException {
 
 
-//        MyParser parser= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\new.pdf");
+        MyParser parser= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\new.pdf");
 //
 //        System.out.println("Hello");
 //        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
