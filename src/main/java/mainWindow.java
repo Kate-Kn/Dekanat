@@ -4,14 +4,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 
 public class mainWindow  extends JFrame {
     private JPanel queryHead = new JPanel();
     private JPanel body = new JPanel();
     private JPanel sideBtnPanel = new JPanel();
-    private JButton btnLoadPdf = new JButton("Load PDF");
-    private JButton btnExportExcel = new JButton("Export to Excel");
+    private JButton btnLoadPdf = new JButton("Завантажити PDF");
+    private JButton btnExportExcel = new JButton("Експорт у Excel");
     private JTable data = new JTable();
     private JScrollPane scr = new JScrollPane();
 
@@ -47,7 +49,6 @@ public class mainWindow  extends JFrame {
 
                     }
                 }
-
             }
         });
 
@@ -63,6 +64,7 @@ public class mainWindow  extends JFrame {
         body.add(scr);
         body.add(sideBtnPanel);
 
+        QueryPanel head = new QueryPanel(queryHead);
         Container container2 = this.getContentPane();
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
         container2.add(queryHead);
