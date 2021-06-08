@@ -1,16 +1,16 @@
-import Entities.Student;
 import Entities.Subject;
-import Entities.Teacher;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
+        checker.checkAndCreate();
+        Subject s = new Subject("sfd", "df", "f");
+        insertStatements.insertSubject(s);
+        System.out.println(getIdsIfExists.getSubjectId(s));
 
-
-        MyParser parser= new MyParser("new.pdf");
+       // MyParser parser= new MyParser("new.pdf");
 //
 //        System.out.println("Hello");
 //        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
@@ -54,10 +54,6 @@ public class main {
 //        } catch (SQLException ex) {
 //            ex.printStackTrace();
 //        }
-        checker.checkAndCreate();
-        Subject s = new Subject("sfd", "df", "f");
-        insertStatements.insertSubject(s);
-        System.out.println(getIdsIfExists.getSubjectId(s));
         //test for insert statement
         //can be executed only once, because of recordbook is unique
 //        Subject sb =new Subject(1,"ds","sd","sd");
