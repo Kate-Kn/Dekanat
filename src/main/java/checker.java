@@ -37,7 +37,7 @@ public class checker {
                     "last_name text(255) NOT NULL,\n" +
                     "first_name text(255) NOT NULL,\n" +
                     "father_name text(255) NULL,\n" +
-                    "recordbook_no int NOT NULL UNIQUE,\n" +
+                    "recordbook_no text NOT NULL UNIQUE,\n" +
                     "PRIMARY KEY (stud_id)\n" +
                     ")";
             Statement statement = connection.createStatement();
