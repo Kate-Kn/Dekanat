@@ -7,10 +7,10 @@ public class main {
     public static void main(String[] args) throws IOException, SQLException {
         checker.checkAndCreate();
         Subject s = new Subject("sfd", "df", "f");
-        insertStatements.insertSubject(s);
-        System.out.println(getIdsIfExists.getSubjectId(s));
-
-       // MyParser parser= new MyParser("new.pdf");
+        //insertStatements.insertSubject(s);
+        //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
+        //System.out.println(getIdsIfExists.getSubjectId(s));
+        MyParser parser= new MyParser("new.pdf");
 //
 //        System.out.println("Hello");
 //        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);

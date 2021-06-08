@@ -126,7 +126,7 @@ public class insertStatements {
         checkPath();
         String d = "jdbc:ucanaccess://"+ path;
         Connection connection = DriverManager.getConnection(d);
-        String sql = "INSERT INTO data_exam (mark_sem, mark_exam, mark_tog,mark_nat,mark_ekts,stid_id,id_data_exam)\n" +
+        String sql = "INSERT INTO mark_vid (mark_sem, mark_exam, mark_tog,mark_nat,mark_ekts,stud_id,id_data_exam)\n" +
                 "VALUES (?, ?,?,?,?,?,?);";
         PreparedStatement st = connection.prepareStatement (sql);
         st.setInt(1, mv.getMark_sem());
