@@ -75,7 +75,7 @@ public class getIdsIfExists {
         }
         return id;
     }
-    public static int getDataExemId(Data_exam t) throws IOException, SQLException {
+    public static int getDataExamId(Data_exam t) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
@@ -89,7 +89,7 @@ public class getIdsIfExists {
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
-            id = result.getInt("id_teacher");
+            id = result.getInt("id_data_exam");
         }
         return id;
     }

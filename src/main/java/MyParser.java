@@ -2,18 +2,15 @@ import Entities.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import static org.apache.pdfbox.pdfparser.PDFParser.load;
@@ -186,11 +183,11 @@ public  class MyParser {
 
 //        dataexam
         Data_exam data_exam = new Data_exam(ontestI,absentI,notallowedI,contr,datefinal,group_st.getId_group(),teacher.getId_teacher());
-        if (getIdsIfExists.getDataExemId(data_exam)==0)
+        if (getIdsIfExists.getDataExamId(data_exam)==0)
         {
             insertStatements.insertDataExam(data_exam);
         }
-        data_exam.setId_data_exam(getIdsIfExists.getDataExemId(data_exam));
+        data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
 //        students
         ArrayList<Student> students = new ArrayList<>();
         ArrayList<Mark_vid> mark_vids = new ArrayList<>();

@@ -66,7 +66,7 @@ public class insertStatements {
         checkPath();
         String d = "jdbc:ucanaccess://"+ path;
         Connection connection = DriverManager.getConnection(d);
-        String sql = "INSERT INTO grou_st (name_group, year_study, semester,year_student,id_subject)\n" +
+        String sql = "INSERT INTO group_st (name_group, year_study, semester,year_student,id_subject)\n" +
                 "VALUES (?, ?,?,?,?);";
         PreparedStatement st = connection.prepareStatement (sql);
         st.setString(1, gr.getName_group());
