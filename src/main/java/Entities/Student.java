@@ -30,11 +30,11 @@ public class Student {
         this.first_name = first_name;
         this.father_name = father_name;
     }
-    public Student( String last_name, String first_name, String father_name, String recordbook_no) {
-        this.last_name = last_name;
-        this.first_name = first_name;
-        this.father_name = father_name;
-    }
+//    public Student( String last_name, String first_name, String father_name, String recordbook_no) {
+//        this.last_name = last_name;
+//        this.first_name = first_name;
+//        this.father_name = father_name;
+//    }
 ////wihout father name
 //    public Student(int stud_id, String last_name, String first_name, String recordbook_no) {
 //        this.stud_id = stud_id;
