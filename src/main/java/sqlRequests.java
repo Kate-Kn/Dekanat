@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.sql.*;
 
 public class sqlRequests {
-    public static ResultSet getStudentsBySubject(int Sub) throws IOException, SQLException {
+    public static ResultSet getStudentsByFields(int sub, int t, int year) throws IOException, SQLException {
         insertStatements.checkPath();
         String d = "jdbc:ucanaccess://"+ insertStatements.path;
         Connection connection = DriverManager.getConnection(d);
@@ -19,7 +19,7 @@ public class sqlRequests {
                 "FROM group_st\n" +
                 "WHERE id_subject = ?)));\n";
         PreparedStatement st = connection.prepareStatement (sql);
-        st.setInt(1, Sub);
+        st.setInt(1, sub);
         return st.executeQuery();
     }
     public static ResultSet getStudentsByGroup(int gr) throws IOException, SQLException {

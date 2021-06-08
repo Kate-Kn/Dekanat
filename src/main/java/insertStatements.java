@@ -17,6 +17,7 @@ public class insertStatements {
         try {
             accessRep = new Scanner(accessReposit);
             path = accessRep.next();
+            accessRep.close();
         } catch (FileNotFoundException e) {
             System.out.println("You haven`t specified a file");
             checker.checkAndCreate();
