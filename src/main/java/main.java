@@ -1,13 +1,17 @@
-import Entities.Subject;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
-        checker.checkAndCreate();
+//        String s ="ss";
+//        s+="ddf";
+//        System.out.println(s);
+        //ResultSet r = sqlRequests.getStudentsByFields(1, 0, 0);
+        //ResultSet r1 = sqlRequests.getVidomistByFields(0, 1, 2, 1);
+        //ResultSet r2 = sqlRequests.statistics(2, 3, 0, 0);
+        //checker.checkAndCreate();
         //deleteStatements.deleteDatabase();
-        Subject s = new Subject("sfd", "df", "f");
+        //Subject s = new Subject("sfd", "df", "f");
         //insertStatements.insertSubject(s);
         //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
         //System.out.println(getIdsIfExists.getSubjectId(s));
