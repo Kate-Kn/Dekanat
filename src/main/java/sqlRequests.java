@@ -3,12 +3,8 @@ import java.sql.*;
 
 public class sqlRequests {
     public static ResultSet getStudentsByFields(int sub, int t, int year) throws IOException, SQLException {
-        int counterNotNull = 0;
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT student.stud_id, first_name+\" \"+last_name AS name_surname, recordbook_no, id_subject, id_teacher, year_student \n" +
-                "FROM (((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id\n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
                 "WHERE ";
         if(sub!=0)
         {
@@ -35,7 +31,27 @@ public class sqlRequests {
 //                "(SELECT id_group\n" +
 //                "FROM group_st\n" +
 //                "WHERE id_subject = ?)));\n";
-        Statement st = connection.createStatement();
+        Statement st = Database.connection.createStatement();
+        return st.executeQuery(sql);
+    }
+    public static ResultSet getStudentsByFieldsInput(String subject, String teacher_surname, int year) throws IOException, SQLException {
+        String sql = "SELECT student.stud_id, first_name+\" \"+last_name AS name_surname, recordbook_no, id_subject, id_teacher, year_student \n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+                "WHERE ";
+        if(subject!=null)
+        {
+            sql+="name_subject like '%"+subject+"%' AND";
+        }
+        if(teacher_surname!=null)
+        {
+            sql+=" teacher.last_name like '%"+teacher_surname+"%' AND";
+        }
+        if(year!=0)
+        {
+            sql+=" year_student = "+year+" AND";
+        }
+        sql+=" 1=1";
+        Statement st = Database.connection.createStatement();
         return st.executeQuery(sql);
     }
 //    public static ResultSet getStudentsByGroup(int gr) throws IOException, SQLException {
@@ -96,9 +112,6 @@ public class sqlRequests {
 //        return st.executeQuery();
 //    }
     public static ResultSet getVidomistByFields(int t, int sub, int year,int s) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql ="SELECT id_data_exam, num_present, num_absent, num_not_allowed, type_control,date_exam, id_teacher\n" +
                 "FROM (((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id\n" +
                 "WHERE ";
@@ -124,7 +137,31 @@ public class sqlRequests {
 //                "WHERE id_teacher = ?;\n";
 //        PreparedStatement st = connection.prepareStatement (sql);
 //        st.setInt(1, t);
-        Statement st = connection.createStatement();
+        Statement st = Database.connection.createStatement();
+        return st.executeQuery(sql);
+    }
+    public static ResultSet getVidomistByFieldsInput(String teacher_surname, String subject, int year,String student) throws IOException, SQLException {
+        String sql ="SELECT id_data_exam, num_present, num_absent, num_not_allowed, type_control,date_exam, id_teacher\n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+                "WHERE ";
+        if(subject!=null)
+        {
+            sql+="name_subject like '%"+subject+"%' AND";
+        }
+        if(teacher_surname!=null)
+        {
+            sql+=" teacher.last_name like '%"+teacher_surname+"%' AND";
+        }
+        if(year!=0)
+        {
+            sql+=" year_student = "+year+" AND";
+        }
+        if (student != null)
+        {
+            sql+=" student.last_name like '%"+student+"%' AND";
+        }
+        sql+=" 1=1";
+        Statement st = Database.connection.createStatement();
         return st.executeQuery(sql);
     }
 //    public static ResultSet getVidomistByGroup(int g) throws IOException, SQLException {
@@ -154,9 +191,6 @@ public class sqlRequests {
 //    }
     //all values are 0 not allowed
     public static ResultSet getDebtorByFields(int student, int subject, int year, int teacher) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql ="SELECT stud_id, first_name+\" \"+last_name AS surname_name\n" +
                 "FROM student\n" +
                 "WHERE stud_id IN\n" +
@@ -199,7 +233,38 @@ public class sqlRequests {
 //                "WHERE id_group = ?));\n";
 //        PreparedStatement st = connection.prepareStatement (sql);
 //        st.setInt(1, g);
-        Statement st = connection.createStatement();
+        Statement st = Database.connection.createStatement();
+        return st.executeQuery(sql);
+    }
+    public static ResultSet getDebtorByFieldsInput(String student, String subject, int year, String teacher) throws IOException, SQLException {
+        String sql ="SELECT stud_id, first_name+\" \"+last_name AS surname_name\n" +
+                "FROM student\n" +
+                "WHERE stud_id IN\n" +
+                "(SELECT student.stud_id\n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+                "WHERE NOT EXISTS\n" +
+                "(SELECT *\n" +
+                "FROM mark_bih\n" +
+                "WHERE mark_vid.id_mark_vid = id_mark_vid)\n" +
+                ") AND ;\n";
+        if(subject!=null)
+        {
+            sql+="name_subject like '%"+subject+"%' AND";
+        }
+        if(teacher!=null)
+        {
+            sql+=" teacher.last_name like '%"+teacher+"%' AND";
+        }
+        if(year!=0)
+        {
+            sql+=" year_student = "+year+" AND";
+        }
+        if (student != null)
+        {
+            sql+=" student.last_name like '%"+student+"%' AND";
+        }
+        sql+=" 1=1";
+        Statement st = Database.connection.createStatement();
         return st.executeQuery(sql);
     }
 //    public static ResultSet getDebtorBySubject(int s) throws IOException, SQLException {
@@ -272,45 +337,33 @@ public class sqlRequests {
 //        return st.executeQuery();
 //    }
     public static ResultSet getNumOfNedForGroup(int g) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
                 "FROM data_exam\n" +
                 "WHERE id_group = ?;";
-        PreparedStatement st = connection.prepareStatement (sql);
+        PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setInt(1, g);
         return st.executeQuery();
     }
     public static ResultSet getNumOfNedForSubject(int s) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
                 "FROM data_exam\n" +
                 "WHERE id_group IN\n" +
                 "(SELECT id_group\n" +
                 "FROM group_st\n" +
                 "WHERE id_subject = ?);";
-        PreparedStatement st = connection.prepareStatement (sql);
+        PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setInt(1, s);
         return st.executeQuery();
     }
     public static ResultSet getNumOfNedForTeacher(int t) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
                 "FROM data_exam\n" +
                 "WHERE id_teacher =  ?;";
-        PreparedStatement st = connection.prepareStatement (sql);
+        PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setInt(1, t);
         return st.executeQuery();
     }
     public static ResultSet getRetakeForFields(int subject, int year, int teacher) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT stud_id, first_name+\" \"+last_name AS name_surname\n" +
                 "FROM student\n" +
                 "WHERE stud_id IN\n" +
@@ -354,7 +407,37 @@ public class sqlRequests {
             sql+=" year_student = "+year+" AND";
         }
         sql+=" 1=1))";
-        Statement st = connection.createStatement();
+        Statement st = Database.connection.createStatement();
+        return st.executeQuery(sql);
+    }
+    public static ResultSet getRetakeForFieldsInput(String subject, int year, String teacher) throws IOException, SQLException {
+        String sql = "SELECT stud_id, first_name+\" \"+last_name AS name_surname\n" +
+                "FROM student\n" +
+                "WHERE stud_id IN\n" +
+                "(SELECT stud_id\n" +
+                "FROM mark_vid\n" +
+                "WHERE id_mark_vid IN\n" +
+                "(SELECT id_mark_vid \n" +
+                "FROM mark_bih) \n" +
+                "AND id_data_exam IN\n" +
+                "(SELECT data_exam.id_data_exam\n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+                "WHERE \n";
+
+        if(subject!=null)
+        {
+            sql+="name_subject like '%"+subject+"%' AND";
+        }
+        if(teacher!=null)
+        {
+            sql+=" teacher.last_name like '%"+teacher+"%' AND";
+        }
+        if(year!=0)
+        {
+            sql+=" year_student = "+year+" AND";
+        }
+        sql+=" 1=1))";
+        Statement st = Database.connection.createStatement();
         return st.executeQuery(sql);
     }
 //    public static ResultSet getRetakeForCourse(int c) throws IOException, SQLException {
@@ -422,9 +505,6 @@ public class sqlRequests {
 //        return st.executeQuery();
 //    }
     public static ResultSet statistics(int subject, int teacher,int student,int year) throws IOException, SQLException {
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT student.stud_id, first_name+\" \"+last_name AS name_surname, recordbook_no, mark_tog, subject.id_subject\n" +
                 "FROM (((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id\n" +
                 "WHERE ";
@@ -445,7 +525,31 @@ public class sqlRequests {
             sql+=" stud_id = "+student+" AND";
         }
         sql+=" 1=1 \n ORDER BY mark_tog;\n";
-        Statement st = connection.createStatement();
+        Statement st = Database.connection.createStatement();
+        return st.executeQuery(sql);
+    }
+    public static ResultSet statisticsInput(String subject, String teacher,String student,int year) throws IOException, SQLException {
+        String sql = "SELECT student.stud_id, first_name+\" \"+last_name AS name_surname, recordbook_no, mark_tog, subject.id_subject\n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+                "WHERE ";
+        if(subject!=null)
+        {
+            sql+="name_subject = "+subject+" AND";
+        }
+        if(teacher!=null)
+        {
+            sql+=" teacher.last_name like '%"+teacher+"%' AND";
+        }
+        if(year!=0)
+        {
+            sql+=" year_student = "+year+" AND";
+        }
+        if(student!=null)
+        {
+            sql+=" student.last_name like '%"+student+"%' AND";
+        }
+        sql+=" 1=1 \n ORDER BY mark_tog;\n";
+        Statement st = Database.connection.createStatement();
         return st.executeQuery(sql);
     }
 

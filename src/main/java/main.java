@@ -1,14 +1,18 @@
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
+        Database.connect();
+        ResultSet r = sqlRequests.getVidomistByFieldsInput("df", "jh", 3, "fds");
 //        String s ="ss";
 //        s+="ddf";
 //        System.out.println(s);
         //ResultSet r = sqlRequests.getStudentsByFields(1, 0, 0);
         //ResultSet r1 = sqlRequests.getVidomistByFields(0, 1, 2, 1);
         //ResultSet r2 = sqlRequests.statistics(2, 3, 0, 0);
+        //ResultSet r3 = sqlRequests.getStudentsByFieldsInput("fg", null, 5);
         //checker.checkAndCreate();
         //deleteStatements.deleteDatabase();
         //Subject s = new Subject("sfd", "df", "f");
