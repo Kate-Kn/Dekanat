@@ -5,7 +5,7 @@ import java.sql.SQLException;
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
         Database.connect();
-        ResultSet r = sqlRequests.getVidomistByFieldsInput("df", "jh", 3, "fds");
+        ResultSet r = sqlRequests.getVidomistByFieldsInput(null, null, 0, null);
 //        String s ="ss";
 //        s+="ddf";
 //        System.out.println(s);
