@@ -19,19 +19,18 @@ public class checker {
         try {
             accessRep = new Scanner(accessReposit);
             path = accessRep.next();
+            accessRep.close();
         } catch (FileNotFoundException e) {
             //  e.printStackTrace();
             //TODO: dialog window to choose directory
             path = "dekanat_database.accdb";
             Database db = DatabaseBuilder.create(FileFormat.V2016, new File(path));
             System.out.println("The database file has been created.");
-            accessReposit.createNewFile();
             FileWriter myWriter = new FileWriter("accessRep.txt");
             myWriter.write(path);
             myWriter.close();
             String d = "jdbc:ucanaccess://"+ path;
             Connection connection = DriverManager.getConnection(d);
-
             String sql = "CREATE TABLE student (\n" +
                     "stud_id AUTOINCREMENT NOT NULL,\n" +
                     "last_name text(255) NOT NULL,\n" +
