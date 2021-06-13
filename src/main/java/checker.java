@@ -92,7 +92,7 @@ public class checker {
             statement.executeUpdate(sql);
 
             sql = "CREATE TABLE data_exam (\n" +
-                    "id_data_exam AUTOINCREMENT NOT NULL,\n" +
+                    "id_data_exam LONG NOT NULL,\n" +
                     "num_present int NOT NULL,\n" +
                     "num_absent int NOT NULL,\n" +
                     "num_not_allowed int NOT NULL,\n" +

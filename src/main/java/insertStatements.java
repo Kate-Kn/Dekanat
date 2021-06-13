@@ -75,21 +75,22 @@ public class insertStatements {
         st.executeUpdate();
     }
     public static void insertDataExam(Data_exam dat) throws IOException, SQLException {
-        String sql = "INSERT INTO data_exam (num_present, num_absent, num_not_allowed,type_control,date_exam,id_group,id_teacher)\n" +
-                "VALUES (?, ?,?,?,?,?,?);";
+        String sql = "INSERT INTO data_exam (id_data_exam, num_present, num_absent, num_not_allowed,type_control,date_exam,id_group,id_teacher)\n" +
+                "VALUES (?, ?,?,?,?,?,?,?);";
         PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setInt(1, dat.getNum_present());
-        st.setInt(2, dat.getNum_absent());
-        st.setInt(3, dat.getNum_not_allowed());
-        st.setString(4, dat.getType_control());
-        st.setDate(5, dat.getDate_exam());
-        st.setInt(6,dat.getId_group());
-        st.setInt(7,dat.getId_teacher());
+        st.setLong(1, dat.getId_data_exam());
+        st.setInt(2, dat.getNum_present());
+        st.setInt(3, dat.getNum_absent());
+        st.setInt(4, dat.getNum_not_allowed());
+        st.setString(5, dat.getType_control());
+        st.setDate(6, dat.getDate_exam());
+        st.setInt(7,dat.getId_group());
+        st.setInt(8,dat.getId_teacher());
         st.executeUpdate();
     }
     public static void insertMarkBih(Mark_bih mB) throws IOException, SQLException {
         String sql = "INSERT INTO data_exam (mark_sem, mark_exam, mark_tog,mark_nat,mark_ekts,id_mark_vid,id_bih)\n" +
-                "VALUES (?, ?,?,?,?,?,?);";
+                "VALUES (?, ?,?,?,?,?,?,?);";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setInt(1, mB.getMark_sem());
         st.setInt(2, mB.getMark_check());
