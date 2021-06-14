@@ -38,7 +38,8 @@ public class sqlRequests {
         String sql = "SELECT student.stud_id, first_name+\" \"+last_name AS name_surname, recordbook_no, id_subject, id_teacher, year_student \n" +
                 "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
                 "WHERE ";
-        if(subject!=null)
+        //if(subject!=null)
+        if(!subject.isEmpty())
         {
             sql+="name_subject like '%"+subject+"%' AND";
         }
