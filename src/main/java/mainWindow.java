@@ -14,9 +14,12 @@ public class mainWindow  extends JFrame {
     private JPanel sideBtnPanel = new JPanel();
     private JButton btnLoadPdf = new JButton("Завантажити PDF");
     private JButton btnExportExcel = new JButton("Експорт у Excel");
-    private JTable data = new JTable();
-    private JScrollPane scr = new JScrollPane();
+    private JList data = new JList();
+    DisplayTable myt = new DisplayTable();
 
+    public DisplayTable getTable(){
+        return myt;
+    }
     public mainWindow() {
         super("Simple Example");
         this.setSize(1200,700);
@@ -45,8 +48,13 @@ public class mainWindow  extends JFrame {
                             JOptionPane.PLAIN_MESSAGE);
                     try {
                         MyParser prs = new MyParser(selectedFile.getPath());
+                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
+                        System.out.println(sqlRequestsForInterface.getTeachers().toArray());
+                        data = new JList(sqlRequestsForInterface.getTeachers().toArray());
                     } catch (Exception exc) {
-
+                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
+                        System.out.println(exc.getMessage());
+                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
                     }
                 }
             }
@@ -60,11 +68,14 @@ public class mainWindow  extends JFrame {
         sideBtnPanel.add(btnExportExcel);
 
         body.setLayout(new BoxLayout(body, BoxLayout.X_AXIS));
-        scr.setViewportView(data);
+
+        JTable table = new JTable(myt);
+        JScrollPane scr = new JScrollPane(table);
         body.add(scr);
         body.add(sideBtnPanel);
 
-        QueryPanel head = new QueryPanel(queryHead);
+        QueryPanel head = new QueryPanel(this);
+        queryHead.add(head);
         Container container2 = this.getContentPane();
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
         container2.add(queryHead);

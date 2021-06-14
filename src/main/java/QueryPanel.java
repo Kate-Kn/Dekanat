@@ -1,97 +1,125 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.*;
 
-public class QueryPanel implements ItemListener
+public class QueryPanel extends JPanel
 {
-    private static JPanel cards;
+    final   static String GENERALPANEL = "Усі дані";
+    final   static String STUDENTPANEL   = "Студенти";
+    final   static String RESTUDENTPANEL   = "Студенти-перескладанці";
+    final   static String VIDOMISTPANEL = "Відомості";
+    final   static String NEDOPPANEL = "Недопуски";
+    final   static String RATINGPANEL = "Рейтинг";
+    final   static String DEBTORSSPANEL   = "Боржники";
+    final   static String SPECIALSPANEL   = "Спеціальні";
 
-    final   static String SUBJECTPANEL = "предмети";
-    final   static String GROUPPANEL   = "групи";
-    final   static String STUDENTPANEL   = "групи";
-    final   static String TEACHERPANEL   = "викладачі";
-    final   static String VIDOMISTPANEL = "відомості";
-    final   static String MARKVIDPANEL = "оцінки відомості";
-    final   static String BIHUNETSPANEL   = "бігунці";
-    final   static String MARKBIHPANEL = "оцінки бігунця";
+    public QueryPanel(mainWindow container) {
 
-    public QueryPanel(Container container) {
-        JComboBox<String> tab = new JComboBox(new String[]{SUBJECTPANEL, GROUPPANEL, STUDENTPANEL, TEACHERPANEL,
-                VIDOMISTPANEL, MARKVIDPANEL, BIHUNETSPANEL, MARKBIHPANEL});
-        tab.setEditable(false);
-        tab.addItemListener(this);
-
-        JPanel cbPanel = new JPanel();
-        cbPanel.add(tab);
-
-        JPanel cardSubject = new JPanel();
-        JComboBox<String> parametersSubject = new JComboBox(new String[]{"номер", "назва", "освітній рівень", "факультет"});
-        cardSubject.add(new JLabel("Шукаємо за"));
-        cardSubject.add(parametersSubject);
-        cardSubject.add(new JTextField("", 15));
-
-        JPanel cardGroup = new JPanel();
-        JComboBox<String> parametersGroup = new JComboBox(new String[]{"шифр", "назва", "навчальний рік", "семестр", "курс"});
-        cardGroup.add(new JLabel("Шукаємо за"));
-        cardGroup.add(parametersGroup);
-        cardGroup.add(new JTextField("", 15));
-
-        JPanel cardVidomist = new JPanel();
-        JComboBox<String> parametersVidomist = new JComboBox(new String[]{"номер", "кількість присутніх", "кількість відсутніх", "кількість недопущених", "тип контролю", "дата складання"});
-        cardVidomist.add(new JLabel("Шукаємо за"));
-        cardVidomist.add(parametersVidomist);
-        cardVidomist.add(new JTextField("", 15));
-
-        JPanel cardMarkVid = new JPanel();
-        JComboBox<String> parametersMarkVid = new JComboBox(new String[]{"номер", "оцінка за трим", "оцінка перевірки", "оцінка разом", "оцінка нац. шкала", "оцінка єктс"});
-        cardMarkVid.add(new JLabel("Шукаємо за"));
-        cardMarkVid.add(parametersMarkVid);
-        cardMarkVid.add(new JTextField("", 15));
-
-        JPanel cardTeacher = new JPanel();
-        JComboBox<String> parametersTeacher = new JComboBox(new String[]{"шифр", "ім'я", "прізвище", "по-батькові", "науковий ступінь", "вчене звання", "посада"});
-        cardTeacher.add(new JLabel("Шукаємо за"));
-        cardTeacher.add(parametersTeacher);
-        cardTeacher.add(new JTextField("", 15));
-
-        JPanel cardStudent = new JPanel();
-        JComboBox<String> parametersStudent = new JComboBox(new String[]{"шифр", "ім'я", "прізвище", "по-батькові", "залікова книга"});
-        cardStudent.add(new JLabel("Шукаємо за"));
-        cardStudent.add(parametersStudent);
-        cardStudent.add(new JTextField("", 15));
-
-        JPanel cardBihunets = new JPanel();
-        JComboBox<String> parametersBihunets = new JComboBox(new String[]{"номер", "дата складання", "дійсний до", "причина перенесення", "тип контролю"});
-        cardBihunets.add(new JLabel("Шукаємо за"));
-        cardBihunets.add(parametersBihunets);
-        cardBihunets.add(new JTextField("", 15));
-
-        JPanel cardMarkBih = new JPanel();
-        JComboBox<String> parametersMarkBih = new JComboBox(new String[]{"номер", "оцінка за трим", "оцінка перевірки", "оцінка разом", "оцінка нац. шкала", "оцінка єктс"});
-        cardMarkBih.add(new JLabel("Шукаємо за"));
-        cardMarkBih.add(parametersMarkBih);
-        cardMarkBih.add(new JTextField("", 15));
-
-        cards = new JPanel(new CardLayout());
-
-        cards.add(cardSubject, SUBJECTPANEL);
-        cards.add(cardGroup, GROUPPANEL);
-        cards.add(cardVidomist, STUDENTPANEL);
-        cards.add(cardMarkVid, TEACHERPANEL);
-        cards.add(cardTeacher, VIDOMISTPANEL);
-        cards.add(cardStudent, MARKVIDPANEL);
-        cards.add(cardBihunets, BIHUNETSPANEL);
-        cards.add(cardBihunets, MARKBIHPANEL);
+        JTabbedPane queries = new JTabbedPane();
 
         JButton sendBtn = new JButton("Знайти");
-        container.add(cbPanel, BorderLayout.PAGE_START);
-        container.add(cards, BorderLayout.CENTER);
-        container.add(sendBtn, BorderLayout.PAGE_END);
+
+        JPanel tabGeneral = new JPanel();
+        JComboBox<String> bareTables = new JComboBox(new String[]{"Студент", "Викладач", "Предмет", "Група"});
+        tabGeneral.add(bareTables);
+        JButton sendBtnGen = new JButton("Знайти");
+        tabGeneral.add(sendBtnGen);
+        queries.addTab(GENERALPANEL, tabGeneral);
+        sendBtnGen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
+
+        JPanel tabStudent = new JPanel();
+        tabStudent.add(new JLabel("surname"));
+        JTextField tStTeacherF = new JTextField("", 15);
+        tabStudent.add(tStTeacherF);
+        tabStudent.add(new JLabel("year"));
+        JTextField tStYearF = new JTextField("", 15);
+        tabStudent.add(tStYearF);
+        tabStudent.add(new JLabel("subj"));
+        JTextField tStSubjectF = new JTextField("", 15);
+        tabStudent.add(tStSubjectF);
+        tabStudent.add(sendBtn);
+        queries.addTab(STUDENTPANEL, tabStudent);
+
+        JPanel tabRestudent = new JPanel();
+        tabRestudent.add(new JLabel("surname"));
+        JTextField tReStTeacherF = new JTextField("", 15);
+        tabRestudent.add(tReStTeacherF);
+        tabRestudent.add(new JLabel("year"));
+        JTextField tReStYearF = new JTextField("", 15);
+        tabRestudent.add(tReStYearF);
+        tabRestudent.add(new JLabel("subj"));
+        JTextField tReStSubjectF = new JTextField("", 15);
+        tabRestudent.add(tReStSubjectF);
+        tabRestudent.add(sendBtn);
+        queries.addTab(RESTUDENTPANEL, tabRestudent);
+
+        JPanel tabVidomist = new JPanel();
+        tabVidomist.add(new JLabel("surname"));
+        JTextField tVidTeacherF = new JTextField("", 15);
+        tabVidomist.add(tVidTeacherF);
+        tabVidomist.add(new JLabel("year"));
+        JTextField tVidSubjectF = new JTextField("", 15);
+        tabVidomist.add(tVidSubjectF);
+        tabVidomist.add(new JLabel("subj"));
+        JTextField tVidYearF = new JTextField("", 15);
+        tabVidomist.add(tVidYearF);
+        tabVidomist.add(new JLabel("st"));
+        JTextField tVidStudentF = new JTextField("", 15);
+        tabVidomist.add(tVidStudentF);
+        tabVidomist.add(sendBtn);
+        queries.addTab(VIDOMISTPANEL, tabVidomist);
+
+        JPanel tabNedop = new JPanel();
+        tabNedop.add(new JLabel("subj"));
+        JTextField tNedTeacherF = new JTextField("", 15);
+        tabNedop.add(tNedTeacherF);
+        tabNedop.add(new JLabel("subj"));
+        JTextField tNedStudentF = new JTextField("", 15);
+        tabNedop.add(tNedStudentF);
+        tabNedop.add(sendBtn);
+        queries.addTab(NEDOPPANEL, tabNedop);
+
+        /*JPanel tabRating = new JPanel();
+        JLabel sign = new JLabel("surname");
+        JTextField textField = new JTextField("", 15);
+        JLabel sign = new JLabel("year");
+        JTextField textField = new JTextField("", 15);
+        JLabel sign = new JLabel("subj");
+        JTextField textField = new JTextField("", 15);
+        JLabel sign = new JLabel("st");
+        JTextField textField = new JTextField("", 15);
+
+        JPanel tabDebt = new JPanel();
+        JLabel sign = new JLabel("surname");
+        JTextField textField = new JTextField("", 15);
+        JLabel sign = new JLabel("year");
+        JTextField textField = new JTextField("", 15);
+        JLabel sign = new JLabel("subj");
+        JTextField textField = new JTextField("", 15);
+        JLabel sign = new JLabel("st");
+        JTextField textField = new JTextField("", 15);
+
+        JPanel tabSpecial = new JPanel();*/
+        container.add(queries);
+
     }
-    public void itemStateChanged(ItemEvent event)
+    /*public void itemStateChanged(ItemEvent event)
     {
         CardLayout layout = (CardLayout)(cards.getLayout());
         layout.show(cards, (String)event.getItem());
-    }
+    }*/
 
 }
