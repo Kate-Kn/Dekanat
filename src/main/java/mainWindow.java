@@ -81,7 +81,18 @@ public class mainWindow  extends JFrame {
         container2.add(queryHead);
         container2.add(body);
 
-
+        changeFont(container2, new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+    }
+    public static void changeFont ( Component component, Font font )
+    {
+        component.setFont ( font );
+        if ( component instanceof Container )
+        {
+            for ( Component child : ( ( Container ) component ).getComponents () )
+            {
+                changeFont ( child, font );
+            }
+        }
     }
     public static void main(String[] args) {
         try {
