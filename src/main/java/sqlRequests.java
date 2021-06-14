@@ -252,7 +252,7 @@ public class sqlRequests {
                 "WHERE stud_id IN\n" +
                 "(SELECT student.stud_id\n" +
                 "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
-                "WHERE NOT EXISTS\n" +
+                "WHERE mark_ekts = 'F' AND NOT EXISTS\n" +
                 "(SELECT *\n" +
                 "FROM mark_bih\n" +
                 "WHERE mark_vid.id_mark_vid = id_mark_vid)\n" +
@@ -281,7 +281,7 @@ public class sqlRequests {
                     "WHERE stud_id IN\n" +
                     "(SELECT student.stud_id\n" +
                     "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
-                    "WHERE NOT EXISTS\n" +
+                    "WHERE mark_ekts = 'F' AND NOT EXISTS\n" +
                     "(SELECT *\n" +
                     "FROM mark_bih\n" +
                     "WHERE mark_vid.id_mark_vid = id_mark_vid)\n";

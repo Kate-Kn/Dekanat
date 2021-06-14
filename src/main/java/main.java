@@ -1,11 +1,12 @@
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main {
     public static void main(String[] args) throws IOException, SQLException {
+        checker.checkAndCreate();
+        //mandatory line
         Database.connect();
-        ResultSet r = sqlRequests.getVidomistByFieldsInput(null, null, 0, null);
+       // ResultSet r = sqlRequests.getVidomistByFieldsInput(null, null, 0, null);
 //        String s ="ss";
 //        s+="ddf";
 //        System.out.println(s);
@@ -19,7 +20,7 @@ public class main {
         //insertStatements.insertSubject(s);
         //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
         //System.out.println(getIdsIfExists.getSubjectId(s));
-        //MyParser parser= new MyParser("new.pdf");
+        MyParser parser= new MyParser("new.pdf");
 //
 //        System.out.println("Hello");
 //        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
