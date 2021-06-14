@@ -22,7 +22,7 @@ public class QueryPanel extends JPanel
         JButton sendBtn = new JButton("Знайти");
 
         JPanel tabGeneral = new JPanel();
-        JComboBox<String> bareTables = new JComboBox(new String[]{"Студент", "Викладач", "Предмет", "Група"});
+        JComboBox<String> bareTables = new JComboBox(new String[]{"Студенти", "Викладачі", "Предмети", "Групи"});
         tabGeneral.add(bareTables);
         JButton sendBtnGen = new JButton("Знайти");
         tabGeneral.add(sendBtnGen);
@@ -31,6 +31,8 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    checker.checkAndCreate();
+                    Database.connect();
                     container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -41,78 +43,101 @@ public class QueryPanel extends JPanel
         });
 
         JPanel tabStudent = new JPanel();
-        tabStudent.add(new JLabel("surname"));
+        tabStudent.add(new JLabel("Прізвище викладача"));
         JTextField tStTeacherF = new JTextField("", 15);
         tabStudent.add(tStTeacherF);
-        tabStudent.add(new JLabel("year"));
+        tabStudent.add(new JLabel("Рік навчання"));
         JTextField tStYearF = new JTextField("", 15);
         tabStudent.add(tStYearF);
-        tabStudent.add(new JLabel("subj"));
+        tabStudent.add(new JLabel("Предмет"));
         JTextField tStSubjectF = new JTextField("", 15);
         tabStudent.add(tStSubjectF);
-        tabStudent.add(sendBtn);
+        JButton sendBtnSt = new JButton("Знайти");
+        tabStudent.add(sendBtnSt);
         queries.addTab(STUDENTPANEL, tabStudent);
 
         JPanel tabRestudent = new JPanel();
-        tabRestudent.add(new JLabel("surname"));
+        tabRestudent.add(new JLabel("Прізвище викладача"));
         JTextField tReStTeacherF = new JTextField("", 15);
         tabRestudent.add(tReStTeacherF);
-        tabRestudent.add(new JLabel("year"));
+        tabRestudent.add(new JLabel("Рік навчання"));
         JTextField tReStYearF = new JTextField("", 15);
         tabRestudent.add(tReStYearF);
-        tabRestudent.add(new JLabel("subj"));
+        tabRestudent.add(new JLabel("Предмет"));
         JTextField tReStSubjectF = new JTextField("", 15);
         tabRestudent.add(tReStSubjectF);
-        tabRestudent.add(sendBtn);
+        JButton sendBtnReSt = new JButton("Знайти");
+        tabRestudent.add(sendBtnReSt);
         queries.addTab(RESTUDENTPANEL, tabRestudent);
 
         JPanel tabVidomist = new JPanel();
-        tabVidomist.add(new JLabel("surname"));
+        tabVidomist.add(new JLabel("Прізвище викладача"));
         JTextField tVidTeacherF = new JTextField("", 15);
         tabVidomist.add(tVidTeacherF);
-        tabVidomist.add(new JLabel("year"));
+        tabVidomist.add(new JLabel("Рік навчання"));
         JTextField tVidSubjectF = new JTextField("", 15);
         tabVidomist.add(tVidSubjectF);
-        tabVidomist.add(new JLabel("subj"));
+        tabVidomist.add(new JLabel("Предмет"));
         JTextField tVidYearF = new JTextField("", 15);
         tabVidomist.add(tVidYearF);
-        tabVidomist.add(new JLabel("st"));
+        tabVidomist.add(new JLabel("Прізвище студента"));
         JTextField tVidStudentF = new JTextField("", 15);
         tabVidomist.add(tVidStudentF);
-        tabVidomist.add(sendBtn);
+        JButton sendBtnVid = new JButton("Знайти");
+        tabVidomist.add(sendBtnVid);
         queries.addTab(VIDOMISTPANEL, tabVidomist);
 
         JPanel tabNedop = new JPanel();
-        tabNedop.add(new JLabel("subj"));
+        tabNedop.add(new JLabel("Прізвище викладача"));
         JTextField tNedTeacherF = new JTextField("", 15);
         tabNedop.add(tNedTeacherF);
-        tabNedop.add(new JLabel("subj"));
+        tabNedop.add(new JLabel("Прізвище студента"));
         JTextField tNedStudentF = new JTextField("", 15);
         tabNedop.add(tNedStudentF);
-        tabNedop.add(sendBtn);
+        JButton sendBtnNed = new JButton("Знайти");
+        tabNedop.add(sendBtnNed);
         queries.addTab(NEDOPPANEL, tabNedop);
 
-        /*JPanel tabRating = new JPanel();
-        JLabel sign = new JLabel("surname");
-        JTextField textField = new JTextField("", 15);
-        JLabel sign = new JLabel("year");
-        JTextField textField = new JTextField("", 15);
-        JLabel sign = new JLabel("subj");
-        JTextField textField = new JTextField("", 15);
-        JLabel sign = new JLabel("st");
-        JTextField textField = new JTextField("", 15);
+        JPanel tabRating = new JPanel();
+        tabRating.add(new JLabel("Прізвище викладача"));
+        JTextField tRateTeacherF = new JTextField("", 15);
+        tabRating.add(tRateTeacherF);
+        tabRating.add(new JLabel("Рік навчання"));
+        JTextField tRateYearF = new JTextField("", 15);
+        tabRating.add(tRateYearF);
+        tabRating.add(new JLabel("Предмет"));
+        JTextField tRateSubjectF = new JTextField("", 15);
+        tabRating.add(tRateSubjectF);
+        tabRating.add(new JLabel("Прізвище студента"));
+        JTextField tRateStudentF = new JTextField("", 15);
+        tabRating.add(tRateStudentF);
+        JButton sendBtnRate = new JButton("Знайти");
+        tabRating.add(sendBtnRate);
+        queries.addTab(RATINGPANEL, tabRating);
 
         JPanel tabDebt = new JPanel();
-        JLabel sign = new JLabel("surname");
-        JTextField textField = new JTextField("", 15);
-        JLabel sign = new JLabel("year");
-        JTextField textField = new JTextField("", 15);
-        JLabel sign = new JLabel("subj");
-        JTextField textField = new JTextField("", 15);
-        JLabel sign = new JLabel("st");
-        JTextField textField = new JTextField("", 15);
+        tabDebt.add(new JLabel("Прізвище викладача"));
+        JTextField tabDebtTeacherF = new JTextField("", 15);
+        tabDebt.add(tabDebtTeacherF);
+        tabDebt.add(new JLabel("Рік навчання"));
+        JTextField tabDebtYearF = new JTextField("", 15);
+        tabDebt.add(tabDebtYearF);
+        tabDebt.add(new JLabel("Предмет"));
+        JTextField tabDebtSubjectF = new JTextField("", 15);
+        tabDebt.add(tabDebtSubjectF);
+        tabDebt.add(new JLabel("Прізвище студента"));
+        JTextField tabDebtStudentF = new JTextField("", 15);
+        tabDebt.add(tabDebtStudentF);
+        JButton sendBtnDebt = new JButton("Знайти");
+        tabDebt.add(sendBtnDebt);
+        queries.addTab(DEBTORSSPANEL, tabDebt);
 
-        JPanel tabSpecial = new JPanel();*/
+        JPanel tabSpecial = new JPanel();
+        JComboBox ourQueries = new JComboBox(new String[] {"Котя-Марія", "Катя", "Настя"});
+        tabSpecial.add(ourQueries);
+        JButton sendBtnSpec = new JButton("Знайти");
+        tabSpecial.add(sendBtnSpec);
+        queries.addTab(SPECIALSPANEL, tabSpecial);
         container.add(queries);
 
     }
