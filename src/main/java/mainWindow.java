@@ -9,11 +9,7 @@ import java.awt.event.ItemListener;
 import java.io.File;
 
 public class mainWindow  extends JFrame {
-    private JPanel queryHead = new JPanel();
     private JPanel body = new JPanel();
-    private JPanel sideBtnPanel = new JPanel();
-    private JButton btnLoadPdf = new JButton("Завантажити PDF");
-    private JButton btnExportExcel = new JButton("Експорт у Excel");
     private JList data = new JList();
     DisplayTable myt = new DisplayTable();
 
@@ -26,6 +22,7 @@ public class mainWindow  extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        JButton btnLoadPdf = new JButton("Завантажити PDF");
         btnLoadPdf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,20 +45,19 @@ public class mainWindow  extends JFrame {
                             JOptionPane.PLAIN_MESSAGE);
                     try {
                         MyParser prs = new MyParser(selectedFile.getPath());
-                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
                         System.out.println(sqlRequestsForInterface.getTeachers().toArray());
                         data = new JList(sqlRequestsForInterface.getTeachers().toArray());
                     } catch (Exception exc) {
-                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
                         System.out.println(exc.getMessage());
-                        System.out.println("\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************\n\n************");
                     }
                 }
             }
         });
 
+        JPanel sideBtnPanel = new JPanel();
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton btnExportExcel = new JButton("Експорт у Excel");
         btnExportExcel.setAlignmentX(Component.CENTER_ALIGNMENT);
         sideBtnPanel.add(btnLoadPdf);
         sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
@@ -75,6 +71,7 @@ public class mainWindow  extends JFrame {
         body.add(sideBtnPanel);
 
         QueryPanel head = new QueryPanel(this);
+        JPanel queryHead = new JPanel();
         queryHead.add(head);
         Container container2 = this.getContentPane();
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
@@ -96,20 +93,10 @@ public class mainWindow  extends JFrame {
     }
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch (UnsupportedLookAndFeelException e) {
-            // handle exception
-        }
-        catch (ClassNotFoundException e) {
-            // handle exception
-        }
-        catch (InstantiationException e) {
-            // handle exception
-        }
-        catch (IllegalAccessException e) {
-            // handle exception
+        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
         }
         mainWindow ww = new mainWindow();
         ww.setVisible(true);

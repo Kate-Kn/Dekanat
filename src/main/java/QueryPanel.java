@@ -242,7 +242,7 @@ public class QueryPanel extends JPanel
         container.add(queries);
 
     }
-    private class NumericAndLengthFilter extends DocumentFilter {
+    private static class NumericAndLengthFilter extends DocumentFilter {
     private int length = 0;
     public NumericAndLengthFilter(int length) {
         this.length = length;
