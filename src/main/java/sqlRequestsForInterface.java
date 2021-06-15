@@ -5,12 +5,9 @@ import java.util.ArrayList;
 public class sqlRequestsForInterface {
     public static ArrayList<String> getTeachers() throws IOException, SQLException {
         ArrayList<String> res = new ArrayList<String>();
-        insertStatements.checkPath();
-        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-        Connection connection = DriverManager.getConnection(d);
         String sql = "SELECT id_teacher, first_name+' '+last_name AS name_surname\n" +
                 "FROM teacher;";
-        Statement statement = connection.createStatement();
+        Statement statement = Database.connection.createStatement();
         ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
                 int id_t = result.getInt("id_teacher");
@@ -18,6 +15,15 @@ public class sqlRequestsForInterface {
                 res.add(id_t+"-"+toAdd);
             }
             return res;
+    }
+    //temporary func for testing purposes
+    public static ResultSet getTeachersRS() throws IOException, SQLException {
+        ArrayList<String> res = new ArrayList<String>();
+        String sql = "SELECT id_teacher, first_name+' '+last_name AS name_surname\n" +
+                "FROM teacher;";
+        Statement statement = Database.connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        return result;
     }
     public static ArrayList<String> getCourses() throws IOException, SQLException {
         ArrayList<String> res = new ArrayList<String>();

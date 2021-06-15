@@ -1,97 +1,282 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
-public class QueryPanel implements ItemListener
+public class QueryPanel extends JPanel
 {
-    private static JPanel cards;
+    final   static String GENERALPANEL = "Усі дані";
+    final   static String STUDENTPANEL   = "Студенти";
+    final   static String RESTUDENTPANEL   = "Студенти-перескладанці";
+    final   static String VIDOMISTPANEL = "Відомості";
+    final   static String NEDOPPANEL = "Недопуски";
+    final   static String RATINGPANEL = "Рейтинг";
+    final   static String DEBTORSSPANEL   = "Боржники";
 
-    final   static String SUBJECTPANEL = "предмети";
-    final   static String GROUPPANEL   = "групи";
-    final   static String STUDENTPANEL   = "групи";
-    final   static String TEACHERPANEL   = "викладачі";
-    final   static String VIDOMISTPANEL = "відомості";
-    final   static String MARKVIDPANEL = "оцінки відомості";
-    final   static String BIHUNETSPANEL   = "бігунці";
-    final   static String MARKBIHPANEL = "оцінки бігунця";
+    public QueryPanel(mainWindow container) {
 
-    public QueryPanel(Container container) {
-        JComboBox<String> tab = new JComboBox(new String[]{SUBJECTPANEL, GROUPPANEL, STUDENTPANEL, TEACHERPANEL,
-                VIDOMISTPANEL, MARKVIDPANEL, BIHUNETSPANEL, MARKBIHPANEL});
-        tab.setEditable(false);
-        tab.addItemListener(this);
+        JTabbedPane queries = new JTabbedPane();
 
-        JPanel cbPanel = new JPanel();
-        cbPanel.add(tab);
+//  Не вистачає запитів, треба дописати?
 
-        JPanel cardSubject = new JPanel();
-        JComboBox<String> parametersSubject = new JComboBox(new String[]{"номер", "назва", "освітній рівень", "факультет"});
-        cardSubject.add(new JLabel("Шукаємо за"));
-        cardSubject.add(parametersSubject);
-        cardSubject.add(new JTextField("", 15));
+        /*JPanel tabGeneral = new JPanel();
+        JComboBox<String> bareTables = new JComboBox(new String[]{"Студенти", "Викладачі", "Предмети", "Групи"});
+        tabGeneral.add(bareTables);
+        JButton sendBtnGen = new JButton("Знайти");
+        tabGeneral.add(sendBtnGen);
+        queries.addTab(GENERALPANEL, tabGeneral);
+        sendBtnGen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    switch ((String)bareTables.getSelectedItem()) {
+                        case "Студенти":
+                            container.getTable().setTable(sqlRequestsForInterface.getStudentsRS());
+                            break;
+                        case "Викладачі":
+                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                            break;
+                        case "Предмети":
+                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                            break;
+                        case "Групи":
+                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                            break;
+                    }
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });*/
 
-        JPanel cardGroup = new JPanel();
-        JComboBox<String> parametersGroup = new JComboBox(new String[]{"шифр", "назва", "навчальний рік", "семестр", "курс"});
-        cardGroup.add(new JLabel("Шукаємо за"));
-        cardGroup.add(parametersGroup);
-        cardGroup.add(new JTextField("", 15));
+        JPanel tabStudent = new JPanel();
+        tabStudent.add(new JLabel("Предмет"));
+        JTextField tStSubjectF = new JTextField("", 15);
+        tabStudent.add(tStSubjectF);
+        tabStudent.add(new JLabel("Прізвище викладача"));
+        JTextField tStTeacherF = new JTextField("", 15);
+        tabStudent.add(tStTeacherF);
+        tabStudent.add(new JLabel("Курс"));
+        JTextField tStYearF = new JTextField("", 15);
+        ((AbstractDocument) tStYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));
+        tabStudent.add(tStYearF);
+        JButton sendBtnSt = new JButton("Знайти");
+        tabStudent.add(sendBtnSt);
+        queries.addTab(STUDENTPANEL, tabStudent);
+        sendBtnSt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    container.getTable().setTable(sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), Integer.parseInt(tStYearF.getText())));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
-        JPanel cardVidomist = new JPanel();
-        JComboBox<String> parametersVidomist = new JComboBox(new String[]{"номер", "кількість присутніх", "кількість відсутніх", "кількість недопущених", "тип контролю", "дата складання"});
-        cardVidomist.add(new JLabel("Шукаємо за"));
-        cardVidomist.add(parametersVidomist);
-        cardVidomist.add(new JTextField("", 15));
+        JPanel tabRestudent = new JPanel();
+        tabRestudent.add(new JLabel("Прізвище викладача"));
+        JTextField tReStTeacherF = new JTextField("", 15);
+        tabRestudent.add(tReStTeacherF);
+        tabRestudent.add(new JLabel("Курс"));
+        JTextField tReStYearF = new JTextField("", 15);
+        ((AbstractDocument) tReStYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));
+        tabRestudent.add(tReStYearF);
+        tabRestudent.add(new JLabel("Предмет"));
+        JTextField tReStSubjectF = new JTextField("", 15);
+        tabRestudent.add(tReStSubjectF);
+        JButton sendBtnReSt = new JButton("Знайти");
+        tabRestudent.add(sendBtnReSt);
+        queries.addTab(RESTUDENTPANEL, tabRestudent);
+        sendBtnReSt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    container.getTable().setTable(sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), Integer.parseInt(tReStYearF.getText()), tReStTeacherF.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
-        JPanel cardMarkVid = new JPanel();
-        JComboBox<String> parametersMarkVid = new JComboBox(new String[]{"номер", "оцінка за трим", "оцінка перевірки", "оцінка разом", "оцінка нац. шкала", "оцінка єктс"});
-        cardMarkVid.add(new JLabel("Шукаємо за"));
-        cardMarkVid.add(parametersMarkVid);
-        cardMarkVid.add(new JTextField("", 15));
+        JPanel tabVidomist = new JPanel();
+        tabVidomist.add(new JLabel("Прізвище викладача"));
+        JTextField tVidTeacherF = new JTextField("", 15);
+        tabVidomist.add(tVidTeacherF);
+        tabVidomist.add(new JLabel("Курс"));
+        JTextField tVidSubjectF = new JTextField("", 15);
+        ((AbstractDocument) tVidSubjectF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));
+        tabVidomist.add(tVidSubjectF);
+        tabVidomist.add(new JLabel("Предмет"));
+        JTextField tVidYearF = new JTextField("", 15);
+        tabVidomist.add(tVidYearF);
+        tabVidomist.add(new JLabel("Прізвище студента"));
+        JTextField tVidStudentF = new JTextField("", 15);
+        tabVidomist.add(tVidStudentF);
+        JButton sendBtnVid = new JButton("Знайти");
+        tabVidomist.add(sendBtnVid);
+        queries.addTab(VIDOMISTPANEL, tabVidomist);
+        sendBtnVid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
-        JPanel cardTeacher = new JPanel();
-        JComboBox<String> parametersTeacher = new JComboBox(new String[]{"шифр", "ім'я", "прізвище", "по-батькові", "науковий ступінь", "вчене звання", "посада"});
-        cardTeacher.add(new JLabel("Шукаємо за"));
-        cardTeacher.add(parametersTeacher);
-        cardTeacher.add(new JTextField("", 15));
+//  Не вистачає запитів, треба дописати?
 
-        JPanel cardStudent = new JPanel();
-        JComboBox<String> parametersStudent = new JComboBox(new String[]{"шифр", "ім'я", "прізвище", "по-батькові", "залікова книга"});
-        cardStudent.add(new JLabel("Шукаємо за"));
-        cardStudent.add(parametersStudent);
-        cardStudent.add(new JTextField("", 15));
+        /*JPanel tabNedop = new JPanel();
+        tabNedop.add(new JLabel("Прізвище викладача"));
+        JTextField tNedTeacherF = new JTextField("", 15);
+        tabNedop.add(tNedTeacherF);
+        tabNedop.add(new JLabel("Прізвище студента"));
+        JTextField tNedStudentF = new JTextField("", 15);
+        tabNedop.add(tNedStudentF);
+        JButton sendBtnNed = new JButton("Знайти");
+        tabNedop.add(sendBtnNed);
+        queries.addTab(NEDOPPANEL, tabNedop);
+        sendBtnNed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });*/
 
-        JPanel cardBihunets = new JPanel();
-        JComboBox<String> parametersBihunets = new JComboBox(new String[]{"номер", "дата складання", "дійсний до", "причина перенесення", "тип контролю"});
-        cardBihunets.add(new JLabel("Шукаємо за"));
-        cardBihunets.add(parametersBihunets);
-        cardBihunets.add(new JTextField("", 15));
+        JPanel tabRating = new JPanel();
+        tabRating.add(new JLabel("Прізвище викладача"));
+        JTextField tRateTeacherF = new JTextField("", 15);
+        tabRating.add(tRateTeacherF);
+        tabRating.add(new JLabel("Курс"));
+        JTextField tRateYearF = new JTextField("", 15);
+        ((AbstractDocument) tRateYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));
+        tabRating.add(tRateYearF);
+        tabRating.add(new JLabel("Предмет"));
+        JTextField tRateSubjectF = new JTextField("", 15);
+        tabRating.add(tRateSubjectF);
+        tabRating.add(new JLabel("Прізвище студента"));
+        JTextField tRateStudentF = new JTextField("", 15);
+        tabRating.add(tRateStudentF);
+        JButton sendBtnRate = new JButton("Знайти");
+        tabRating.add(sendBtnRate);
+        queries.addTab(RATINGPANEL, tabRating);
+        sendBtnRate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    container.getTable().setTable(sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), Integer.parseInt(tRateYearF.getText())));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
-        JPanel cardMarkBih = new JPanel();
-        JComboBox<String> parametersMarkBih = new JComboBox(new String[]{"номер", "оцінка за трим", "оцінка перевірки", "оцінка разом", "оцінка нац. шкала", "оцінка єктс"});
-        cardMarkBih.add(new JLabel("Шукаємо за"));
-        cardMarkBih.add(parametersMarkBih);
-        cardMarkBih.add(new JTextField("", 15));
+        JPanel tabDebt = new JPanel();
+        tabDebt.add(new JLabel("Прізвище викладача"));
+        JTextField tabDebtTeacherF = new JTextField("", 15);
+        tabDebt.add(tabDebtTeacherF);
+        tabDebt.add(new JLabel("Курс"));
+        JTextField tabDebtYearF = new JTextField("", 15);
+        ((AbstractDocument) tabDebtYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));
+        tabDebt.add(tabDebtYearF);
+        tabDebt.add(new JLabel("Предмет"));
+        JTextField tabDebtSubjectF = new JTextField("", 15);
+        tabDebt.add(tabDebtSubjectF);
+        tabDebt.add(new JLabel("Прізвище студента"));
+        JTextField tabDebtStudentF = new JTextField("", 15);
+        tabDebt.add(tabDebtStudentF);
+        JButton sendBtnDebt = new JButton("Знайти");
+        tabDebt.add(sendBtnDebt);
+        queries.addTab(DEBTORSSPANEL, tabDebt);
+        sendBtnDebt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checker.checkAndCreate();
+                    Database.connect();
+                    container.getTable().setTable(sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), Integer.parseInt(tabDebtYearF.getText()), tabDebtTeacherF.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
-        cards = new JPanel(new CardLayout());
+        container.add(queries);
 
-        cards.add(cardSubject, SUBJECTPANEL);
-        cards.add(cardGroup, GROUPPANEL);
-        cards.add(cardVidomist, STUDENTPANEL);
-        cards.add(cardMarkVid, TEACHERPANEL);
-        cards.add(cardTeacher, VIDOMISTPANEL);
-        cards.add(cardStudent, MARKVIDPANEL);
-        cards.add(cardBihunets, BIHUNETSPANEL);
-        cards.add(cardBihunets, MARKBIHPANEL);
-
-        JButton sendBtn = new JButton("Знайти");
-        container.add(cbPanel, BorderLayout.PAGE_START);
-        container.add(cards, BorderLayout.CENTER);
-        container.add(sendBtn, BorderLayout.PAGE_END);
     }
-    public void itemStateChanged(ItemEvent event)
-    {
-        CardLayout layout = (CardLayout)(cards.getLayout());
-        layout.show(cards, (String)event.getItem());
+    private static class NumericAndLengthFilter extends DocumentFilter {
+    private int length = 0;
+    public NumericAndLengthFilter(int length) {
+        this.length = length;
     }
 
+    @Override
+    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+        if (isNumeric(string)) {
+            if (this.length > 0 && fb.getDocument().getLength() + string.length() > this.length) {
+                return;
+            }
+            super.insertString(fb, offset, string, attr);
+        }
+    }
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws  BadLocationException {
+        if (isNumeric(text)) {
+            if (this.length > 0 && fb.getDocument().getLength() + text.length() > this.length) {
+                return;
+            }
+            super.insertString(fb, offset, text, attrs);
+        }
+    }
+    private boolean isNumeric(String text) {
+        if (text == null || text.trim().equals("")) {
+            return false;
+        }
+        for (int iCount = 0; iCount < text.length(); iCount++) {
+            if (!Character.isDigit(text.charAt(iCount))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+}
+
