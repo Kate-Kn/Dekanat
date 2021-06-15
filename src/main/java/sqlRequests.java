@@ -2,6 +2,36 @@ import java.io.IOException;
 import java.sql.*;
 
 public class sqlRequests {
+    public static ResultSet getNumOfNedInput(int year, String subject, String student_las, String teacher) throws IOException, SQLException {
+        String sql = "SELECT SUM(num_not_allowed) AS кількість_недопускі\n" +
+                "FROM ((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+                "WHERE ";
+        if(subject!=null)
+        {
+            sql+="name_subject like '%"+subject+"%' AND";
+        }
+        if(teacher!=null)
+        {
+            sql+=" teacher.last_name like '%"+teacher+"%' AND";
+        }
+        if(year!=0)
+        {
+            sql+=" year_student = "+year+" AND";
+        }
+        if (student_las != null)
+        {
+            sql+=" student.last_name like '%"+student_las+"%' AND";
+        }
+        sql+=" 1=1";
+        if(subject == null&&teacher == null &&year==0&&student_las==null)
+        {
+            sql ="SELECT SUM(num_not_allowed) AS кількість_недопускі\n" +
+                    "FROM ((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n"
+            ;
+        }
+        Statement st = Database.connection.createStatement();
+        return st.executeQuery(sql);
+    }
     public static ResultSet getDebtorByFieldsInput(String student, String subject, int year, String teacher) throws IOException, SQLException {
         String sql ="SELECT student.stud_id AS ідентифікатор_студента, student.first_name+\" \"+student.last_name AS ПІБ_студент, recordbook_no,year_student, subject.id_subject,name_subject,teacher.id_teacher,teacher.first_name+\" \"+teacher.last_name AS name_surname_teacher, id_bih,id_mark_bih\n" +
                 "FROM (((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher) INNER JOIN mark_bih ON mark_bih.id_mark_vid = mark_vid.id_mark_vid\n" +
@@ -440,33 +470,34 @@ public class sqlRequests {
 //        st.setInt(1, c);
 //        return st.executeQuery();
 //    }
-    public static ResultSet getNumOfNedForGroup(int g) throws IOException, SQLException {
-        String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
-                "FROM data_exam\n" +
-                "WHERE id_group = ?;";
-        PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setInt(1, g);
-        return st.executeQuery();
-    }
-    public static ResultSet getNumOfNedForSubject(int s) throws IOException, SQLException {
-        String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
-                "FROM data_exam\n" +
-                "WHERE id_group IN\n" +
-                "(SELECT id_group\n" +
-                "FROM group_st\n" +
-                "WHERE id_subject = ?);";
-        PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setInt(1, s);
-        return st.executeQuery();
-    }
-    public static ResultSet getNumOfNedForTeacher(int t) throws IOException, SQLException {
-        String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
-                "FROM data_exam\n" +
-                "WHERE id_teacher =  ?;";
-        PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setInt(1, t);
-        return st.executeQuery();
-    }
+
+//    public static ResultSet getNumOfNedForSubject(int s) throws IOException, SQLException {
+//        String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
+//                "FROM data_exam\n" +
+//                "WHERE id_group IN\n" +
+//                "(SELECT id_group\n" +
+//                "FROM group_st\n" +
+//                "WHERE id_subject = ?);";
+//        PreparedStatement st = Database.connection.prepareStatement (sql);
+//        st.setInt(1, s);
+//        return st.executeQuery();
+//    }
+//    public static ResultSet getNumOfNedForTeacher(int t) throws IOException, SQLException {
+//        String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
+//                "FROM data_exam\n" +
+//                "WHERE id_teacher =  ?;";
+//        PreparedStatement st = Database.connection.prepareStatement (sql);
+//        st.setInt(1, t);
+//        return st.executeQuery();
+//    }
+//    public static ResultSet getNumOfNedForTeacher(String teacher_surname, String subject_name, String student_surname) throws IOException, SQLException {
+//        String sql = "SELECT SUM(num_not_allowed) AS num_of_nedopusk\n" +
+//                "FROM data_exam\n" +
+//                "WHERE id_teacher =  ?;";
+//        PreparedStatement st = Database.connection.prepareStatement (sql);
+//        st.setInt(1, t);
+//        return st.executeQuery();
+//    }
     public static ResultSet getRetakeForFields(int subject, int year, int teacher) throws IOException, SQLException {
         String sql = "SELECT stud_id, first_name+\" \"+last_name AS name_surname\n" +
                 "FROM student\n" +

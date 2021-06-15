@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class mainWindow  extends JFrame {
     private JPanel body = new JPanel();
@@ -89,7 +91,9 @@ public class mainWindow  extends JFrame {
             }
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, SQLException {
+        checker.checkAndCreate();
+        Database.connect();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }

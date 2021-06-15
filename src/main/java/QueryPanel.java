@@ -34,8 +34,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     switch ((String)bareTables.getSelectedItem()) {
                         case "Студенти":
                             container.getTable().setTable(sqlRequestsForInterface.getStudentsRS());
@@ -76,8 +74,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     container.getTable().setTable(sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), Integer.parseInt(tStYearF.getText())));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -105,8 +101,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     container.getTable().setTable(sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), Integer.parseInt(tReStYearF.getText()), tReStTeacherF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -137,8 +131,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -164,8 +156,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -196,8 +186,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     container.getTable().setTable(sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), Integer.parseInt(tRateYearF.getText())));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -228,8 +216,6 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    checker.checkAndCreate();
-                    Database.connect();
                     container.getTable().setTable(sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), Integer.parseInt(tabDebtYearF.getText()), tabDebtTeacherF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();

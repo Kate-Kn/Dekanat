@@ -13,6 +13,7 @@ public class main {
         ResultSet r = sqlRequests.getStudentsByFieldsInput("null", null, 0);
         ResultSet r1 = sqlRequests.getDebtorByFieldsInput("null", null, 0,null);
         ResultSet r4 = sqlRequests.getVidomistByFieldsInput("null", null, 0,null);
+        ResultSet r5 = sqlRequests.getNumOfNedInput(0, "null", null,null);
 //        String s ="ss";
 //        s+="ddf";
 //        System.out.println(s);
