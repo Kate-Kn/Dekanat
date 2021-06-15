@@ -273,19 +273,19 @@ public  class MyParser {
                         teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
                         //groupst
                         Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-                         data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
                         if (getIdsIfExists.getGroupId(group_st) == 0) {
                             insertStatements.insertGroup(group_st);
                         }
                         group_st.setId_group(getIdsIfExists.getGroupId(group_st));
+                        data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
                     // dataexam
                         if (getIdsIfExists.getDataExamId(data_exam) == 0) {
                             insertStatements.insertDataExam(data_exam);
                         }
 
-                        data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
+                       // data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
 
                         System.out.println(sub.toString());
                         System.out.println(teacher.toString());
@@ -301,6 +301,7 @@ public  class MyParser {
                            }
                            student.setStud_id(getIdsIfExists.getStudentId(student));
                            mark_vid.setId_data_exam(data_exam.getId_data_exam());
+                           mark_vid.setStud_id(student.getStud_id());
                            if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
                                insertStatements.insertMarkVid(mark_vid);
                            }

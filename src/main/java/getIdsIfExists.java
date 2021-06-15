@@ -68,9 +68,22 @@ public class getIdsIfExists {
                 "FROM data_exam\n" +
                 "WHERE id_data_exam = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setInt(1, t.getId_data_exam());
+        ResultSet result = st.executeQuery();
+        int id = 0;
+        while (result.next()) {
+            id = result.getInt("id_data_exam");
+        }
+        return id;
+    }
+    public static int getDataExamId2(Data_exam t) throws IOException, SQLException {
+        String sql = "SELECT id_data_exam\n" +
+                "FROM data_exam\n" +
+                "WHERE id_data_exam = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setLong(1, t.getId_data_exam());
         ResultSet result = st.executeQuery();
-        int id =t.getId_data_exam();
+        int id =0;
         while (result.next()) {
             id = result.getInt("id_data_exam");
         }
