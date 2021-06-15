@@ -12,7 +12,9 @@ public class Data_exam {
     Date date_exam;
     int id_group;
     int id_teacher;
+    public Data_exam(){
 
+    }
     public Data_exam(int id_data_exam, int num_present, int num_absent, int num_not_allowed, String type_control, Date date_exam, int id_group, int id_teacher) {
         this.id_data_exam = id_data_exam;
         this.num_present = num_present;

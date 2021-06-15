@@ -70,7 +70,7 @@ public class getIdsIfExists {
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setLong(1, t.getId_data_exam());
         ResultSet result = st.executeQuery();
-        int id =0;
+        int id =t.getId_data_exam();
         while (result.next()) {
             id = result.getInt("id_data_exam");
         }

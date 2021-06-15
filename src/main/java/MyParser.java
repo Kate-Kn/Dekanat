@@ -225,66 +225,90 @@ public  class MyParser {
                 //subject
                 Subject subjecthelp = new Subject(sub, edu, fac);
                 Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
-                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
+//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
+//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
                 ArrayList<Student> students = new ArrayList<>();
                 ArrayList<Mark_vid> mark_vids = new ArrayList<>();
                 for (int ii = 0; ii < ontestI; ii++) {
-                    String stlastname = markar[ii + 1][1];
-                    String stfirstname = markar[ii + 1][2];
-                    String stsecondname = markar[ii + 1][3];
-                    String recordbook = markar[ii + 1][4] + markar[ii + 1][5] + markar[ii + 1][6];
-                    //     System.out.println(stlastname+stfirstname+stsecondname+recordbook);
+                    String stlastname = markar[ii ][1];
+                    String stfirstname = markar[ii ][2];
+                    String stsecondname = markar[ii ][3];
+                    String recordbook = markar[ii ][4] + markar[ii ][5] + markar[ii ][6];
+//                         System.out.println(stlastname+stfirstname+stsecondname+recordbook);
                     Student student = new Student(stlastname, stfirstname, stsecondname, recordbook);
                     students.add(student);
 
-                    String mark1 = markar[ii + 1][7];
-                    String mark2 = markar[ii + 1][8];
-                    String markraz = markar[ii + 1][9];
-                    String nats = markar[ii + 1][10];
-                    String ekts = markar[ii + 1][11];
+                    String mark1 = markar[ii ][7];
+                    String mark2 = markar[ii ][8];
+                    String markraz = markar[ii ][9];
+                    String nats = markar[ii ][10];
+                    String ekts = markar[ii ][11];
                     int mark1I = Integer.parseInt(mark1);
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
-                    Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), data_exam.getId_data_exam());
+                    Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
                     mark_vid.validateManual();
                     mark_vids.add(mark_vid);
 
-//                    if (getIdsIfExists.getStudentId(student) == 0) {
-//                        insertStatements.insertStudent(student);
-//                    }
-//                    student.setStud_id(getIdsIfExists.getStudentId(student));
 //
-//                    if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
-//                        insertStatements.insertMarkVid(mark_vid);
-//                    }
-//                    mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
                 }
+                boolean caninsert=false;
+                //validation
+                caninsert=true;
+//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
+//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
+
                 //inserting
+                Data_exam data_exam= new Data_exam();
+                    if(caninsert) {
+                        if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
+                            insertStatements.insertSubject(subjecthelp);
+                        }
+                        subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
+                        //teaccher
+                        if (getIdsIfExists.getTeacherId(teacher) == 0) {
+                            insertStatements.insertTeacher(teacher);
+                        }
+                        teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
+                        //groupst
+                        Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
+                         data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
-                if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
-                    insertStatements.insertSubject(subjecthelp);
-                }
-                subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
-                //teaccher
-                if (getIdsIfExists.getTeacherId(teacher) == 0) {
-                    insertStatements.insertTeacher(teacher);
-                }
-                teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
-                //groupst
-                 if (getIdsIfExists.getGroupId(group_st) == 0) {
-                    insertStatements.insertGroup(group_st);
-                }
-                group_st.setId_group(getIdsIfExists.getGroupId(group_st));
+                        if (getIdsIfExists.getGroupId(group_st) == 0) {
+                            insertStatements.insertGroup(group_st);
+                        }
+                        group_st.setId_group(getIdsIfExists.getGroupId(group_st));
 
-//        dataexam
-//                if (getIdsIfExists.getDataExamId(data_exam) == 0) {
-                    insertStatements.insertDataExam(data_exam);
-//                }
-//                data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
-//        students
+                    // dataexam
+                        if (getIdsIfExists.getDataExamId(data_exam) == 0) {
+                            insertStatements.insertDataExam(data_exam);
+                        }
 
+                        data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
+
+                        System.out.println(sub.toString());
+                        System.out.println(teacher.toString());
+                        System.out.println(group_st.toString());
+                        System.out.println(data_exam.toString());
+                        //students and markvid
+                       for (int k =0 ; k<students.size(); k++)
+                       {
+                           Student student = students.get(k);
+                           Mark_vid mark_vid = mark_vids.get(k);
+                           if (getIdsIfExists.getStudentId(student) == 0) {
+                                insertStatements.insertStudent(student);
+                           }
+                           student.setStud_id(getIdsIfExists.getStudentId(student));
+                           mark_vid.setId_data_exam(data_exam.getId_data_exam());
+                           if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
+                               insertStatements.insertMarkVid(mark_vid);
+                           }
+                           mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
+
+                           System.out.println(student.toString()+"\t"+mark_vid.toString());
+                       }
+                    }
             }
         }else
             //яко бігунець

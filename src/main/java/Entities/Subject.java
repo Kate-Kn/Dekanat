@@ -51,12 +51,25 @@ public class Subject {
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id_subject=" + id_subject +
+                ", name_subject='" + name_subject + '\'' +
+                ", edu_level='" + edu_level + '\'' +
+                ", faculty='" + faculty + '\'' +
+                '}';
+    }
+
     public void validateManual() throws Exception {
         if(edu_level == "")
         {
             throw new Exception(Teacher.exeptions[0]);
         }
     }
+
+
     //processing after such mistakes must be conducted and saved to gave a list of them
     public ArrayList<String> validateAutofill() throws Exception
     {
