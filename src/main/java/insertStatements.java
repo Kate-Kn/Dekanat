@@ -64,7 +64,7 @@ public class insertStatements {
         st.executeUpdate();
     }
     public static void insertBihunets(Bihunets bih) throws IOException, SQLException {
-        String sql = "INSERT INTO bihunets (date_taken, ok_till, reason,control,id_teacherr)\n" +
+        String sql = "INSERT INTO bihunets (id_bih, date_taken, ok_till, reason,control,id_teacherr)\n" +
                 "VALUES (?, ?,?,?,?);";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setDate(1, bih.getDate());
@@ -89,7 +89,7 @@ public class insertStatements {
         st.executeUpdate();
     }
     public static void insertMarkBih(Mark_bih mB) throws IOException, SQLException {
-        String sql = "INSERT INTO data_exam (mark_sem, mark_exam, mark_tog,mark_nat,mark_ekts,id_mark_vid,id_bih)\n" +
+        String sql = "INSERT INTO mark_bih (mark_sem, mark_exam, mark_tog,mark_nat,mark_ekts,id_mark_vid,id_bih)\n" +
                 "VALUES (?, ?,?,?,?,?,?,?);";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setInt(1, mB.getMark_sem());

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main {
@@ -7,6 +8,12 @@ public class main {
         //mandatory line
         Database.connect();
        // ResultSet r = sqlRequests.getVidomistByFieldsInput(null, null, 0, null);
+        ResultSet r2 = sqlRequests.statisticsInput("null", null, null, 0);
+        ResultSet r3 = sqlRequests.getRetakeForFieldsInput("null", 0, null);
+        ResultSet r = sqlRequests.getStudentsByFieldsInput("null", null, 0);
+        ResultSet r1 = sqlRequests.getDebtorByFieldsInput("null", null, 0,null);
+        ResultSet r4 = sqlRequests.getVidomistByFieldsInput("null", null, 0,null);
+        ResultSet r5 = sqlRequests.getNumOfNedInput(0, "null", null,null);
 //        String s ="ss";
 //        s+="ddf";
 //        System.out.println(s);
@@ -20,9 +27,8 @@ public class main {
         //insertStatements.insertSubject(s);
         //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
         //System.out.println(getIdsIfExists.getSubjectId(s));
-        MyParser parser= new MyParser("new.pdf");
-//        MyParser parser1= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\bihnew.pdf");
-//        MyParser parser2= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\dc_good.pdf");
+       // MyParser parser= new MyParser("new.pdf");
+//
 //        System.out.println("Hello");
 //        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
 //        System.out.println(  t.toString());

@@ -15,7 +15,7 @@ public class accessToExcel {
     public static void main(String[] args) throws IOException, SQLException {
         accessToExcel exporter = new accessToExcel();
         exporter.export("student");
-        exporter.exportFromResultSet(sqlRequests.getNumOfNedForGroup(1));
+        //exporter.exportFromResultSet(sqlRequests.getNumOfNedInput(1));
     }
     private String getFileName(String baseName) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");

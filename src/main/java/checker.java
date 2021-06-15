@@ -69,7 +69,7 @@ public class checker {
                     "id_group AUTOINCREMENT NOT NULL,\n" +
                     "name_group text(255) NOT NULL,\n" +
                     "year_study int NOT NULL,\n" +
-                    "semester int NOT NULL,\n" +
+                    "semester text NOT NULL,\n" +
                     "year_student int NOT NULL,\n" +
                     "id_subject long NOT NULL,\n" +
                     "PRIMARY KEY (id_group),\n" +
@@ -79,7 +79,7 @@ public class checker {
             statement.executeUpdate(sql);
 
             sql = "CREATE TABLE bihunets(\n" +
-                    "id_bih AUTOINCREMENT NOT NULL,\n" +
+                    "id_bih LONG NOT NULL,\n" +
                     "date_taken date NOT NULL,\n" +
                     "ok_till date NOT NULL,\n" +
                     "reason text(255) NOT NULL,\n" +

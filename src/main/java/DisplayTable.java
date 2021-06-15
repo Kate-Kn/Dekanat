@@ -38,6 +38,9 @@ public class DisplayTable extends AbstractTableModel {
             headers = new String[colCount];
             for (int h = 1; h <= colCount; h++) {
                 headers[h - 1] = meta.getColumnName(h);
+                System.out.println(headers[h-1]);
+                if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";
             }
 
             // and file the cache with the records from our query. This would

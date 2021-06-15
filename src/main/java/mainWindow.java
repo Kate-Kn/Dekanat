@@ -4,9 +4,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class mainWindow  extends JFrame {
     private JPanel body = new JPanel();
@@ -45,8 +45,8 @@ public class mainWindow  extends JFrame {
                             JOptionPane.PLAIN_MESSAGE);
                     try {
                         MyParser prs = new MyParser(selectedFile.getPath());
-                        System.out.println(sqlRequestsForInterface.getTeachers().toArray());
-                        data = new JList(sqlRequestsForInterface.getTeachers().toArray());
+                        //System.out.println(sqlRequestsForInterface.getTeachers().toArray());
+                        //data = new JList(sqlRequestsForInterface.getTeachers().toArray());
                     } catch (Exception exc) {
                         System.out.println(exc.getMessage());
                     }
@@ -91,7 +91,9 @@ public class mainWindow  extends JFrame {
             }
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, SQLException {
+        checker.checkAndCreate();
+        Database.connect();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
