@@ -69,7 +69,7 @@ public class checker {
                     "id_group AUTOINCREMENT NOT NULL,\n" +
                     "name_group text(255) NOT NULL,\n" +
                     "year_study int NOT NULL,\n" +
-                    "semester int NOT NULL,\n" +
+                    "semester text NOT NULL,\n" +
                     "year_student int NOT NULL,\n" +
                     "id_subject long NOT NULL,\n" +
                     "PRIMARY KEY (id_group),\n" +
