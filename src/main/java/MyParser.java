@@ -1,5 +1,7 @@
 import Entities.*;
 import org.apache.commons.lang3.StringUtils;
+
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -39,10 +41,25 @@ public  class MyParser {
         String dat =StringUtils.substringBetween(text,"Дата", "р.");
         String teach =StringUtils.substringBetween(text,"р.", "Прізвище");
         String teachnamefull =StringUtils.substringBefore(teach,",");
-        String teachzv =StringUtils.substringBetween(teach,",",",");
-        String teachpos =StringUtils.substringAfterLast(teach,",");
+
+        String tshit = StringUtils.substringAfter(teach,",");
+        String teachzv="";
+        String teachpos="";
+        if (tshit.contains(",")) {
+
+             teachzv = StringUtils.substringBetween(teach, ",", ",");
+             teachpos = StringUtils.substringAfterLast(teach, ",");
+        }else
+        {
+            teachzv = StringUtils.substringAfterLast(teach, ",");
+            teachpos ="";
+
+        }
         dat= dat.replaceAll(" ", "")
                 .replaceAll("квітня","/04/")
+                .replaceAll("червня","/06/")
+
+                .replaceAll("травня","/05/")
                 .replaceAll("«","")
                 .replaceAll("»","");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
@@ -108,38 +125,31 @@ public  class MyParser {
         System.out.println("teachpos\n"+teachpos);
 
         String marks =StringUtils.substringBetween(text,"викладача","*");
+
         String end =StringUtils.substringBetween(text,"*","Декан");
 
         System.out.println("marks\n"+marks);
         System.out.println("end\n"+end);
-        String ontest =StringUtils.substringBetween(end,"_", "_");
-        ontest= ontest
-                .replaceAll(" ", "");
-        String absentf =StringUtils.substringBetween(end,"не з’явились", "Кількість");
-        String absent =StringUtils.substringBetween(absentf,"_", "_");
-        String notallowed =StringUtils.substringAfterLast(end,"заліку");
-        notallowed= notallowed
-                .replaceAll(" ", "")
-                .replaceAll("_", "")
-                .replaceAll("\r", "")
-                .replaceAll("\n", "");
-        System.out.println("ontest\n"+ontest);
-        System.out.println("absent\n"+absent);
-        System.out.println("notallowed\n"+notallowed);
-        int ontestI=Integer.parseInt(ontest);
-        int absentI=Integer.parseInt(absent);
-        int notallowedI=Integer.parseInt(notallowed);
+        if (text.contains("відомість")) {
+            String ontest = StringUtils.substringBetween(end, "_", "_");
+            ontest = ontest
+                    .replaceAll(" ", "");
+            String absentf = StringUtils.substringBetween(end, "не з’явились", "Кількість");
+            String absent = StringUtils.substringBetween(absentf, "_", "_");
+            String notallowed = StringUtils.substringAfterLast(end, "заліку");
+            notallowed = notallowed
+                    .replaceAll(" ", "")
+                    .replaceAll("_", "")
+                    .replaceAll("\r", "")
+                    .replaceAll("\n", "");
+            System.out.println("ontest\n" + ontest);
+            System.out.println("absent\n" + absent);
+            System.out.println("notallowed\n" + notallowed);
+            int ontestI = Integer.parseInt(ontest);
+            int absentI = Integer.parseInt(absent);
+            int notallowedI = Integer.parseInt(notallowed);
 
         String[] marksvidstr = marks.split(" "+Character.toString((char)13));
-
-//        String help=marksvidstr[1];
-//        String[] help1=help.split(" ");
-////        for (int i=0; i<help.length(); i++) {
-////            System.out.println((int) help.charAt(i));
-////        }
-//        System.out.println(Arrays.toString(help1));
-//        System.out.println(help1.length);
-
 
         System.out.println(Arrays.toString(marksvidstr));
         System.out.println(marksvidstr.length);
@@ -220,6 +230,29 @@ public  class MyParser {
                  insertStatements.insertMarkVid(mark_vid);
              }
              mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
+        }
+        }else
+            //яко бігунець
+            { String marksbih = StringUtils.substringBetween(text,"Підпис","*");
+            marksbih=StringUtils.substringAfter(marksbih,"1");
+            marksbih= "1 "+marksbih;
+            marksbih = marksbih.replaceAll("\n","").replaceAll("\r","");
+            String[] marksvidstr1 = marksbih.split(" ");
+
+            System.out.println(Arrays.toString(marksvidstr1));
+            System.out.println(marksvidstr1.length);
+            String[][] markar= new String[1+1][12];
+            for (int i =0; i<1+1;i++) {
+                for (int j = 0; j < 12; j++) {
+                    String[] help3=marksvidstr1[i].split(" ");
+                    // System.out.println(Arrays.toString(help3));
+                    markar[i][j]=help3[j];
+                    System.out.print(markar[i][j] + " ");
+                }
+                System.out.println();
+            }
+
+
         }
 
         document.close();

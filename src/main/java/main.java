@@ -10,7 +10,8 @@ public class main {
         //insertStatements.insertSubject(s);
         //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
         //System.out.println(getIdsIfExists.getSubjectId(s));
-        MyParser parser= new MyParser("new.pdf");
+//        MyParser parser= new MyParser("new.pdf");
+        MyParser parser1= new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\bihnew.pdf");
 //
 //        System.out.println("Hello");
 //        Teacher t = new Teacher(1, "kate", "blavt", null,null,null,null);
