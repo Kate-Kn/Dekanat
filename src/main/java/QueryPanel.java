@@ -1,12 +1,12 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class QueryPanel extends JPanel
 {

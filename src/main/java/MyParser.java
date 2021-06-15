@@ -181,8 +181,8 @@ public  class MyParser {
         }
         group_st.setId_group(getIdsIfExists.getGroupId(group_st));
 
-//        dataexam
-        Data_exam data_exam = new Data_exam(ontestI,absentI,notallowedI,contr,datefinal,group_st.getId_group(),teacher.getId_teacher());
+//       // dataexam
+        Data_exam data_exam = new Data_exam(2,ontestI,absentI,notallowedI,contr,datefinal,group_st.getId_group(),teacher.getId_teacher());
         if (getIdsIfExists.getDataExamId(data_exam)==0)
         {
             insertStatements.insertDataExam(data_exam);

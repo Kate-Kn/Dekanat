@@ -79,7 +79,7 @@ public class checker {
             statement.executeUpdate(sql);
 
             sql = "CREATE TABLE bihunets(\n" +
-                    "id_bih AUTOINCREMENT NOT NULL,\n" +
+                    "id_bih LONG NOT NULL,\n" +
                     "date_taken date NOT NULL,\n" +
                     "ok_till date NOT NULL,\n" +
                     "reason text(255) NOT NULL,\n" +
