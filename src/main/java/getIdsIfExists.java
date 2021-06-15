@@ -66,11 +66,9 @@ public class getIdsIfExists {
     public static int getDataExamId(Data_exam t) throws IOException, SQLException {
         String sql = "SELECT id_data_exam\n" +
                 "FROM data_exam\n" +
-                "WHERE date_exam=? AND id_group=? AND id_teacher=?;";
+                "WHERE id_data_exam = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setDate(1, t.getDate_exam());
-        st.setInt(2, t.getId_group());
-        st.setInt(3, t.getId_teacher());
+        st.setLong(1, t.getId_data_exam());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
@@ -81,10 +79,9 @@ public class getIdsIfExists {
     public static int getBihId(Bihunets t) throws IOException, SQLException {
         String sql = "SELECT id_bih\n" +
                 "FROM bihunets\n" +
-                "WHERE date_taken=? AND id_teacher=?;";
+                "WHERE id_bihunets = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setDate(1, t.getDate());
-        st.setInt(2, t.getId_teacher());
+        st.setLong(1, t.getId_bih());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
