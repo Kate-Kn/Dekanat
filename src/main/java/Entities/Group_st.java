@@ -1,6 +1,9 @@
 package Entities;
 
+import java.util.ArrayList;
+
 public class Group_st {
+    ArrayList<String> groupErrors = new ArrayList();
     int id_group;
     String name_group;
     int year_study;
@@ -16,6 +19,7 @@ public class Group_st {
         this.year_student = year_student;
         this.id_subject = id_subject;
     }
+
     public Group_st(String name_group, int year_study, int semester, int year_student, int id_subject) {
         this.name_group = name_group;
         this.year_study = year_study;
@@ -23,6 +27,7 @@ public class Group_st {
         this.year_student = year_student;
         this.id_subject = id_subject;
     }
+
     public int getId_group() {
         return id_group;
     }
@@ -69,5 +74,14 @@ public class Group_st {
 
     public void setId_subject(int id_subject) {
         this.id_subject = id_subject;
+    }
+
+    public void validateManual() throws Exception {
+        if (name_group.isEmpty()) {
+            groupErrors.add("no subject name");
+            throw new Exception("no subject name");
+        }
+
+
     }
 }

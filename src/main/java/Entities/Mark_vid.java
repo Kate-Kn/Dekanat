@@ -98,9 +98,38 @@ public class Mark_vid {
     }
 
     public void validateManual() throws Exception {
-        if(mark_sem == -1 || mark_check == -1 || mark_raz == -1|| mark_ekts.equals("") || mark_nat.equals(""))
+        if(mark_sem == -1 || mark_check == -1 || mark_raz == -1|| mark_ekts.equals("")
+                || mark_nat.equals(""))
         {
-            throw new Exception(Teacher.exeptions[0]);
+            throw new Exception(Teacher.exeptions[0] + "Not included mark");
+        }
+        if(mark_raz!=mark_check+mark_sem)
+        {
+            throw new Exception(Teacher.exeptions[0] + "Invalid sum");
+        }
+        if(mark_raz>=91&& !mark_ekts.equals("A"))
+        {
+            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+        }
+        if(mark_raz>=81 && mark_raz<91 && !mark_ekts.equals("B"))
+        {
+            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+        }
+        if(mark_raz>=71 && mark_raz<81 && !mark_ekts.equals("C"))
+        {
+            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+        }
+        if(mark_raz>=65 && mark_raz<71 && !mark_ekts.equals("D"))
+        {
+            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+        }
+        if(mark_raz>=60 && mark_raz<65 && !mark_ekts.equals("E"))
+        {
+            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+        }
+        if(mark_ekts.equals("F"))
+        {
+            throw new Exception(Teacher.exeptions[0] + "Can't contain F");
         }
     }
     //processing after such mistakes must be conducted and saved to gave a list of them

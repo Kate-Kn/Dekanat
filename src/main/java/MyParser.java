@@ -21,7 +21,7 @@ public  class MyParser {
 
     String path;
 
-    public  MyParser(String path) throws IOException, SQLException {
+    public  MyParser(String path) throws Exception {
         this.path=path;
         File file = new File(path);
         PDDocument document = load(file);
@@ -228,6 +228,41 @@ public  class MyParser {
                 Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
                 Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
+                ArrayList<Student> students = new ArrayList<>();
+                ArrayList<Mark_vid> mark_vids = new ArrayList<>();
+                for (int ii = 0; ii < ontestI; ii++) {
+                    String stlastname = markar[ii + 1][1];
+                    String stfirstname = markar[ii + 1][2];
+                    String stsecondname = markar[ii + 1][3];
+                    String recordbook = markar[ii + 1][4] + markar[ii + 1][5] + markar[ii + 1][6];
+                    //     System.out.println(stlastname+stfirstname+stsecondname+recordbook);
+                    Student student = new Student(stlastname, stfirstname, stsecondname, recordbook);
+                    students.add(student);
+
+                    String mark1 = markar[ii + 1][7];
+                    String mark2 = markar[ii + 1][8];
+                    String markraz = markar[ii + 1][9];
+                    String nats = markar[ii + 1][10];
+                    String ekts = markar[ii + 1][11];
+                    int mark1I = Integer.parseInt(mark1);
+                    int mark2I = Integer.parseInt(mark2);
+                    int markrazI = Integer.parseInt(markraz);
+                    Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), data_exam.getId_data_exam());
+                    mark_vid.validateManual();
+                    mark_vids.add(mark_vid);
+
+//                    if (getIdsIfExists.getStudentId(student) == 0) {
+//                        insertStatements.insertStudent(student);
+//                    }
+//                    student.setStud_id(getIdsIfExists.getStudentId(student));
+//
+//                    if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
+//                        insertStatements.insertMarkVid(mark_vid);
+//                    }
+//                    mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
+                }
+                //inserting
+
                 if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
                     insertStatements.insertSubject(subjecthelp);
                 }
@@ -244,40 +279,12 @@ public  class MyParser {
                 group_st.setId_group(getIdsIfExists.getGroupId(group_st));
 
 //        dataexam
-                if (getIdsIfExists.getDataExamId(data_exam) == 0) {
+//                if (getIdsIfExists.getDataExamId(data_exam) == 0) {
                     insertStatements.insertDataExam(data_exam);
-                }
-                data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
+//                }
+//                data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
 //        students
-                ArrayList<Student> students = new ArrayList<>();
-                ArrayList<Mark_vid> mark_vids = new ArrayList<>();
-                for (int ii = 0; ii < ontestI; ii++) {
-                    String stlastname = markar[ii + 1][1];
-                    String stfirstname = markar[ii + 1][2];
-                    String stsecondname = markar[ii + 1][3];
-                    String recordbook = markar[ii + 1][4] + markar[ii + 1][5] + markar[ii + 1][6];
-                    //     System.out.println(stlastname+stfirstname+stsecondname+recordbook);
-                    Student student = new Student(stlastname, stfirstname, stsecondname, recordbook);
-                    students.add(student);
-                    if (getIdsIfExists.getStudentId(student) == 0) {
-                        insertStatements.insertStudent(student);
-                    }
-                    student.setStud_id(getIdsIfExists.getStudentId(student));
-                    String mark1 = markar[ii + 1][7];
-                    String mark2 = markar[ii + 1][8];
-                    String markraz = markar[ii + 1][9];
-                    String nats = markar[ii + 1][10];
-                    String ekts = markar[ii + 1][11];
-                    int mark1I = Integer.parseInt(mark1);
-                    int mark2I = Integer.parseInt(mark2);
-                    int markrazI = Integer.parseInt(markraz);
-                    Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), data_exam.getId_data_exam());
-                    mark_vids.add(mark_vid);
-                    if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
-                        insertStatements.insertMarkVid(mark_vid);
-                    }
-                    mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
-                }
+
             }
         }else
             //яко бігунець
