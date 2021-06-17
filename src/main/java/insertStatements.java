@@ -98,7 +98,7 @@ public class insertStatements {
         st.setInt(3, mB.getMark_raz());
         st.setString(4, mB.getMark_nat());
         st.setString(5, mB.getMark_ekts());
-        st.setInt(6,mB.getId_mark_bih());
+        st.setInt(6,mB.getId_mark_vid());
         st.setInt(7,mB.getId_bih());
         st.executeUpdate();
     }

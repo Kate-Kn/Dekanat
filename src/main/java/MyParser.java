@@ -1,10 +1,14 @@
 import Entities.*;
 import org.apache.commons.lang3.StringUtils;
+
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -800,10 +804,13 @@ public  class MyParser {
                     int mark1I = Integer.parseInt(mark1);
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
-                    Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
+                    System.out.println(getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
+                    Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts,
+                            student.getStud_id(), getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
                     mark_bih.validateManual();
                     mark_bihs.add(mark_bih);
 
+//
                 }
                 boolean caninsert2=false;
                 //validation
@@ -833,6 +840,7 @@ public  class MyParser {
                     group_st.setId_group(getIdsIfExists.getGroupId(group_st));
                     //data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
                     bihunets = new Bihunets(vidIdInt, datefinal, oktilld, reason, contr, teacher.getId_teacher());
+
                     if (getIdsIfExists.getBihId(bihunets) == 0) {
                         insertStatements.insertBihunets(bihunets);
                     }
@@ -853,6 +861,7 @@ public  class MyParser {
                         student.setStud_id(getIdsIfExists.getStudentId(student));
 
                         mark_bih.setId_bih(bihunets.getId_bih());
+
                         if (getIdsIfExists.getMarkBih(mark_bih) == 0) {
                             insertStatements.insertMarkBih(mark_bih);
                         }
