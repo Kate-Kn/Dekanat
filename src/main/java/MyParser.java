@@ -34,33 +34,29 @@ public  class MyParser {
 
             String vidId=StringUtils.substringBetween(text,"№", "Освітній");
             String edu=StringUtils.substringBetween(text,"рівень", "Факультет");
-
-        String fac=StringUtils.substringBetween(text,"Факультет", "Рік");
-        String year=StringUtils.substringBetween(text,"навчання", "Група");
-
-        String grouup =StringUtils.substringBetween(text,"Група", "Дисципліна");
-        String sub =StringUtils.substringBetween(text,"Дисципліна", "Семестр");
-        String sem =StringUtils.substringBetween(text,"Семестр", "Залікові");
+            String fac=StringUtils.substringBetween(text,"Факультет", "Рік");
+            String year=StringUtils.substringBetween(text,"навчання", "Група");
+            String grouup =StringUtils.substringBetween(text,"Група", "Дисципліна");
+            String sub =StringUtils.substringBetween(text,"Дисципліна", "Семестр");
+            String sem =StringUtils.substringBetween(text,"Семестр", "Залікові");
             String credits =StringUtils.substringBetween(text,"бали", "Форма");
             String contr =StringUtils.substringBetween(text,"контролю:", "Дата");
-        String dat =StringUtils.substringBetween(text,"Дата", "р.");
-        String teach =StringUtils.substringBetween(text,"р.", "Прізвище");
-        String teachnamefull =StringUtils.substringBefore(teach,",");
-
-        String tshit = StringUtils.substringAfter(teach,",");
-        String teachzv="";
-        String teachpos="";
-        if (tshit.contains(",")) {
+            String dat =StringUtils.substringBetween(text,"Дата", "р.");
+            String teach =StringUtils.substringBetween(text,"р.", "Прізвище");
+            String teachnamefull =StringUtils.substringBefore(teach,",");
+            String tshit = StringUtils.substringAfter(teach,",");
+            String teachzv="";
+            String teachpos="";
+            if (tshit.contains(",")) {
 
              teachzv = StringUtils.substringBetween(teach, ",", ",");
              teachpos = StringUtils.substringAfterLast(teach, ",");
-        }else
-        {
-            teachzv = StringUtils.substringAfterLast(teach, ",");
-            teachpos ="";
-
-        }
-        dat= dat.replaceAll(" ", "")
+            }else
+            {
+                teachzv = StringUtils.substringAfterLast(teach, ",");
+                teachpos ="";
+            }
+            dat= dat.replaceAll(" ", "")
                 .replaceAll("\n","")
                 .replaceAll("\r","")
                 .replaceAll("квітня","/04/")
@@ -78,52 +74,52 @@ public  class MyParser {
                 .replaceAll("грудня","/12/")
                 .replaceAll("«","")
                 .replaceAll("»","");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
-        LocalDate dateTime = LocalDate.parse(dat, formatter);
-        Date datefinal = Date.valueOf(dateTime);
-        System.out.println(dateTime);
-        edu = edu.replaceAll(" ", "")
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+            LocalDate dateTime = LocalDate.parse(dat, formatter);
+            Date datefinal = Date.valueOf(dateTime);
+            System.out.println(dateTime);
+            edu = edu.replaceAll(" ", "")
                 .replaceAll("\r", "")
                 .replaceAll("\n", "");
 
-        vidId = vidId.replaceAll(" ", "")
+            vidId = vidId.replaceAll(" ", "")
+                        .replaceAll("\r", "")
+                        .replaceAll("\n", "");
+            int vidIdInt=Integer.parseInt(vidId);
+            fac= fac.replaceAll(" ", "")
                     .replaceAll("\r", "")
                     .replaceAll("\n", "");
-        int vidIdInt=Integer.parseInt(vidId);
-        fac= fac.replaceAll(" ", "")
-                .replaceAll("\r", "")
-                .replaceAll("\n", "");
-        year=year.replaceAll(" ", "")
-                .replaceAll("_", "")
-                .replaceAll("\n", "");
-        int yearI=Integer.parseInt(year);
-        grouup= grouup.replaceAll(" ", "")
-                .replaceAll("\r", "")
-                .replaceAll("\n", "");
-        sub= sub.replaceAll("\n", "")
-                .replaceAll("\r", "");
-        sem=sem.replaceAll(" ", "")
-                .replaceAll("\r", "")
-                .replaceAll("_", "")
-                .replaceAll("д", "1")
-                .replaceAll("\n", "");
-        int semI=Integer.parseInt(sem);
-        credits=credits.replaceAll(" ", "")
-                .replaceAll("\r", "")
-                .replaceAll("_", "")
-                .replaceAll("\n", "");
-              //  .replaceAll(".", ",");
-        double creditsInt=Double.parseDouble(credits);
-        contr= contr.replaceAll(" ", "")
-                .replaceAll("\r", "")
-                .replaceAll("_", "")
-                .replaceAll("\n", "");
-        teachnamefull= teachnamefull
-                .replaceAll("\r", "")
-                .replaceAll("\n", "");
-        teachnamefull= teachnamefull.replaceAll(" ", "");
-        String[] tech = teachnamefull.split("(?=[A-Я])");
-        System.out.println(Arrays.toString(tech));
+            year=year.replaceAll(" ", "")
+                    .replaceAll("_", "")
+                    .replaceAll("\n", "");
+            int yearI=Integer.parseInt(year);
+            grouup= grouup.replaceAll(" ", "")
+                    .replaceAll("\r", "")
+                    .replaceAll("\n", "");
+            sub= sub.replaceAll("\n", "")
+                    .replaceAll("\r", "");
+            sem=sem.replaceAll(" ", "")
+                    .replaceAll("\r", "")
+                    .replaceAll("_", "")
+                    .replaceAll("д", "1")
+                    .replaceAll("\n", "");
+            int semI=Integer.parseInt(sem);
+            credits=credits.replaceAll(" ", "")
+                    .replaceAll("\r", "")
+                    .replaceAll("_", "")
+                    .replaceAll("\n", "");
+                  //  .replaceAll(".", ",");
+            double creditsInt=Double.parseDouble(credits);
+            contr= contr.replaceAll(" ", "")
+                    .replaceAll("\r", "")
+                    .replaceAll("_", "")
+                    .replaceAll("\n", "");
+            teachnamefull= teachnamefull
+                    .replaceAll("\r", "")
+                    .replaceAll("\n", "");
+            teachnamefull= teachnamefull.replaceAll(" ", "");
+            String[] tech = teachnamefull.split("(?=[A-Я])");
+            System.out.println(Arrays.toString(tech));
             String tlast = "";
             String tfirst = "";
             String tSecond ="";
@@ -133,78 +129,77 @@ public  class MyParser {
              if (techfulllength==3) {
                  tSecond = tech[2];
              }
-        teachzv= teachzv
+             teachzv= teachzv
                 .replaceAll("\r", "")
                 .replaceAll("\n", "");
-        teachpos= teachpos
+             teachpos= teachpos
                 .replaceAll("\r", "")
                 .replaceAll("\n", "");
 
-        System.out.println(text);
-        System.out.println("vidId\n"+vidId);
-        System.out.println("edu\n"+edu);
-        System.out.println("fac\n"+fac);
-        System.out.println("year\n"+year);
-        System.out.println("group\n"+grouup);
-        System.out.println("sub\n"+sub);
-        System.out.println("sem\n"+sem);
-        System.out.println("credits\n"+credits);
-        System.out.println("contr\n"+contr);
-        System.out.println("dat\n"+dat);
-        System.out.println("teach\n"+teach);
-        System.out.println("teach\n"+teachnamefull);
-        System.out.println("teachlast\n"+tlast);
-        System.out.println("teachfirst\n"+tfirst);
-        System.out.println("teachseconf\n"+tSecond);
+             System.out.println(text);
+             System.out.println("vidId\n"+vidId);
+             System.out.println("edu\n"+edu);
+             System.out.println("fac\n"+fac);
+             System.out.println("year\n"+year);
+             System.out.println("group\n"+grouup);
+             System.out.println("sub\n"+sub);
+             System.out.println("sem\n"+sem);
+             System.out.println("credits\n"+credits);
+             System.out.println("contr\n"+contr);
+             System.out.println("dat\n"+dat);
+             System.out.println("teach\n"+teach);
+             System.out.println("teach\n"+teachnamefull);
+             System.out.println("teachlast\n"+tlast);
+             System.out.println("teachfirst\n"+tfirst);
+             System.out.println("teachseconf\n"+tSecond);
+             System.out.println("teachzv\n"+teachzv);
+             System.out.println("teachpos\n"+teachpos);
+             String markshelp =StringUtils.substringBetween(text,"Підпис","*");
 
-        System.out.println("teachzv\n"+teachzv);
-        System.out.println("teachpos\n"+teachpos);
-        String markshelp =StringUtils.substringBetween(text,"Підпис","*");
+             String marks =StringUtils.substringAfter(markshelp,"1");
+             marks="1 "+marks;
 
-        String marks =StringUtils.substringAfter(markshelp,"1");
-        marks="1 "+marks;
+             String end =StringUtils.substringBetween(text,"*","Декан");
 
-        String end =StringUtils.substringBetween(text,"*","Декан");
+             System.out.println("marks\n"+marks);
+             System.out.println("end\n"+end);
 
-        System.out.println("marks\n"+marks);
-        System.out.println("end\n"+end);
-
-            String ontest = StringUtils.substringBetween(end, "заліку", "Кількість");
-            ontest = ontest
+             String ontest = StringUtils.substringBetween(end, "заліку", "Кількість");
+             ontest = ontest
                     .replaceAll(" ", "")
                     .replaceAll("\r", "")
                     .replaceAll("_", "")
                     .replaceAll("\n", "");
-            String absentf = StringUtils.substringBetween(end, "не з’явились", "Кількість");
-            String absent = StringUtils.substringAfter(absentf, "залік");
-            String notallowed = StringUtils.substringAfterLast(end, "заліку");
-            notallowed = notallowed
+             String absentf = StringUtils.substringBetween(end, "не з’явились", "Кількість");
+             String absent = StringUtils.substringAfter(absentf, "залік");
+             String notallowed = StringUtils.substringAfterLast(end, "заліку");
+             notallowed = notallowed
                     .replaceAll(" ", "")
                     .replaceAll("_", "")
                     .replaceAll("\r", "")
                     .replaceAll("\n", "");
-            absent = absent
+             absent = absent
                     .replaceAll(" ", "")
                     .replaceAll("_", "")
                     .replaceAll("\r", "")
                     .replaceAll("\n", "");
-            System.out.println("ontest\n" + ontest);
-            System.out.println("absent\n" + absent);
-            System.out.println("notallowed\n" + notallowed);
-            int ontestI = Integer.parseInt(ontest);
-            int absentI = Integer.parseInt(absent);
-            int notallowedI = Integer.parseInt(notallowed);
+             System.out.println("ontest\n" + ontest);
+             System.out.println("absent\n" + absent);
+             System.out.println("notallowed\n" + notallowed);
+             int ontestI = Integer.parseInt(ontest);
+             int absentI = Integer.parseInt(absent);
+             int notallowedI = Integer.parseInt(notallowed);
 
-            marks= marks.replaceAll("\\s+", " ")
+             marks= marks.replaceAll("\\s+", " ")
                     .replaceAll("\r", " ")
                     .replaceAll("\n", " ")
                     .replaceAll("бп", "бп ")
                     .replaceAll("мп", "мп ")
                     .replaceAll("\\s+", " ");
-            marks= marks.replaceAll("Не зараховано", "Незараховано")
+             marks= marks.replaceAll("Не зараховано", "Незараховано")
                     .replaceAll("Не відвідував", "Невідвідував")
                     .replaceAll("Не допущений", "Недопущено");
-            marks= marks.replaceAll("Незараховано","Незараховано ")
+             marks= marks.replaceAll("Незараховано","Незараховано ")
                     .replaceAll( "Невідвідував","Невідвідував ")
                     .replaceAll("Недопущений", "Недопущений")
                     .replaceAll("\\s+", " ")
@@ -298,7 +293,11 @@ public  class MyParser {
 
                     System.out.println("ok");
                 }
-
+                int amountOfrows = first.size();
+                if(amountOfrows!=ontestI)
+                {
+                   // throw new Exception("")
+                }
                 //array creation
 
                 String[][] markar= new String[first.size()][12];
@@ -356,8 +355,6 @@ public  class MyParser {
                 //subject
                 Subject subjecthelp = new Subject(sub, edu, fac);
                 Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
-//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
                 ArrayList<Student> students = new ArrayList<>();
                 ArrayList<Mark_vid> mark_vids = new ArrayList<>();
@@ -382,13 +379,10 @@ public  class MyParser {
                     mark_vid.validateManual();
                     mark_vids.add(mark_vid);
 
-//
                 }
                 boolean caninsert2=false;
                 //validation
                 caninsert2=true;
-//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
 
                 //inserting
                 Data_exam data_exam= new Data_exam();
@@ -415,8 +409,6 @@ public  class MyParser {
                     if (getIdsIfExists.getDataExamId(data_exam) == 0) {
                         insertStatements.insertDataExam(data_exam);
                     }
-
-                    // data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
 
                     System.out.println(sub.toString());
                     System.out.println(teacher.toString());
@@ -446,17 +438,19 @@ public  class MyParser {
         }else
             //яко бігунець
             {
-
                 bihunetsParser(text);
-
             }
         }catch (Exception e){
             e.printStackTrace();
+            System.err.println("видаляю все до дідька!!!");
+
         }
         document.close();
 
 }
         private void bihunetsParser(String text) throws Exception {
+try {
+
 
             String vidId=StringUtils.substringBetween(text,"№", "Освітній");
             String edu=StringUtils.substringBetween(text,"рівень", "Факультет");
@@ -864,5 +858,10 @@ public  class MyParser {
                         System.out.println(student.toString() + "\t" + mark_bih.toString());
                     }
                 }}
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            System.err.println("ВИДАЛЯБ!!!");
         }
+    }
 }
