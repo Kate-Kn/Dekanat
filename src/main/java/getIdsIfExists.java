@@ -130,4 +130,19 @@ public class getIdsIfExists {
         }
         return id;
     }
+    public static int getMarkVidByStudent(Student s) throws SQLException {
+        String sql = "SELECT id_mark_vid\n" +
+                "FROM mark_vid INNER JOIN student ON mark_vid.stud_id = student.stud_id\n" +
+                "WHERE first_name=? AND last_name=? AND recordbook_no = ? AND mark_ekts = 'F';";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setString(1, s.getFirst_name());
+        st.setString(2, s.getLast_name());
+        st.setString(3, s.getRecordbook_no());
+        ResultSet result = st.executeQuery();
+        int id =0;
+        while (result.next()) {
+            id = result.getInt("id_mark_vid");
+        }
+        return id;
+    }
 }
