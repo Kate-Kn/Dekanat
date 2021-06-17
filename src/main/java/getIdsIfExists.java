@@ -92,7 +92,7 @@ public class getIdsIfExists {
     public static int getBihId(Bihunets t) throws IOException, SQLException {
         String sql = "SELECT id_bih\n" +
                 "FROM bihunets\n" +
-                "WHERE id_bihunets = ?;";
+                "WHERE id_bih = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setLong(1, t.getId_bih());
         ResultSet result = st.executeQuery();

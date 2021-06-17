@@ -64,13 +64,14 @@ public class insertStatements {
         st.executeUpdate();
     }
     public static void insertBihunets(Bihunets bih) throws IOException, SQLException {
-        String sql = "INSERT INTO bihunets (id_bih, date_taken, ok_till, reason,control,id_teacherr)\n" +
-                "VALUES (?, ?,?,?,?);";
+        String sql = "INSERT INTO bihunets (id_bih, date_taken, ok_till, reason,control,id_teacher)\n" +
+                "VALUES (?, ?,?,?,?,?);";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setDate(1, bih.getDate());
         st.setDate(2, bih.getOk_till());
         st.setString(3, bih.getReason());
         st.setString(4, bih.getControl());
+
         st.setInt(5, bih.getId_teacher());
         st.executeUpdate();
     }
