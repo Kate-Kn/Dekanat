@@ -1,6 +1,6 @@
 public class main {
     public static void main(String[] args) throws Exception {
-        //deleteStatements.deleteDatabase();
+//        deleteStatements.deleteDatabase();
         checker.checkAndCreate();
         //mandatory line
         Database.connect();
@@ -12,5 +12,8 @@ public class main {
         MyParser parser7= new MyParser("holes.pdf");
         MyParser parser8 = new MyParser("nitbad.pdf");
         MyParser parser9 = new MyParser("Бігунець.pdf");
+        MyParser parser10 = new MyParser("infoposhuk_wrong_amount.pdf");
+    //    MyParser parser11 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\Магістри_Іспит.pdf");
+
     }
 }

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import static org.apache.pdfbox.pdfparser.PDFParser.load;
@@ -16,8 +17,10 @@ import static org.apache.pdfbox.pdfparser.PDFParser.load;
 public  class MyParser {
 
     String path;
-
+    String error = "Нема помилок)";
+    ArrayList<String> ordinaryStrings = new ArrayList<>();
     public  MyParser(String path) throws Exception {
+        System.out.println("Start");
         this.path=path;
         File file = new File(path);
         PDDocument document = load(file);
@@ -32,9 +35,15 @@ public  class MyParser {
 
         if (text.contains("ВІДОМІСТЬ")){
 
+            text= text.replaceAll("\\s+", " ")
+                    .replaceAll("\r", "")
+                    .replaceAll("\n", "");
+
             String vidId=StringUtils.substringBetween(text,"№", "Освітній");
+            ordinaryStrings.add(vidId);
             String edu=StringUtils.substringBetween(text,"рівень", "Факультет");
             String fac=StringUtils.substringBetween(text,"Факультет", "Рік");
+            if(edu.equals(null)) throw new Exception("нема факультету");
             String year=StringUtils.substringBetween(text,"навчання", "Група");
             String grouup =StringUtils.substringBetween(text,"Група", "Дисципліна");
             String sub =StringUtils.substringBetween(text,"Дисципліна", "Семестр");
@@ -42,11 +51,33 @@ public  class MyParser {
             String credits =StringUtils.substringBetween(text,"бали", "Форма");
             String contr =StringUtils.substringBetween(text,"контролю:", "Дата");
             String dat =StringUtils.substringBetween(text,"Дата", "р.");
+            String styduear = StringUtils.substringBetween(dat,"»", "р.");
+//            styduear = styduear.replaceAll(" ","");
+//            int styduearI=Integer.parseInt(styduear);
             String teach =StringUtils.substringBetween(text,"р.", "Прізвище");
             String teachnamefull =StringUtils.substringBefore(teach,",");
             String tshit = StringUtils.substringAfter(teach,",");
             String teachzv="";
             String teachpos="";
+            ordinaryStrings.add(vidId);
+            ordinaryStrings.add(edu);
+
+            ordinaryStrings.add(fac);
+            ordinaryStrings.add(year);
+            ordinaryStrings.add(grouup);
+            ordinaryStrings.add(sub);
+            ordinaryStrings.add(sem);
+            ordinaryStrings.add(credits);
+            ordinaryStrings.add(contr);
+            ordinaryStrings.add(dat);
+
+            for (int l =0; l<ordinaryStrings.size(); l++)
+            {
+                if(ordinaryStrings.get(l).equals(""))
+                {
+                    throw new Exception("Помилка в шапці");
+                }
+            }
             if (tshit.contains(",")) {
 
              teachzv = StringUtils.substringBetween(teach, ",", ",");
@@ -78,6 +109,9 @@ public  class MyParser {
             LocalDate dateTime = LocalDate.parse(dat, formatter);
             Date datefinal = Date.valueOf(dateTime);
             System.out.println(dateTime);
+            styduear = StringUtils.substringAfterLast(dat,"/");
+          //  styduear = styduear.replaceAll(" ","");
+             int styduearI=Integer.parseInt(styduear);
             edu = edu.replaceAll(" ", "")
                 .replaceAll("\r", "")
                 .replaceAll("\n", "");
@@ -293,10 +327,27 @@ public  class MyParser {
 
                     System.out.println("ok");
                 }
+
                 int amountOfrows = first.size();
-                if(amountOfrows!=ontestI)
+                int nedop=0;
+                int nevidvid=0;
+                for (int i  = 0; i<amountOfrows;i++){
+                    if (national.get(i).equals("Недопущено"))
+                    {
+                        nedop++;
+                    }
+                    if (national.get(i).equals("Невідвідував"))
+                    {
+                        nevidvid++;
+                    }
+                }
+                if(amountOfrows-nevidvid!=ontestI)
                 {
-                   // throw new Exception("")
+                    throw new Exception("Не збігається кількість людей у відомості");
+                }
+                if(nedop!=notallowedI)
+                {
+                    throw new Exception("Не збігається кількість недопущених");
                 }
                 //array creation
 
@@ -376,7 +427,14 @@ public  class MyParser {
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
                     Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
-                    mark_vid.validateManual();
+                    try {
+                        mark_vid.validateManual();
+                    }catch (Exception e){
+                        e.printStackTrace();
+
+                        error = e.getMessage();
+                    }
+
                     mark_vids.add(mark_vid);
 
                 }
@@ -386,28 +444,58 @@ public  class MyParser {
 
                 //inserting
                 Data_exam data_exam= new Data_exam();
+                boolean firstsub=false;
                 if(caninsert2) {
                     if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
-                        insertStatements.insertSubject(subjecthelp);
+                        firstsub=true;
+                        try{
+                        insertStatements.insertSubject(subjecthelp);}
+                        catch (Exception e){
+                            throw new Exception("Не можу вписати предмет");
+                        }
                     }
                     subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
                     //teaccher
+                    boolean firstTeachettimeinsertion=false;
                     if (getIdsIfExists.getTeacherId(teacher) == 0) {
-                        insertStatements.insertTeacher(teacher);
+                        firstTeachettimeinsertion = true;
+                        try{
+                            insertStatements.insertTeacher(teacher);
+                        }
+                         catch (Exception e){
+                            if(firstsub) deleteStatements.deleteSubject(subjecthelp);
+                           throw new Exception("Не можу вписати вчителя");
+                        }
                     }
                     teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
                     //groupst
-                    Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-
+                    Group_st group_st = new Group_st(grouup, styduearI, semI, yearI, subjecthelp.getId_subject());
+boolean firatGroup= false;
                     if (getIdsIfExists.getGroupId(group_st) == 0) {
-                        insertStatements.insertGroup(group_st);
+                        try{
+                            firatGroup=true;
+                            insertStatements.insertGroup(group_st);
+                        }
+                         catch (Exception e){
+                             if(firstsub) deleteStatements.deleteSubject(subjecthelp);
+                             if (firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
+                        throw new Exception("Не можу вписати групу");
+                    }
                     }
                     group_st.setId_group(getIdsIfExists.getGroupId(group_st));
                     data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
-
+boolean firstdata= false;
                     // dataexam
                     if (getIdsIfExists.getDataExamId(data_exam) == 0) {
-                        insertStatements.insertDataExam(data_exam);
+                        firstdata = true;
+                        try {insertStatements.insertDataExam(data_exam);
+                        }
+                         catch (Exception e){
+                             if(firstsub) deleteStatements.deleteSubject(subjecthelp);
+                             if(firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
+                             if(firatGroup ) deleteStatements.deleteGroup(group_st);
+                        throw new Exception("Не можу вписати відомість");
+                    }
                     }
 
                     System.out.println(sub.toString());
@@ -415,18 +503,46 @@ public  class MyParser {
                     System.out.println(group_st.toString());
                     System.out.println(data_exam.toString());
                     //students and markvid
+                    ArrayList<Boolean> bollst= new ArrayList<>();
                     for (int k =0 ; k<students.size(); k++)
                     {
+                        bollst.add(false);
                         Student student = students.get(k);
                         Mark_vid mark_vid = mark_vids.get(k);
                         if (getIdsIfExists.getStudentId(student) == 0) {
-                            insertStatements.insertStudent(student);
+                            bollst.set(k, true);
+                           try { insertStatements.insertStudent(student);
+                           }
+                           catch (Exception e){
+                               if(firstdata) deleteStatements.deleteDatabase();
+                               if(firstsub) deleteStatements.deleteSubject(subjecthelp);
+                               if(firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
+                               if(firatGroup ) deleteStatements.deleteGroup(group_st);
+                               for (int d = 0; d<=k;d++)
+                                {
+                                    if(bollst.get(k)==true)
+                                    deleteStatements.deleteStudent(students.get(d));
+                                }
+                                throw new Exception("Не можу вписати якогось студента");
+                        }
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
                         mark_vid.setId_data_exam(data_exam.getId_data_exam());
                         mark_vid.setStud_id(student.getStud_id());
                         if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
-                            insertStatements.insertMarkVid(mark_vid);
+                           try { insertStatements.insertMarkVid(mark_vid);
+                        }
+                           catch (Exception e){
+                               if(firstsub) deleteStatements.deleteSubject(subjecthelp);
+                               if(firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
+                               if(firatGroup ) deleteStatements.deleteGroup(group_st);
+                               for (int d = 0; d<=k;d++)
+                               {
+                                   if(bollst.get(k))
+                                       deleteStatements.deleteStudent(students.get(d));
+                               }
+                        throw new Exception("Не можу вписати якогось студента");
+                    }
                         }
                         mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
 
@@ -442,11 +558,14 @@ public  class MyParser {
             }
         }catch (Exception e){
             e.printStackTrace();
+
             System.err.println("видаляю все до дідька!!!");
+            error = e.getMessage();
 
         }
         document.close();
-
+        System.err.println("Помилка "+error);
+        System.out.println("Кінець ");
 }
         private void bihunetsParser(String text) throws Exception {
 try {
@@ -470,6 +589,8 @@ try {
             String dat =StringUtils.substringBetween(text,"Дата", "р.");
             String teach =StringUtils.substringBetween(text,"р.", "Прізвище");
             String teachnamefull =StringUtils.substringBefore(teach,",");
+    String styduear = StringUtils.substringBetween(dat,"»", "р.");
+
 
             String tshit = StringUtils.substringAfter(teach,",");
             String teachzv="";
@@ -588,7 +709,9 @@ try {
             teachpos= teachpos
                     .replaceAll("\r", "")
                     .replaceAll("\n", "");
-
+   // styduear = styduear.replaceAll(" ","");
+    styduear = StringUtils.substringAfterLast(dat,"/");
+    int styduearI=Integer.parseInt(styduear);
             System.out.println(text);
             System.out.println("vidId\n"+vidId);
             System.out.println("edu\n"+edu);
@@ -771,9 +894,7 @@ try {
                     throw new Exception("bad bihynets nsybject");
                 }
                 Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
-//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
-
+//
                 ArrayList<Student> students = new ArrayList<>();
                 ArrayList<Mark_bih> mark_bihs = new ArrayList<>();
                 int rowsnum = first.size();
@@ -798,7 +919,12 @@ try {
                     Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts,
                              getIdsIfExists.getMarkVidByStudent(student,subjecthelp),0);
                     System.out.println(mark_bih.getId_mark_vid());
-                    mark_bih.validateManual();
+                    try {
+                        mark_bih.validateManual();
+                    }catch (Exception e)
+                    {
+                        throw new Exception(e.getMessage());
+                    }
                     mark_bihs.add(mark_bih);
                     System.out.println(mark_bihs.get(ii).getId_mark_vid());
                 }
@@ -810,29 +936,47 @@ try {
                 Bihunets bihunets = new Bihunets();
 
                 if(caninsert2) {
-//                    subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
-//                    if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
-//                       System.out.println("bad bihynets nsybject");
-//                       throw new Exception("bad bihynets nsybject");
-//                    }
+
                     subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
                     //teaccher
+                    boolean firsttrcherinsertion = false;
                     if (getIdsIfExists.getTeacherId(teacher) == 0) {
-                        insertStatements.insertTeacher(teacher);
+                        firsttrcherinsertion=true;
+                       try{ insertStatements.insertTeacher(teacher);
+                    }
+                           catch (Exception e){
+                        throw new Exception("Не можу вписати вчителя з бігунця");
+                    }
                     }
                     teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
                     //groupst
-                    Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-
+                    Group_st group_st = new Group_st(grouup, styduearI, semI, yearI, subjecthelp.getId_subject());
+boolean firstGrop=false;
                     if (getIdsIfExists.getGroupId(group_st) == 0) {
-                        insertStatements.insertGroup(group_st);
+                        firstGrop=true;
+                        try {insertStatements.insertGroup(group_st);
+                    }
+                           catch (Exception e){
+if(firsttrcherinsertion)
+                        deleteStatements.deleteTeacher(teacher);
+
+                        throw new Exception("Не можу вписати групу");
+                    }
                     }
                     group_st.setId_group(getIdsIfExists.getGroupId(group_st));
                     //data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
                     bihunets = new Bihunets(vidIdInt, datefinal, oktilld, reason, contr, teacher.getId_teacher());
-
+boolean firstbih = false;
                     if (getIdsIfExists.getBihId(bihunets) == 0) {
-                        insertStatements.insertBihunets(bihunets);
+                        firstbih=true;
+                       try { insertStatements.insertBihunets(bihunets);
+                    }
+                           catch (Exception e){
+                      if(firsttrcherinsertion)  deleteStatements.deleteTeacher(teacher);
+                       if(firstGrop) deleteStatements.deleteGroup(group_st);
+
+                        throw new Exception("Не можу вписати групу з бігунця");
+                    }
                     }
 
                     // data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
@@ -842,16 +986,30 @@ try {
                     System.out.println(group_st.toString());
                     System.out.println(bihunets.toString());
                     //students and markvid
+                    ArrayList<Boolean> boolst = new ArrayList<>();
                     for (int k = 0; k < students.size(); k++) {
+                        boolst.add(false);
                         Student student = students.get(k);
                         Mark_bih mark_bih = mark_bihs.get(k);
                         if (getIdsIfExists.getStudentId(student) == 0) {
-                            throw new Exception("акий студент не здавав ");
+                            throw new Exception("такий студент не здавав ");
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
                         mark_bih.setId_bih(bihunets.getId_bih());
                         if (getIdsIfExists.getMarkBih(mark_bih) == 0) {
-                            insertStatements.insertMarkBih(mark_bih);
+                           try{ insertStatements.insertMarkBih(mark_bih);
+                        }
+                           catch (Exception e){
+//if(firstbih)deleteStatements.
+                        if(firsttrcherinsertion)    deleteStatements.deleteTeacher(teacher);
+                           if(firstGrop) deleteStatements.deleteGroup(group_st);
+                            for (int d = 0; d<=k;d++)
+                            {
+                                if(boolst.get(d))
+                                deleteStatements.deleteStudent(students.get(d));
+                            }
+                            throw new Exception("Не можу вписати оцінки бігунця якогось студента");
+                        }
                         }
                         mark_bih.setId_mark_bih(getIdsIfExists.getMarkBih(mark_bih));
 
@@ -862,6 +1020,7 @@ try {
         {
             e.printStackTrace();
             System.err.println("ВИДАЛЯБ!!!");
+            error =e.getMessage();
         }
     }
 }
