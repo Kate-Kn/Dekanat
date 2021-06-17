@@ -804,7 +804,9 @@ public  class MyParser {
                     int mark1I = Integer.parseInt(mark1);
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
-                    Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
+                    System.out.println(getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
+                    Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts,
+                            student.getStud_id(), getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
                     mark_bih.validateManual();
                     mark_bihs.add(mark_bih);
 
