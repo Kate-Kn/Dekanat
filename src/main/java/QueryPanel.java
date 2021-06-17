@@ -1,3 +1,5 @@
+import org.codehaus.plexus.util.StringUtils;
+
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -22,10 +24,9 @@ public class QueryPanel extends JPanel
 
         JTabbedPane queries = new JTabbedPane();
 
-//  Не вистачає запитів, треба дописати?
 
-        /*JPanel tabGeneral = new JPanel();
-        JComboBox<String> bareTables = new JComboBox(new String[]{"Студенти", "Викладачі", "Предмети", "Групи"});
+        JPanel tabGeneral = new JPanel();
+        JComboBox<String> bareTables = new JComboBox(new String[]{"Студенти", "Викладачі", "Предмети", "Групи", "Відомості", "Бігунці", "Оцінки відомостей", "Оцінки бігунців"});
         tabGeneral.add(bareTables);
         JButton sendBtnGen = new JButton("Знайти");
         tabGeneral.add(sendBtnGen);
@@ -36,16 +37,28 @@ public class QueryPanel extends JPanel
                 try {
                     switch ((String)bareTables.getSelectedItem()) {
                         case "Студенти":
-                            container.getTable().setTable(sqlRequestsForInterface.getStudentsRS());
+                            container.getTable().setTable(sqlRequestsForInterface.getStudents());
                             break;
                         case "Викладачі":
-                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                            container.getTable().setTable(sqlRequestsForInterface.getTeachers());
                             break;
                         case "Предмети":
-                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                            container.getTable().setTable(sqlRequestsForInterface.getSubjects());
                             break;
                         case "Групи":
-                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());
+                            container.getTable().setTable(sqlRequestsForInterface.getGroups());
+                            break;
+                        case "Відомості":
+                            container.getTable().setTable(sqlRequestsForInterface.getDataExam());
+                            break;
+                        case "Бігунці":
+                            container.getTable().setTable(sqlRequestsForInterface.getBihunets());
+                            break;
+                        case "Оцінки відомостей":
+                            container.getTable().setTable(sqlRequestsForInterface.getMarkVid());
+                            break;
+                        case "Оцінки бугунців":
+                            container.getTable().setTable(sqlRequestsForInterface.getMarkBih());
                             break;
                     }
                 } catch (IOException ioException) {
@@ -54,7 +67,7 @@ public class QueryPanel extends JPanel
                     throwables.printStackTrace();
                 }
             }
-        });*/
+        });
 
         JPanel tabStudent = new JPanel();
         tabStudent.add(new JLabel("Предмет"));
@@ -74,7 +87,7 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), Integer.parseInt(tStYearF.getText())));
+                    container.getTable().setTable(sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), toInt(tStYearF.getText())));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -101,7 +114,7 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), Integer.parseInt(tReStYearF.getText()), tReStTeacherF.getText()));
+                    container.getTable().setTable(sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), toInt(tReStYearF.getText()), tReStTeacherF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -131,7 +144,7 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
+                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), toInt(tVidYearF.getText()), tVidStudentF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -140,15 +153,19 @@ public class QueryPanel extends JPanel
             }
         });
 
-//  Не вистачає запитів, треба дописати?
-
-        /*JPanel tabNedop = new JPanel();
-        tabNedop.add(new JLabel("Прізвище викладача"));
-        JTextField tNedTeacherF = new JTextField("", 15);
-        tabNedop.add(tNedTeacherF);
+        JPanel tabNedop = new JPanel();
+        tabNedop.add(new JLabel("Курс"));
+        JTextField tNedYearF = new JTextField("", 15);
+        tabNedop.add(tNedYearF);
+        tabNedop.add(new JLabel("Предмет"));
+        JTextField tNedSubF = new JTextField("", 15);
+        tabNedop.add(tNedSubF);
         tabNedop.add(new JLabel("Прізвище студента"));
-        JTextField tNedStudentF = new JTextField("", 15);
-        tabNedop.add(tNedStudentF);
+        JTextField tNedStudF = new JTextField("", 15);
+        tabNedop.add(tNedStudF);
+        tabNedop.add(new JLabel("Прізвище викладача"));
+        JTextField tNedTeaF = new JTextField("", 15);
+        tabNedop.add(tNedTeaF);
         JButton sendBtnNed = new JButton("Знайти");
         tabNedop.add(sendBtnNed);
         queries.addTab(NEDOPPANEL, tabNedop);
@@ -156,14 +173,14 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
+                    container.getTable().setTable(sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedStudF.getText(), tNedTeaF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
             }
-        });*/
+        });
 
         JPanel tabRating = new JPanel();
         tabRating.add(new JLabel("Прізвище викладача"));
@@ -186,7 +203,7 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), Integer.parseInt(tRateYearF.getText())));
+                    container.getTable().setTable(sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), toInt(tRateYearF.getText())));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -216,7 +233,7 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), Integer.parseInt(tabDebtYearF.getText()), tabDebtTeacherF.getText()));
+                    container.getTable().setTable(sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), toInt(tabDebtYearF.getText()), tabDebtTeacherF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -226,43 +243,45 @@ public class QueryPanel extends JPanel
         });
 
         container.add(queries);
-
+    }
+    private int toInt(String value) {
+        return StringUtils.isNotBlank(value) ? Integer.parseInt(value) : 0;
     }
     private static class NumericAndLengthFilter extends DocumentFilter {
-    private int length = 0;
-    public NumericAndLengthFilter(int length) {
-        this.length = length;
-    }
+        private int length = 0;
+        public NumericAndLengthFilter(int length) {
+            this.length = length;
+        }
 
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (isNumeric(string)) {
-            if (this.length > 0 && fb.getDocument().getLength() + string.length() > this.length) {
-                return;
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (isNumeric(string)) {
+                if (this.length > 0 && fb.getDocument().getLength() + string.length() > this.length) {
+                    return;
+                }
+                super.insertString(fb, offset, string, attr);
             }
-            super.insertString(fb, offset, string, attr);
         }
-    }
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws  BadLocationException {
-        if (isNumeric(text)) {
-            if (this.length > 0 && fb.getDocument().getLength() + text.length() > this.length) {
-                return;
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws  BadLocationException {
+            if (isNumeric(text)) {
+                if (this.length > 0 && fb.getDocument().getLength() + text.length() > this.length) {
+                    return;
+                }
+                super.insertString(fb, offset, text, attrs);
             }
-            super.insertString(fb, offset, text, attrs);
         }
-    }
-    private boolean isNumeric(String text) {
-        if (text == null || text.trim().equals("")) {
-            return false;
-        }
-        for (int iCount = 0; iCount < text.length(); iCount++) {
-            if (!Character.isDigit(text.charAt(iCount))) {
+        private boolean isNumeric(String text) {
+            if (text == null || text.trim().equals("")) {
                 return false;
             }
+            for (int iCount = 0; iCount < text.length(); iCount++) {
+                if (!Character.isDigit(text.charAt(iCount))) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
     }
-}
 }
 
