@@ -26,10 +26,9 @@ public class deleteStatements{
     }
     public static void deleteStudent(Student student) throws IOException, SQLException {
         String sql = "DELETE FROM student\n" +
-                "WHERE last_name = ? AND first_name = ?;";
+                "WHERE stud_id = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setString(1, student.getLast_name());
-        st.setString(2, student.getFirst_name());
+        st.setString(1, student.getStud_id());
         st.executeUpdate();
     }
     public static void deleteSubject(Subject subject) throws IOException, SQLException {
