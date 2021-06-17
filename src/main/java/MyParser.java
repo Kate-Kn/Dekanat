@@ -226,7 +226,7 @@ public  class MyParser {
             boolean fulltable = false;
             if (marksvidstr.length%12==0)
             {
-             fulltable=true;
+//             fulltable=true;
             }
             System.out.println(Arrays.toString(marksvidstr));
             System.out.println(marksvidstr.length);
