@@ -57,7 +57,7 @@ public class QueryPanel extends JPanel
                         case "Оцінки відомостей":
                             container.getTable().setTable(sqlRequestsForInterface.getMarkVid());
                             break;
-                        case "Оцінки бугунців":
+                        case "Оцінки бігунців":
                             container.getTable().setTable(sqlRequestsForInterface.getMarkBih());
                             break;
                     }
