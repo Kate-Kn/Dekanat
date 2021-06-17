@@ -112,7 +112,7 @@ public class getIdsIfExists {
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
-            id = result.getInt("id_teacher");
+            id = result.getInt("id_mark_bih");
         }
         return id;
     }

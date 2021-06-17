@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class QueryPanel extends JPanel
 {
     final   static String GENERALPANEL = "Усі дані";
-    final   static String STUDENTPANEL   = "Студенти";
+    final   static String STUDENTPANEL   = "Успішні студенти";
     final   static String RESTUDENTPANEL   = "Студенти-перескладанці";
     final   static String VIDOMISTPANEL = "Відомості";
     final   static String NEDOPPANEL = "Недопуски";
@@ -160,9 +160,9 @@ public class QueryPanel extends JPanel
         tabNedop.add(new JLabel("Предмет"));
         JTextField tNedSubF = new JTextField("", 15);
         tabNedop.add(tNedSubF);
-        tabNedop.add(new JLabel("Прізвище студента"));
-        JTextField tNedStudF = new JTextField("", 15);
-        tabNedop.add(tNedStudF);
+//        tabNedop.add(new JLabel("Прізвище студента"));
+//        JTextField tNedStudF = new JTextField("", 15);
+//        tabNedop.add(tNedStudF);
         tabNedop.add(new JLabel("Прізвище викладача"));
         JTextField tNedTeaF = new JTextField("", 15);
         tabNedop.add(tNedTeaF);
@@ -173,7 +173,7 @@ public class QueryPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    container.getTable().setTable(sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedStudF.getText(), tNedTeaF.getText()));
+                    container.getTable().setTable(sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedTeaF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {

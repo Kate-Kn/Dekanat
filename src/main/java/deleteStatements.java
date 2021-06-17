@@ -1,5 +1,11 @@
+import Entities.Group_st;
+import Entities.Student;
+import Entities.Subject;
+import Entities.Teacher;
+
 import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class deleteStatements{
@@ -18,48 +24,36 @@ public class deleteStatements{
             System.out.println("Failed to delete the file.");
         }
     }
-//    public static void deleteStudent(Student student) throws IOException, SQLException {
-//        insertStatements.checkPath();
-//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-//        Connection connection = DriverManager.getConnection(d);
-//        String sql = "DELETE FROM student\n" +
-//                "WHERE last_name = ? AND first_name = ?;";
-//        PreparedStatement st = connection.prepareStatement (sql);
-//        st.setString(1, student.getLast_name());
-//        st.setString(2, student.getFirst_name());
-//        st.executeUpdate();
-//    }
-//    public static void deleteSubject(Subject subject) throws IOException, SQLException {
-//        insertStatements.checkPath();
-//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-//        Connection connection = DriverManager.getConnection(d);
-//        String sql = "DELETE FROM subject\n" +
-//                "WHERE id_subject = ?;";
-//        PreparedStatement st = connection.prepareStatement (sql);
-//        st.setInt(1, subject.getId_subject());
-//        st.executeUpdate();
-//    }
-//    //can`t do (need to talk about)
-//    public static void deleteGroup(Group_st gr) throws IOException, SQLException {
-//        insertStatements.checkPath();
-//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-//        Connection connection = DriverManager.getConnection(d);
-//        String sql = "DELETE FROM group_st\n" +
-//                "WHERE id_group = ?;";
-//        PreparedStatement st = connection.prepareStatement (sql);
-//        st.setInt(1, gr.getId_group());
-//        st.executeUpdate();
-//    }
-//    public static void deleteTeacher(Teacher tc) throws IOException, SQLException {
-//        insertStatements.checkPath();
-//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-//        Connection connection = DriverManager.getConnection(d);
-//        String sql = "DELETE FROM group_st\n" +
-//                "WHERE id_teacher = ?;";
-//        PreparedStatement st = connection.prepareStatement (sql);
-//        st.setInt(1, tc.getId_teacher());
-//        st.executeUpdate();
-//    }
+    public static void deleteStudent(Student student) throws IOException, SQLException {
+        String sql = "DELETE FROM student\n" +
+                "WHERE last_name = ? AND first_name = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setString(1, student.getLast_name());
+        st.setString(2, student.getFirst_name());
+        st.executeUpdate();
+    }
+    public static void deleteSubject(Subject subject) throws IOException, SQLException {
+        String sql = "DELETE FROM subject\n" +
+                "WHERE id_subject = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setInt(1, subject.getId_subject());
+        st.executeUpdate();
+    }
+    //can`t do (need to talk about)
+    public static void deleteGroup(Group_st gr) throws IOException, SQLException {
+        String sql = "DELETE FROM group_st\n" +
+                "WHERE id_group = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setInt(1, gr.getId_group());
+        st.executeUpdate();
+    }
+    public static void deleteTeacher(Teacher tc) throws IOException, SQLException {
+        String sql = "DELETE FROM group_st\n" +
+                "WHERE id_teacher = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setInt(1, tc.getId_teacher());
+        st.executeUpdate();
+    }
 //    public static void deleteVid(Data_exam de) throws IOException, SQLException {
 //        insertStatements.checkPath();
 //        String d = "jdbc:ucanaccess://"+ insertStatements.path;

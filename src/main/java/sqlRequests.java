@@ -2,9 +2,11 @@ import java.io.IOException;
 import java.sql.*;
 
 public class sqlRequests {
-    public static ResultSet getNumOfNedInput(int year, String subject, String student_las, String teacher) throws IOException, SQLException {
-        String sql = "SELECT SUM(num_not_allowed) AS кількість_недопускі\n" +
-                "FROM ((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+    public static ResultSet getNumOfNedInput(int year, String subject, String teacher) throws IOException, SQLException {
+        String sql = "SELECT SUM(num_not_allowed) AS кількість_недопусків\n" +
+                "FROM (((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) " +
+                "INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) " +
+                "INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher)\n" +
                 "WHERE ";
         if(subject!=null)
         {
@@ -18,15 +20,13 @@ public class sqlRequests {
         {
             sql+=" year_student = "+year+" AND";
         }
-        if (student_las != null)
-        {
-            sql+=" student.last_name like '%"+student_las+"%' AND";
-        }
         sql+=" 1=1";
-        if(subject == null&&teacher == null &&year==0&&student_las==null)
+        if(subject == null&&teacher == null &&year==0)
         {
             sql ="SELECT SUM(num_not_allowed) AS кількість_недопускі\n" +
-                    "FROM ((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n"
+                    "FROM ((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject)" +
+                    " INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) " +
+                    "INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n"
             ;
         }
         Statement st = Database.connection.createStatement();
@@ -34,7 +34,11 @@ public class sqlRequests {
     }
     public static ResultSet getDebtorByFieldsInput(String student, String subject, int year, String teacher) throws IOException, SQLException {
         String sql ="SELECT student.stud_id AS ідентифікатор_студента, student.first_name+\" \"+student.last_name AS ПІБ_студент, recordbook_no,year_student, subject.id_subject,name_subject,teacher.id_teacher,teacher.first_name+\" \"+teacher.last_name AS name_surname_teacher, id_bih,id_mark_bih\n" +
-                "FROM (((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher) INNER JOIN mark_bih ON mark_bih.id_mark_vid = mark_vid.id_mark_vid\n" +
+                "FROM (((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject)" +
+                " INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) " +
+                "INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) " +
+                "INNER JOIN student ON mark_vid.stud_id = student.stud_id) " +
+                "INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher) INNER JOIN mark_bih ON mark_bih.id_mark_vid = mark_vid.id_mark_vid\n" +
                 "WHERE stud_id IN\n" +
                 "(SELECT student.stud_id\n" +
                 "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
@@ -106,8 +110,14 @@ public class sqlRequests {
         return st.executeQuery(sql);
     }
     public static ResultSet getStudentsByFieldsInput(String subject, String teacher_surname, int year) throws IOException, SQLException {
-        String sql = "SELECT student.stud_id, student.first_name+\" \"+student.last_name AS name_surname_student, recordbook_no,year_student, id_subject,name_subject id_teacher, teacher.first_name+\" \"+teacher.last_name AS name_surname_teacher \n" +
-                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) INNER JOIN student ON mark_vid.stud_id = student.stud_id) INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
+        String sql = "SELECT student.stud_id, student.first_name+\" \"+student.last_name AS " +
+                "name_surname_student, recordbook_no,year_student, id_subject,name_subject " +
+                "id_teacher, teacher.first_name+\" \"+teacher.last_name AS name_surname_teacher \n" +
+                "FROM ((((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) " +
+                "INNER JOIN data_exam ON group_st.id_group = data_exam.id_group)" +
+                " INNER JOIN mark_vid ON mark_vid.id_data_exam = data_exam.id_data_exam) " +
+                "INNER JOIN student ON mark_vid.stud_id = student.stud_id) " +
+                "INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher\n" +
                 "WHERE ";
         //if(subject!=null)
         if(subject!=null/*&!subject.isEmpty())*/)

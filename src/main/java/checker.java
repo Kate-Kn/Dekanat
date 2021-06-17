@@ -73,7 +73,7 @@ public class checker {
                     "year_student int NOT NULL,\n" +
                     "id_subject long NOT NULL,\n" +
                     "PRIMARY KEY (id_group),\n" +
-                    "CONSTRAINT FK_sub FOREIGN KEY (id_subject) REFERENCES subject (id_subject) ON UPDATE CASCADE" +
+                    "CONSTRAINT FK_sub FOREIGN KEY (id_subject) REFERENCES subject (id_subject) ON DELETE CASCADE ON UPDATE CASCADE" +
                     ")";
             statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -86,7 +86,7 @@ public class checker {
                     "control text(255) NOT NULL,\n" +
                     "id_teacher long NOT NULL,\n" +
                     "PRIMARY KEY (id_bih),\n" +
-                    "CONSTRAINT FK_teacher FOREIGN KEY (id_teacher) REFERENCES teacher (id_teacher) ON UPDATE CASCADE\n" +
+                    "CONSTRAINT FK_teacher FOREIGN KEY (id_teacher) REFERENCES teacher (id_teacher) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                     ")";
             statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -101,8 +101,8 @@ public class checker {
                     "id_group long NOT NULL,\n" +
                     "id_teacher long NOT NULL,\n" +
                     "PRIMARY KEY (id_data_exam),\n" +
-                    "CONSTRAINT FK_teache FOREIGN KEY (id_teacher) REFERENCES teacher (id_teacher) ON UPDATE CASCADE,\n" +
-                    "CONSTRAINT FK_group FOREIGN KEY (id_group) REFERENCES group_st(id_group) ON UPDATE CASCADE\n" +
+                    "CONSTRAINT FK_teache FOREIGN KEY (id_teacher) REFERENCES teacher (id_teacher) ON DELETE CASCADE ON UPDATE CASCADE,\n" +
+                    "CONSTRAINT FK_group FOREIGN KEY (id_group) REFERENCES group_st(id_group) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                     ")";
             statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -133,7 +133,7 @@ public class checker {
                     "id_mark_vid long NOT NULL,\n" +
                     "id_bih long NOT NULL,\n" +
                     "PRIMARY KEY (id_mark_bih ),\n" +
-                    "CONSTRAINT FK_mv FOREIGN KEY (id_mark_vid) REFERENCES mark_vid (id_mark_vid) ON UPDATE CASCADE,\n" +
+                    "CONSTRAINT FK_mv FOREIGN KEY (id_mark_vid) REFERENCES mark_vid (id_mark_vid) ON DELETE CASCADE ON UPDATE CASCADE,\n" +
                     "CONSTRAINT FK_bihunets FOREIGN KEY (id_bih) REFERENCES bihunets (id_bih) ON UPDATE CASCADE ON DELETE CASCADE\n" +
                     ")";
             statement = connection.createStatement();
