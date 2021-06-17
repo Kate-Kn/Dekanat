@@ -11,6 +11,9 @@ public class Bihunets {
     String control;
     int id_teacher;
 //with all parametrs
+    public Bihunets(){
+
+    }
     public Bihunets(int id_bih, Date date, Date ok_till, String reason, String control, int id_teacher) {
         this.id_bih = id_bih;
         this.date = date;

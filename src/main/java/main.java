@@ -28,17 +28,13 @@ public class main {
         //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
         //System.out.println(getIdsIfExists.getSubjectId(s));
         MyParser parser = new MyParser("new.pdf");
-        MyParser parser3 = new MyParser("dc_good.pdf");
+//        MyParser parser3 = new MyParser("dc_good.pdf");
      //   MyParser parser4 = new MyParser("infoposhuk_good.pdf");
-        MyParser parser5 = new MyParser("unix_good.pdf");
+//        MyParser parser5 = new MyParser("unix_good.pdf");
 //        MyParser parser6 = new MyParser("dc_good.pdf");
 
-
-
-
-
         // MyParser parser1= new MyParser("holes.pdf");
-     //  MyParser parser1 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\dc_good.pdf");
+       MyParser parser1 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Бігунець.pdf");
   // MyParser parser2 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Магістри_Іспит.pdf");
 ////
 //        System.out.println("Hello");
