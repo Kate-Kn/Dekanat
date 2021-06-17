@@ -852,7 +852,7 @@ public  class MyParser {
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
                         mark_bih.setId_bih(bihunets.getId_bih());
-                        mark_bih.setId_mark_vid(100000);
+                      //  mark_bih.setId_mark_vid(100000);
                         if (getIdsIfExists.getMarkBih(mark_bih) == 0) {
                             insertStatements.insertMarkBih(mark_bih);
                         }
