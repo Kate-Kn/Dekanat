@@ -131,11 +131,17 @@ public class getIdsIfExists {
         return id;
     }
     public static int getMarkVidByStudent(Student s,Subject sub) throws SQLException {
-        System.out.println(s.getFirst_name()+s.getLast_name()+s.getRecordbook_no()+sub.getId_subject());
+        System.out.println(s.getFirst_name()+" "+s.getLast_name()+" "+s.getRecordbook_no()+" "+sub.getId_subject());
         String sql = "SELECT id_mark_vid\n" +
                 "FROM mark_vid INNER JOIN student ON mark_vid.stud_id = student.stud_id\n" +
                 "WHERE first_name=? AND last_name=? AND recordbook_no = ? AND mark_ekts = 'F' AND " +
-                "id_data_exam IN (SELECT id_data_exam FROM data_exam WHERE id_group IN (SELECT id_group FROM group_st WHERE id_subject =?));";
+                "id_data_exam IN " +
+                "(SELECT id_data_exam " +
+                "FROM data_exam " +
+                "WHERE id_group IN " +
+                "(SELECT id_group " +
+                "FROM group_st" +
+                " WHERE id_subject =?));";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setString(1, s.getFirst_name());
         st.setString(2, s.getLast_name());
@@ -146,6 +152,7 @@ public class getIdsIfExists {
         while (result.next()) {
             id = result.getInt("id_mark_vid");
         }
+        System.out.println(id);
         return id;
     }
 }

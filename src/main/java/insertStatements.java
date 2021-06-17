@@ -90,6 +90,9 @@ public class insertStatements {
         st.executeUpdate();
     }
     public static void insertMarkBih(Mark_bih mB) throws IOException, SQLException {
+        System.out.println(mB.getId_mark_bih());
+        System.out.println(mB.getId_mark_vid());
+        System.out.println(mB.getMark_check());
         String sql = "INSERT INTO mark_bih (mark_sem, mark_exam, mark_tog,mark_nat,mark_ekts,id_mark_vid,id_bih)\n" +
                 "VALUES (?, ?,?,?,?,?,?);";
         PreparedStatement st = Database.connection.prepareStatement (sql);

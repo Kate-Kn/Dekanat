@@ -1,22 +1,15 @@
-import Entities.Student;
-import Entities.Subject;
-
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class main {
     public static void main(String[] args) throws Exception {
         checker.checkAndCreate();
         //mandatory line
         Database.connect();
        // ResultSet r = sqlRequests.getVidomistByFieldsInput(null, null, 0, null);
-        ResultSet r2 = sqlRequests.statisticsInput("null", null, null, 0);
-        ResultSet r3 = sqlRequests.getRetakeForFieldsInput("null", 0, null);
-        ResultSet r = sqlRequests.getStudentsByFieldsInput("null", null, 0);
-        ResultSet r1 = sqlRequests.getDebtorByFieldsInput("null", null, 0,null);
-        ResultSet r4 = sqlRequests.getVidomistByFieldsInput("null", null, 0,null);
-        ResultSet r5 = sqlRequests.getNumOfNedInput(0, "null", null,null);
+//        ResultSet r2 = sqlRequests.statisticsInput("null", null, null, 0);
+//        ResultSet r3 = sqlRequests.getRetakeForFieldsInput("null", 0, null);
+//        ResultSet r = sqlRequests.getStudentsByFieldsInput("null", null, 0);
+//        ResultSet r1 = sqlRequests.getDebtorByFieldsInput("null", null, 0,null);
+//        ResultSet r4 = sqlRequests.getVidomistByFieldsInput("null", null, 0,null);
+//        ResultSet r5 = sqlRequests.getNumOfNedInput(0, "null", null,null);
 //        String s ="ss";
 //        s+="ddf";
 //        System.out.println(s);
@@ -30,18 +23,18 @@ public class main {
         //insertStatements.insertSubject(s);
         //insertStatements.insertGroup(new Group_st("sd", 22, 3, 3, 1));
         //System.out.println(getIdsIfExists.getSubjectId(s));
-        MyParser parser = new MyParser("new.pdf");
+       // MyParser parser = new MyParser("new.pdf");
 //        MyParser parser3 = new MyParser("dc_good.pdf");
      //   MyParser parser4 = new MyParser("infoposhuk_good.pdf");
 //        MyParser parser5 = new MyParser("unix_good.pdf");
 //        MyParser parser6 = new MyParser("dc_good.pdf");
 
         // MyParser parser1= new MyParser("holes.pdf");
-        Student student = new Student("dgjgfjd","dhhf","dhj","d");
-        Subject subject= new Subject("jdh","djhc","jdh");
-        getIdsIfExists.getMarkVidByStudent(student,subject);
+       // Student student = new Student("dgjgfjd","dhhf","dhj","d");
+       // Subject subject= new Subject("jdh","djhc","jdh");
+        //getIdsIfExists.getMarkVidByStudent(student,subject);
         MyParser parser7 = new MyParser("nitbad.pdf");
-        MyParser parser1 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Бігунець.pdf");
+        MyParser parser1 = new MyParser("Бігунець.pdf");
   // MyParser parser2 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Магістри_Іспит.pdf");
 ////
 //        System.out.println("Hello");

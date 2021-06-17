@@ -1,14 +1,10 @@
 import Entities.*;
 import org.apache.commons.lang3.StringUtils;
-
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -806,11 +802,11 @@ public  class MyParser {
                     int markrazI = Integer.parseInt(markraz);
                     System.out.println(getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
                     Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts,
-                            student.getStud_id(), getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
+                             getIdsIfExists.getMarkVidByStudent(student,subjecthelp),0);
+                    System.out.println(mark_bih.getId_mark_vid());
                     mark_bih.validateManual();
                     mark_bihs.add(mark_bih);
-
-//
+                    System.out.println(mark_bihs.get(ii).getId_mark_vid());
                 }
                 boolean caninsert2=false;
                 //validation
@@ -859,9 +855,7 @@ public  class MyParser {
                             throw new Exception("акий студент не здавав ");
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
-
                         mark_bih.setId_bih(bihunets.getId_bih());
-
                         if (getIdsIfExists.getMarkBih(mark_bih) == 0) {
                             insertStatements.insertMarkBih(mark_bih);
                         }
