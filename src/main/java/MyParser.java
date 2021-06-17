@@ -968,15 +968,15 @@ if(firsttrcherinsertion)
                     bihunets = new Bihunets(vidIdInt, datefinal, oktilld, reason, contr, teacher.getId_teacher());
 boolean firstbih = false;
                     if (getIdsIfExists.getBihId(bihunets) == 0) {
-                        firstbih=true;
-                       try { insertStatements.insertBihunets(bihunets);
-                    }
-                           catch (Exception e){
-                      if(firsttrcherinsertion)  deleteStatements.deleteTeacher(teacher);
-                       if(firstGrop) deleteStatements.deleteGroup(group_st);
+                        firstbih = true;
+                        try {
+                            insertStatements.insertBihunets(bihunets);
+                        } catch (Exception e) {
+                            if (firsttrcherinsertion) deleteStatements.deleteTeacher(teacher);
+                            if (firstGrop) deleteStatements.deleteGroup(group_st);
 
-                        throw new Exception("Не можу вписати групу з бігунця");
-                    }
+                            throw new Exception("Не можу вписати групу з бігунця");
+                        }
                     }
 
                     // data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
