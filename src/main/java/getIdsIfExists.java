@@ -51,11 +51,11 @@ public class getIdsIfExists {
     public static int getSubjectId(Subject t) throws IOException, SQLException {
         String sql = "SELECT id_subject\n" +
                 "FROM subject\n" +
-                "WHERE name_subject = ? AND edu_level = ? AND faculty = ?;";
+                "WHERE name_subject like '"+t.getName_subject()+"' AND edu_level = ? AND faculty = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setString(1, t.getName_subject());
-        st.setString(2, t.getEdu_level());
-        st.setString(3, t.getFaculty());
+      //  st.setString(1, t.getName_subject());
+        st.setString(1, t.getEdu_level());
+        st.setString(2, t.getFaculty());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {
@@ -130,14 +130,17 @@ public class getIdsIfExists {
         }
         return id;
     }
-    public static int getMarkVidByStudent(Student s) throws SQLException {
+    public static int getMarkVidByStudent(Student s,Subject sub) throws SQLException {
+        System.out.println(s.getFirst_name()+s.getLast_name()+s.getRecordbook_no()+sub.getId_subject());
         String sql = "SELECT id_mark_vid\n" +
                 "FROM mark_vid INNER JOIN student ON mark_vid.stud_id = student.stud_id\n" +
-                "WHERE first_name=? AND last_name=? AND recordbook_no = ? AND mark_ekts = 'F';";
+                "WHERE first_name=? AND last_name=? AND recordbook_no = ? AND mark_ekts = 'F' AND " +
+                "id_data_exam IN (SELECT id_data_exam FROM data_exam WHERE id_group IN (SELECT id_group FROM group_st WHERE id_subject =?));";
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setString(1, s.getFirst_name());
         st.setString(2, s.getLast_name());
         st.setString(3, s.getRecordbook_no());
+        st.setInt(4, sub.getId_subject());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {

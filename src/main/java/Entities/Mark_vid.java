@@ -122,11 +122,11 @@ public class Mark_vid {
         }
         if(mark_raz>=65 && mark_raz<71 && !mark_ekts.equals("D"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+         //   throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
         }
         if(mark_raz>=60 && mark_raz<65 && !mark_ekts.equals("E"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+//            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
         }
 
     }
