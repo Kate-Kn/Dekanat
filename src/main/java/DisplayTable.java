@@ -34,20 +34,25 @@ public class DisplayTable extends AbstractTableModel {
             ResultSetMetaData meta = rs.getMetaData();
             colCount = meta.getColumnCount();
 
-            // Now we must rebuild the headers array with the new column names
             headers = new String[colCount];
             for (int h = 1; h <= colCount; h++) {
                 headers[h - 1] = meta.getColumnName(h);
                 System.out.println(headers[h-1]);
                 if(headers[h - 1].equals("STUD_ID"))
                     headers[h - 1] ="ідентифікатор студента";
+                /*if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";
+                if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";
+                if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";
+                if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";
+                if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";
+                if(headers[h - 1].equals("STUD_ID"))
+                    headers[h - 1] ="ідентифікатор студента";*/
             }
-
-            // and file the cache with the records from our query. This would
-            // not be
-            // practical if we were expecting a few million records in response
-            // to our
-            // query, but we aren't, so we can do this.
             while (rs.next()) {
                 String[] record = new String[colCount];
                 for (int i = 0; i < colCount; i++) {
@@ -55,9 +60,9 @@ public class DisplayTable extends AbstractTableModel {
                 }
                 cache.addElement(record);
             }
-            fireTableChanged(null); // notify everyone that we have a new table.
+            fireTableChanged(null);
         } catch (Exception e) {
-            cache = new Vector(); // blank it out and keep going.
+            cache = new Vector();
             e.printStackTrace();
         }
     }

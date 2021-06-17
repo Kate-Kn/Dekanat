@@ -11,15 +11,6 @@ public class sqlRequestsForInterface {
         ResultSet result = statement.executeQuery(sql);
         return result;
     }
-    //temporary func for testing purposes
-//    public static ResultSet getTeachersRS() throws IOException, SQLException {
-//        ArrayList<String> res = new ArrayList<String>();
-//        String sql = "SELECT *\n" +
-//                "FROM teacher;";
-//        Statement statement = Database.connection.createStatement();
-//        ResultSet result = statement.executeQuery(sql);
-//        return result;
-//    }
     public static ResultSet getGroups() throws IOException, SQLException {
         String sql = "SELECT *\n" +
                 "FROM group_st;";

@@ -96,8 +96,10 @@ public class mainWindow  extends JFrame {
         Database.connect();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            checker.checkAndCreate();
+            Database.connect();
         }
-        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException | IOException e) {
             e.printStackTrace();
         }
         mainWindow ww = new mainWindow();
