@@ -775,6 +775,11 @@ public  class MyParser {
                 //object creation
                 //subject
                 Subject subjecthelp = new Subject(sub, edu, fac);
+                subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
+                if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
+                    System.out.println("bad bihynets nsybject");
+                    throw new Exception("bad bihynets nsybject");
+                }
                 Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
 //                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
 //                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
@@ -799,7 +804,7 @@ public  class MyParser {
                     int mark1I = Integer.parseInt(mark1);
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
-                    Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
+                    Mark_bih mark_bih = new Mark_bih(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), getIdsIfExists.getMarkVidByStudent(student,subjecthelp));
                     mark_bih.validateManual();
                     mark_bihs.add(mark_bih);
 
@@ -808,16 +813,16 @@ public  class MyParser {
                 boolean caninsert2=false;
                 //validation
                 caninsert2=true;
-//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
-
                 //inserting
-              //  Data_exam data_exam= new Data_exam();
-                Bihunets bihunets= new Bihunets();
+
+                Bihunets bihunets = new Bihunets();
+
                 if(caninsert2) {
-                    if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
-                        insertStatements.insertSubject(subjecthelp);
-                    }
+//                    subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
+//                    if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
+//                       System.out.println("bad bihynets nsybject");
+//                       throw new Exception("bad bihynets nsybject");
+//                    }
                     subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
                     //teaccher
                     if (getIdsIfExists.getTeacherId(teacher) == 0) {
@@ -833,6 +838,7 @@ public  class MyParser {
                     group_st.setId_group(getIdsIfExists.getGroupId(group_st));
                     //data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
                     bihunets = new Bihunets(vidIdInt, datefinal, oktilld, reason, contr, teacher.getId_teacher());
+
                     if (getIdsIfExists.getBihId(bihunets) == 0) {
                         insertStatements.insertBihunets(bihunets);
                     }
@@ -848,11 +854,12 @@ public  class MyParser {
                         Student student = students.get(k);
                         Mark_bih mark_bih = mark_bihs.get(k);
                         if (getIdsIfExists.getStudentId(student) == 0) {
-                            insertStatements.insertStudent(student);
+                            throw new Exception("акий студент не здавав ");
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
+
                         mark_bih.setId_bih(bihunets.getId_bih());
-                      //  mark_bih.setId_mark_vid(100000);
+
                         if (getIdsIfExists.getMarkBih(mark_bih) == 0) {
                             insertStatements.insertMarkBih(mark_bih);
                         }

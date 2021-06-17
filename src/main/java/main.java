@@ -1,3 +1,6 @@
+import Entities.Student;
+import Entities.Subject;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +37,11 @@ public class main {
 //        MyParser parser6 = new MyParser("dc_good.pdf");
 
         // MyParser parser1= new MyParser("holes.pdf");
-       MyParser parser1 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Бігунець.pdf");
+        Student student = new Student("dgjgfjd","dhhf","dhj","d");
+        Subject subject= new Subject("jdh","djhc","jdh");
+        getIdsIfExists.getMarkVidByStudent(student,subject);
+        MyParser parser7 = new MyParser("nitbad.pdf");
+        MyParser parser1 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Бігунець.pdf");
   // MyParser parser2 = new MyParser("C:\\Users\\Owner\\Documents\\Downloads\\Vidomosti_pdf\\Vidomosti_pdf\\From4Group_pdfs\\Магістри_Іспит.pdf");
 ////
 //        System.out.println("Hello");
