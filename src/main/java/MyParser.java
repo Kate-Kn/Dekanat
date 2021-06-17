@@ -109,13 +109,15 @@ public  class MyParser {
         sem=sem.replaceAll(" ", "")
                 .replaceAll("\r", "")
                 .replaceAll("_", "")
+                .replaceAll("д", "1")
                 .replaceAll("\n", "");
         int semI=Integer.parseInt(sem);
         credits=credits.replaceAll(" ", "")
                 .replaceAll("\r", "")
                 .replaceAll("_", "")
                 .replaceAll("\n", "");
-        int creditsInt=Integer.parseInt(credits);
+              //  .replaceAll(".", ",");
+        double creditsInt=Double.parseDouble(credits);
         contr= contr.replaceAll(" ", "")
                 .replaceAll("\r", "")
                 .replaceAll("_", "")
@@ -198,11 +200,26 @@ public  class MyParser {
             int notallowedI = Integer.parseInt(notallowed);
 
             marks= marks.replaceAll("\\s+", " ")
-                    .replaceAll("\r", "")
-                    .replaceAll("\n", " ");
+                    .replaceAll("\r", " ")
+                    .replaceAll("\n", " ")
+                    .replaceAll("бп", "бп ")
+                    .replaceAll("мп", "мп ")
+                    .replaceAll("\\s+", " ");
             marks= marks.replaceAll("Не зараховано", "Незараховано")
                     .replaceAll("Не відвідував", "Невідвідував")
                     .replaceAll("Не допущений", "Недопущено");
+            marks= marks.replaceAll("Незараховано","Незараховано ")
+                    .replaceAll( "Невідвідував","Невідвідував ")
+                    .replaceAll("Недопущений", "Недопущений")
+                    .replaceAll("\\s+", " ")
+                    .replaceAll("A", "A ")
+                    .replaceAll("B", "B ")
+                    .replaceAll("C", "C ")
+                    .replaceAll("D", "D ")
+                    .replaceAll("E", "E ")
+                    .replaceAll("F", "F ")
+                    .replaceAll("\\s+", " ");
+
             System.out.println("marks\n"+marks);
             String[] marksvidstr = marks.split(" ");
             System.out.println("len\n"+marksvidstr.length);
@@ -213,110 +230,110 @@ public  class MyParser {
             }
             System.out.println(Arrays.toString(marksvidstr));
             System.out.println(marksvidstr.length);
-            if (fulltable) {
-                int amountofrows = marksvidstr.length/12;
-                String[][] markar = new String[amountofrows][12];
-                for (int ii = 0; ii < amountofrows; ii++) {
-                    for (int j = 0; j < 12; j++) {
-                        markar[ii][j] = marksvidstr[ii*12+j];
-                        System.out.print(markar[ii][j] + "|");
-                    }
-                    System.out.println("end");
-                }
-
-                System.out.println("markar\n" + Arrays.toString(markar));
-
-
-                //object creation
-                //subject
-                Subject subjecthelp = new Subject(sub, edu, fac);
-                Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
-//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
-
-                ArrayList<Student> students = new ArrayList<>();
-                ArrayList<Mark_vid> mark_vids = new ArrayList<>();
-                for (int ii = 0; ii < ontestI; ii++) {
-                    String stlastname = markar[ii ][1];
-                    String stfirstname = markar[ii ][2];
-                    String stsecondname = markar[ii ][3];
-                    String recordbook = markar[ii ][4] + markar[ii ][5] + markar[ii ][6];
-//                         System.out.println(stlastname+stfirstname+stsecondname+recordbook);
-                    Student student = new Student(stlastname, stfirstname, stsecondname, recordbook);
-                    students.add(student);
-
-                    String mark1 = markar[ii ][7];
-                    String mark2 = markar[ii ][8];
-                    String markraz = markar[ii ][9];
-                    String nats = markar[ii ][10];
-                    String ekts = markar[ii ][11];
-                    int mark1I = Integer.parseInt(mark1);
-                    int mark2I = Integer.parseInt(mark2);
-                    int markrazI = Integer.parseInt(markraz);
-                    Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
-                    mark_vid.validateManual();
-                    mark_vids.add(mark_vid);
-
+//            if (fulltable) {
+//                int amountofrows = marksvidstr.length/12;
+//                String[][] markar = new String[amountofrows][12];
+//                for (int ii = 0; ii < amountofrows; ii++) {
+//                    for (int j = 0; j < 12; j++) {
+//                        markar[ii][j] = marksvidstr[ii*12+j];
+//                        System.out.print(markar[ii][j] + "|");
+//                    }
+//                    System.out.println("end");
+//                }
 //
-                }
-                boolean caninsert=false;
-                //validation
-                caninsert=true;
-//                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-//                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
-
-                //inserting
-                Data_exam data_exam= new Data_exam();
-                    if(caninsert) {
-                        if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
-                            insertStatements.insertSubject(subjecthelp);
-                        }
-                        subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
-                        //teaccher
-                        if (getIdsIfExists.getTeacherId(teacher) == 0) {
-                            insertStatements.insertTeacher(teacher);
-                        }
-                        teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
-                        //groupst
-                        Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
-
-                        if (getIdsIfExists.getGroupId(group_st) == 0) {
-                            insertStatements.insertGroup(group_st);
-                        }
-                        group_st.setId_group(getIdsIfExists.getGroupId(group_st));
-                        data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
-
-                    // dataexam
-                        if (getIdsIfExists.getDataExamId(data_exam) == 0) {
-                            insertStatements.insertDataExam(data_exam);
-                        }
-
-                       // data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
-
-                        System.out.println(sub.toString());
-                        System.out.println(teacher.toString());
-                        System.out.println(group_st.toString());
-                        System.out.println(data_exam.toString());
-                        //students and markvid
-                       for (int k =0 ; k<students.size(); k++)
-                       {
-                           Student student = students.get(k);
-                           Mark_vid mark_vid = mark_vids.get(k);
-                           if (getIdsIfExists.getStudentId(student) == 0) {
-                                insertStatements.insertStudent(student);
-                           }
-                           student.setStud_id(getIdsIfExists.getStudentId(student));
-                           mark_vid.setId_data_exam(data_exam.getId_data_exam());
-                           mark_vid.setStud_id(student.getStud_id());
-                           if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
-                               insertStatements.insertMarkVid(mark_vid);
-                           }
-                           mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
-
-                           System.out.println(student.toString()+"\t"+mark_vid.toString());
-                       }
-                    }
-            } else
+//                System.out.println("markar\n" + Arrays.toString(markar));
+//
+//
+//                //object creation
+//                //subject
+//                Subject subjecthelp = new Subject(sub, edu, fac);
+//                Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
+////                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
+////                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
+//
+//                ArrayList<Student> students = new ArrayList<>();
+//                ArrayList<Mark_vid> mark_vids = new ArrayList<>();
+//                for (int ii = 0; ii < ontestI; ii++) {
+//                    String stlastname = markar[ii ][1];
+//                    String stfirstname = markar[ii ][2];
+//                    String stsecondname = markar[ii ][3];
+//                    String recordbook = markar[ii ][4] + markar[ii ][5] + markar[ii ][6];
+////                         System.out.println(stlastname+stfirstname+stsecondname+recordbook);
+//                    Student student = new Student(stlastname, stfirstname, stsecondname, recordbook);
+//                    students.add(student);
+//
+//                    String mark1 = markar[ii ][7];
+//                    String mark2 = markar[ii ][8];
+//                    String markraz = markar[ii ][9];
+//                    String nats = markar[ii ][10];
+//                    String ekts = markar[ii ][11];
+//                    int mark1I = Integer.parseInt(mark1);
+//                    int mark2I = Integer.parseInt(mark2);
+//                    int markrazI = Integer.parseInt(markraz);
+//                    Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
+//                    mark_vid.validateManual();
+//                    mark_vids.add(mark_vid);
+//
+////
+//                }
+//                boolean caninsert=false;
+//                //validation
+//                caninsert=true;
+////                Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
+////                Data_exam data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
+//
+//                //inserting
+//                Data_exam data_exam= new Data_exam();
+//                    if(caninsert) {
+//                        if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
+//                            insertStatements.insertSubject(subjecthelp);
+//                        }
+//                        subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
+//                        //teaccher
+//                        if (getIdsIfExists.getTeacherId(teacher) == 0) {
+//                            insertStatements.insertTeacher(teacher);
+//                        }
+//                        teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
+//                        //groupst
+//                        Group_st group_st = new Group_st(grouup, 2077, semI, yearI, subjecthelp.getId_subject());
+//
+//                        if (getIdsIfExists.getGroupId(group_st) == 0) {
+//                            insertStatements.insertGroup(group_st);
+//                        }
+//                        group_st.setId_group(getIdsIfExists.getGroupId(group_st));
+//                        data_exam = new Data_exam(vidIdInt, ontestI, absentI, notallowedI, contr, datefinal, group_st.getId_group(), teacher.getId_teacher());
+//
+//                    // dataexam
+//                        if (getIdsIfExists.getDataExamId(data_exam) == 0) {
+//                            insertStatements.insertDataExam(data_exam);
+//                        }
+//
+//                       // data_exam.setId_data_exam(getIdsIfExists.getDataExamId(data_exam));
+//
+//                        System.out.println(sub.toString());
+//                        System.out.println(teacher.toString());
+//                        System.out.println(group_st.toString());
+//                        System.out.println(data_exam.toString());
+//                        //students and markvid
+//                       for (int k =0 ; k<students.size(); k++)
+//                       {
+//                           Student student = students.get(k);
+//                           Mark_vid mark_vid = mark_vids.get(k);
+//                           if (getIdsIfExists.getStudentId(student) == 0) {
+//                                insertStatements.insertStudent(student);
+//                           }
+//                           student.setStud_id(getIdsIfExists.getStudentId(student));
+//                           mark_vid.setId_data_exam(data_exam.getId_data_exam());
+//                           mark_vid.setStud_id(student.getStud_id());
+//                           if (getIdsIfExists.getMarkVid(mark_vid) == 0) {
+//                               insertStatements.insertMarkVid(mark_vid);
+//                           }
+//                           mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
+//
+//                           System.out.println(student.toString()+"\t"+mark_vid.toString());
+//                       }
+//                    }
+//            } else
             {
                 ArrayList<String> num=new ArrayList<>();
                 ArrayList<String> last=new ArrayList<>();
@@ -535,7 +552,8 @@ public  class MyParser {
             }
         }else
             //яко бігунець
-            { String marksbih = StringUtils.substringBetween(text,"Підпис","*");
+            {
+                String marksbih = StringUtils.substringBetween(text,"Підпис","*");
             marksbih=StringUtils.substringAfter(marksbih,"1");
             marksbih= "1 "+marksbih;
             marksbih = marksbih.replaceAll("\n","").replaceAll("\r","");
