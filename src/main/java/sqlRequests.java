@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class sqlRequests {
     public static ResultSet getNumOfNedInput(int year, String subject, String teacher) throws IOException, SQLException {
-        String sql = "SELECT SUM(num_not_allowed) AS кількість_недопусків\n" +
+        String sql = "SELECT Nz(SUM(num_not_allowed),0) AS кількість_недопусків\n" +
                 "FROM (((subject INNER JOIN group_st ON subject.id_subject =group_st.id_subject) " +
                 "INNER JOIN data_exam ON group_st.id_group = data_exam.id_group) " +
                 "INNER JOIN teacher ON data_exam.id_teacher = teacher.id_teacher)\n" +
