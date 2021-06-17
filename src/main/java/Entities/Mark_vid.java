@@ -105,7 +105,8 @@ public class Mark_vid {
         }
         if(mark_raz!=mark_check+mark_sem)
         {
-            throw new Exception(Teacher.exeptions[0] + "Invalid sum");
+            System.out.println("bed sum");
+          //  throw new Exception(Teacher.exeptions[0] + "Invalid sum");
         }
         if(mark_raz>=91&& !mark_ekts.equals("A"))
         {
@@ -127,10 +128,7 @@ public class Mark_vid {
         {
             throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
         }
-        if(mark_ekts.equals("F"))
-        {
-            throw new Exception(Teacher.exeptions[0] + "Can't contain F");
-        }
+
     }
     //processing after such mistakes must be conducted and saved to gave a list of them
     public ArrayList<String> validateAutofill() throws Exception
