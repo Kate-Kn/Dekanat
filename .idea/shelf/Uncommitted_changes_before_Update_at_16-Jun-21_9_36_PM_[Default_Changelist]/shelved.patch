@@ -1,0 +1,251 @@
+Index: src/main/java/DisplayTable.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.table.AbstractTableModel;\r\nimport java.sql.ResultSet;\r\nimport java.sql.ResultSetMetaData;\r\nimport java.util.Vector;\r\n\r\npublic class DisplayTable extends AbstractTableModel {\r\n    Vector cache;\r\n    int colCount;\r\n    String[] headers;\r\n\r\n    public DisplayTable() {\r\n        cache = new Vector();\r\n    }\r\n\r\n    public String getColumnName(int i) {\r\n        return headers[i];\r\n    }\r\n\r\n    public int getColumnCount() {\r\n        return colCount;\r\n    }\r\n\r\n    public int getRowCount() {\r\n        return cache.size();\r\n    }\r\n\r\n    public Object getValueAt(int row, int col) {\r\n        return ((String[]) cache.elementAt(row))[col];\r\n    }\r\n\r\n    public void setTable(ResultSet rs) {\r\n        cache = new Vector();\r\n        try {\r\n            ResultSetMetaData meta = rs.getMetaData();\r\n            colCount = meta.getColumnCount();\r\n\r\n            // Now we must rebuild the headers array with the new column names\r\n            headers = new String[colCount];\r\n            for (int h = 1; h <= colCount; h++) {\r\n                headers[h - 1] = meta.getColumnName(h);\r\n            }\r\n\r\n            // and file the cache with the records from our query. This would\r\n            // not be\r\n            // practical if we were expecting a few million records in response\r\n            // to our\r\n            // query, but we aren't, so we can do this.\r\n            while (rs.next()) {\r\n                String[] record = new String[colCount];\r\n                for (int i = 0; i < colCount; i++) {\r\n                    record[i] = rs.getString(i + 1);\r\n                }\r\n                cache.addElement(record);\r\n            }\r\n            fireTableChanged(null); // notify everyone that we have a new table.\r\n        } catch (Exception e) {\r\n            cache = new Vector(); // blank it out and keep going.\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/DisplayTable.java b/src/main/java/DisplayTable.java
+--- a/src/main/java/DisplayTable.java	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
++++ b/src/main/java/DisplayTable.java	(date 1623739205313)
+@@ -34,17 +34,10 @@
+             ResultSetMetaData meta = rs.getMetaData();
+             colCount = meta.getColumnCount();
+ 
+-            // Now we must rebuild the headers array with the new column names
+             headers = new String[colCount];
+             for (int h = 1; h <= colCount; h++) {
+                 headers[h - 1] = meta.getColumnName(h);
+             }
+-
+-            // and file the cache with the records from our query. This would
+-            // not be
+-            // practical if we were expecting a few million records in response
+-            // to our
+-            // query, but we aren't, so we can do this.
+             while (rs.next()) {
+                 String[] record = new String[colCount];
+                 for (int i = 0; i < colCount; i++) {
+@@ -52,9 +45,9 @@
+                 }
+                 cache.addElement(record);
+             }
+-            fireTableChanged(null); // notify everyone that we have a new table.
++            fireTableChanged(null);
+         } catch (Exception e) {
+-            cache = new Vector(); // blank it out and keep going.
++            cache = new Vector();
+             e.printStackTrace();
+         }
+     }
+Index: src/main/java/mainWindow.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\nimport javax.swing.filechooser.FileFilter;\r\nimport javax.swing.filechooser.FileNameExtensionFilter;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\nimport java.awt.event.ItemEvent;\r\nimport java.awt.event.ItemListener;\r\nimport java.io.File;\r\n\r\npublic class mainWindow  extends JFrame {\r\n    private JPanel body = new JPanel();\r\n    private JList data = new JList();\r\n    DisplayTable myt = new DisplayTable();\r\n\r\n    public DisplayTable getTable(){\r\n        return myt;\r\n    }\r\n    public mainWindow() {\r\n        super(\"Simple Example\");\r\n        this.setSize(1200,700);\r\n        this.setResizable(false);\r\n        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n\r\n        JButton btnLoadPdf = new JButton(\"Завантажити PDF\");\r\n        btnLoadPdf.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                JFileChooser fileChooser = new JFileChooser();\r\n                FileFilter filter = new FileNameExtensionFilter(\"PDF File\",\"pdf\");\r\n                fileChooser.setFileFilter(filter);\r\n                fileChooser.setCurrentDirectory(new File(System.getProperty(\"user.home\")));\r\n                int result = fileChooser.showOpenDialog(body);\r\n                if (result == JFileChooser.APPROVE_OPTION) {\r\n                    File selectedFile = fileChooser.getSelectedFile();\r\n                    String dbp = \"\";\r\n                    try{\r\n                        dbp = checker.checkAndCreate();\r\n                    } catch (Exception ex) {\r\n                        //...\r\n                    }\r\n                    JOptionPane.showMessageDialog(null,\r\n                            \"Hi eartherners, your elected file: \" + selectedFile.getAbsolutePath(),\r\n                            \"Output\",\r\n                            JOptionPane.PLAIN_MESSAGE);\r\n                    try {\r\n                        MyParser prs = new MyParser(selectedFile.getPath());\r\n                        System.out.println(sqlRequestsForInterface.getTeachers().toArray());\r\n                        data = new JList(sqlRequestsForInterface.getTeachers().toArray());\r\n                    } catch (Exception exc) {\r\n                        System.out.println(exc.getMessage());\r\n                    }\r\n                }\r\n            }\r\n        });\r\n\r\n        JPanel sideBtnPanel = new JPanel();\r\n        sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));\r\n        btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);\r\n        JButton btnExportExcel = new JButton(\"Експорт у Excel\");\r\n        btnExportExcel.setAlignmentX(Component.CENTER_ALIGNMENT);\r\n        sideBtnPanel.add(btnLoadPdf);\r\n        sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));\r\n        sideBtnPanel.add(btnExportExcel);\r\n\r\n        body.setLayout(new BoxLayout(body, BoxLayout.X_AXIS));\r\n\r\n        JTable table = new JTable(myt);\r\n        JScrollPane scr = new JScrollPane(table);\r\n        body.add(scr);\r\n        body.add(sideBtnPanel);\r\n\r\n        QueryPanel head = new QueryPanel(this);\r\n        JPanel queryHead = new JPanel();\r\n        queryHead.add(head);\r\n        Container container2 = this.getContentPane();\r\n        container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));\r\n        container2.add(queryHead);\r\n        container2.add(body);\r\n\r\n        changeFont(container2, new Font(Font.SANS_SERIF, Font.PLAIN, 14));\r\n    }\r\n    public static void changeFont ( Component component, Font font )\r\n    {\r\n        component.setFont ( font );\r\n        if ( component instanceof Container )\r\n        {\r\n            for ( Component child : ( ( Container ) component ).getComponents () )\r\n            {\r\n                changeFont ( child, font );\r\n            }\r\n        }\r\n    }\r\n    public static void main(String[] args) {\r\n        try {\r\n            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());\r\n        }\r\n        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {\r\n            e.printStackTrace();\r\n        }\r\n        mainWindow ww = new mainWindow();\r\n        ww.setVisible(true);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/mainWindow.java b/src/main/java/mainWindow.java
+--- a/src/main/java/mainWindow.java	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
++++ b/src/main/java/mainWindow.java	(date 1623734719269)
+@@ -7,6 +7,8 @@
+ import java.awt.event.ItemEvent;
+ import java.awt.event.ItemListener;
+ import java.io.File;
++import java.io.IOException;
++import java.sql.SQLException;
+ 
+ public class mainWindow  extends JFrame {
+     private JPanel body = new JPanel();
+@@ -94,8 +96,10 @@
+     public static void main(String[] args) {
+         try {
+             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
++            checker.checkAndCreate();
++            Database.connect();
+         }
+-        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
++        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException | IOException e) {
+             e.printStackTrace();
+         }
+         mainWindow ww = new mainWindow();
+Index: src/main/java/QueryPanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.awt.*;\r\nimport java.awt.event.*;\r\nimport java.io.IOException;\r\nimport java.sql.SQLException;\r\nimport javax.swing.*;\r\nimport javax.swing.text.AbstractDocument;\r\nimport javax.swing.text.AttributeSet;\r\nimport javax.swing.text.BadLocationException;\r\nimport javax.swing.text.DocumentFilter;\r\n\r\npublic class QueryPanel extends JPanel\r\n{\r\n    final   static String GENERALPANEL = \"Усі дані\";\r\n    final   static String STUDENTPANEL   = \"Студенти\";\r\n    final   static String RESTUDENTPANEL   = \"Студенти-перескладанці\";\r\n    final   static String VIDOMISTPANEL = \"Відомості\";\r\n    final   static String NEDOPPANEL = \"Недопуски\";\r\n    final   static String RATINGPANEL = \"Рейтинг\";\r\n    final   static String DEBTORSSPANEL   = \"Боржники\";\r\n\r\n    public QueryPanel(mainWindow container) {\r\n\r\n        JTabbedPane queries = new JTabbedPane();\r\n\r\n//  Не вистачає запитів, треба дописати?\r\n\r\n        /*JPanel tabGeneral = new JPanel();\r\n        JComboBox<String> bareTables = new JComboBox(new String[]{\"Студенти\", \"Викладачі\", \"Предмети\", \"Групи\"});\r\n        tabGeneral.add(bareTables);\r\n        JButton sendBtnGen = new JButton(\"Знайти\");\r\n        tabGeneral.add(sendBtnGen);\r\n        queries.addTab(GENERALPANEL, tabGeneral);\r\n        sendBtnGen.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    switch ((String)bareTables.getSelectedItem()) {\r\n                        case \"Студенти\":\r\n                            container.getTable().setTable(sqlRequestsForInterface.getStudentsRS());\r\n                            break;\r\n                        case \"Викладачі\":\r\n                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());\r\n                            break;\r\n                        case \"Предмети\":\r\n                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());\r\n                            break;\r\n                        case \"Групи\":\r\n                            container.getTable().setTable(sqlRequestsForInterface.getTeachersRS());\r\n                            break;\r\n                    }\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });*/\r\n\r\n        JPanel tabStudent = new JPanel();\r\n        tabStudent.add(new JLabel(\"Предмет\"));\r\n        JTextField tStSubjectF = new JTextField(\"\", 15);\r\n        tabStudent.add(tStSubjectF);\r\n        tabStudent.add(new JLabel(\"Прізвище викладача\"));\r\n        JTextField tStTeacherF = new JTextField(\"\", 15);\r\n        tabStudent.add(tStTeacherF);\r\n        tabStudent.add(new JLabel(\"Курс\"));\r\n        JTextField tStYearF = new JTextField(\"\", 15);\r\n        ((AbstractDocument) tStYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));\r\n        tabStudent.add(tStYearF);\r\n        JButton sendBtnSt = new JButton(\"Знайти\");\r\n        tabStudent.add(sendBtnSt);\r\n        queries.addTab(STUDENTPANEL, tabStudent);\r\n        sendBtnSt.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    container.getTable().setTable(sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), Integer.parseInt(tStYearF.getText())));\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });\r\n\r\n        JPanel tabRestudent = new JPanel();\r\n        tabRestudent.add(new JLabel(\"Прізвище викладача\"));\r\n        JTextField tReStTeacherF = new JTextField(\"\", 15);\r\n        tabRestudent.add(tReStTeacherF);\r\n        tabRestudent.add(new JLabel(\"Курс\"));\r\n        JTextField tReStYearF = new JTextField(\"\", 15);\r\n        ((AbstractDocument) tReStYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));\r\n        tabRestudent.add(tReStYearF);\r\n        tabRestudent.add(new JLabel(\"Предмет\"));\r\n        JTextField tReStSubjectF = new JTextField(\"\", 15);\r\n        tabRestudent.add(tReStSubjectF);\r\n        JButton sendBtnReSt = new JButton(\"Знайти\");\r\n        tabRestudent.add(sendBtnReSt);\r\n        queries.addTab(RESTUDENTPANEL, tabRestudent);\r\n        sendBtnReSt.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    container.getTable().setTable(sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), Integer.parseInt(tReStYearF.getText()), tReStTeacherF.getText()));\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });\r\n\r\n        JPanel tabVidomist = new JPanel();\r\n        tabVidomist.add(new JLabel(\"Прізвище викладача\"));\r\n        JTextField tVidTeacherF = new JTextField(\"\", 15);\r\n        tabVidomist.add(tVidTeacherF);\r\n        tabVidomist.add(new JLabel(\"Курс\"));\r\n        JTextField tVidSubjectF = new JTextField(\"\", 15);\r\n        ((AbstractDocument) tVidSubjectF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));\r\n        tabVidomist.add(tVidSubjectF);\r\n        tabVidomist.add(new JLabel(\"Предмет\"));\r\n        JTextField tVidYearF = new JTextField(\"\", 15);\r\n        tabVidomist.add(tVidYearF);\r\n        tabVidomist.add(new JLabel(\"Прізвище студента\"));\r\n        JTextField tVidStudentF = new JTextField(\"\", 15);\r\n        tabVidomist.add(tVidStudentF);\r\n        JButton sendBtnVid = new JButton(\"Знайти\");\r\n        tabVidomist.add(sendBtnVid);\r\n        queries.addTab(VIDOMISTPANEL, tabVidomist);\r\n        sendBtnVid.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });\r\n\r\n//  Не вистачає запитів, треба дописати?\r\n\r\n        /*JPanel tabNedop = new JPanel();\r\n        tabNedop.add(new JLabel(\"Прізвище викладача\"));\r\n        JTextField tNedTeacherF = new JTextField(\"\", 15);\r\n        tabNedop.add(tNedTeacherF);\r\n        tabNedop.add(new JLabel(\"Прізвище студента\"));\r\n        JTextField tNedStudentF = new JTextField(\"\", 15);\r\n        tabNedop.add(tNedStudentF);\r\n        JButton sendBtnNed = new JButton(\"Знайти\");\r\n        tabNedop.add(sendBtnNed);\r\n        queries.addTab(NEDOPPANEL, tabNedop);\r\n        sendBtnNed.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });*/\r\n\r\n        JPanel tabRating = new JPanel();\r\n        tabRating.add(new JLabel(\"Прізвище викладача\"));\r\n        JTextField tRateTeacherF = new JTextField(\"\", 15);\r\n        tabRating.add(tRateTeacherF);\r\n        tabRating.add(new JLabel(\"Курс\"));\r\n        JTextField tRateYearF = new JTextField(\"\", 15);\r\n        ((AbstractDocument) tRateYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));\r\n        tabRating.add(tRateYearF);\r\n        tabRating.add(new JLabel(\"Предмет\"));\r\n        JTextField tRateSubjectF = new JTextField(\"\", 15);\r\n        tabRating.add(tRateSubjectF);\r\n        tabRating.add(new JLabel(\"Прізвище студента\"));\r\n        JTextField tRateStudentF = new JTextField(\"\", 15);\r\n        tabRating.add(tRateStudentF);\r\n        JButton sendBtnRate = new JButton(\"Знайти\");\r\n        tabRating.add(sendBtnRate);\r\n        queries.addTab(RATINGPANEL, tabRating);\r\n        sendBtnRate.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    container.getTable().setTable(sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), Integer.parseInt(tRateYearF.getText())));\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });\r\n\r\n        JPanel tabDebt = new JPanel();\r\n        tabDebt.add(new JLabel(\"Прізвище викладача\"));\r\n        JTextField tabDebtTeacherF = new JTextField(\"\", 15);\r\n        tabDebt.add(tabDebtTeacherF);\r\n        tabDebt.add(new JLabel(\"Курс\"));\r\n        JTextField tabDebtYearF = new JTextField(\"\", 15);\r\n        ((AbstractDocument) tabDebtYearF.getDocument()).setDocumentFilter(new NumericAndLengthFilter(1));\r\n        tabDebt.add(tabDebtYearF);\r\n        tabDebt.add(new JLabel(\"Предмет\"));\r\n        JTextField tabDebtSubjectF = new JTextField(\"\", 15);\r\n        tabDebt.add(tabDebtSubjectF);\r\n        tabDebt.add(new JLabel(\"Прізвище студента\"));\r\n        JTextField tabDebtStudentF = new JTextField(\"\", 15);\r\n        tabDebt.add(tabDebtStudentF);\r\n        JButton sendBtnDebt = new JButton(\"Знайти\");\r\n        tabDebt.add(sendBtnDebt);\r\n        queries.addTab(DEBTORSSPANEL, tabDebt);\r\n        sendBtnDebt.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                try {\r\n                    checker.checkAndCreate();\r\n                    Database.connect();\r\n                    container.getTable().setTable(sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), Integer.parseInt(tabDebtYearF.getText()), tabDebtTeacherF.getText()));\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                } catch (SQLException throwables) {\r\n                    throwables.printStackTrace();\r\n                }\r\n            }\r\n        });\r\n\r\n        container.add(queries);\r\n\r\n    }\r\n    private static class NumericAndLengthFilter extends DocumentFilter {\r\n    private int length = 0;\r\n    public NumericAndLengthFilter(int length) {\r\n        this.length = length;\r\n    }\r\n\r\n    @Override\r\n    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {\r\n        if (isNumeric(string)) {\r\n            if (this.length > 0 && fb.getDocument().getLength() + string.length() > this.length) {\r\n                return;\r\n            }\r\n            super.insertString(fb, offset, string, attr);\r\n        }\r\n    }\r\n    @Override\r\n    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws  BadLocationException {\r\n        if (isNumeric(text)) {\r\n            if (this.length > 0 && fb.getDocument().getLength() + text.length() > this.length) {\r\n                return;\r\n            }\r\n            super.insertString(fb, offset, text, attrs);\r\n        }\r\n    }\r\n    private boolean isNumeric(String text) {\r\n        if (text == null || text.trim().equals(\"\")) {\r\n            return false;\r\n        }\r\n        for (int iCount = 0; iCount < text.length(); iCount++) {\r\n            if (!Character.isDigit(text.charAt(iCount))) {\r\n                return false;\r\n            }\r\n        }\r\n        return true;\r\n    }\r\n}\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/QueryPanel.java b/src/main/java/QueryPanel.java
+--- a/src/main/java/QueryPanel.java	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
++++ b/src/main/java/QueryPanel.java	(date 1623741911656)
+@@ -76,8 +76,6 @@
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 try {
+-                    checker.checkAndCreate();
+-                    Database.connect();
+                     container.getTable().setTable(sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), Integer.parseInt(tStYearF.getText())));
+                 } catch (IOException ioException) {
+                     ioException.printStackTrace();
+@@ -105,8 +103,6 @@
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 try {
+-                    checker.checkAndCreate();
+-                    Database.connect();
+                     container.getTable().setTable(sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), Integer.parseInt(tReStYearF.getText()), tReStTeacherF.getText()));
+                 } catch (IOException ioException) {
+                     ioException.printStackTrace();
+@@ -137,8 +133,6 @@
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 try {
+-                    checker.checkAndCreate();
+-                    Database.connect();
+                     container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
+                 } catch (IOException ioException) {
+                     ioException.printStackTrace();
+@@ -148,15 +142,10 @@
+             }
+         });
+ 
+-//  Не вистачає запитів, треба дописати?
+-
+-        /*JPanel tabNedop = new JPanel();
+-        tabNedop.add(new JLabel("Прізвище викладача"));
+-        JTextField tNedTeacherF = new JTextField("", 15);
+-        tabNedop.add(tNedTeacherF);
+-        tabNedop.add(new JLabel("Прізвище студента"));
+-        JTextField tNedStudentF = new JTextField("", 15);
+-        tabNedop.add(tNedStudentF);
++        JPanel tabNedop = new JPanel();
++        tabNedop.add(new JLabel("Предмет"));
++        JTextField tNedSubF = new JTextField("", 15);
++        tabNedop.add(tNedSubF);
+         JButton sendBtnNed = new JButton("Знайти");
+         tabNedop.add(sendBtnNed);
+         queries.addTab(NEDOPPANEL, tabNedop);
+@@ -166,14 +155,14 @@
+                 try {
+                     checker.checkAndCreate();
+                     Database.connect();
+-                    container.getTable().setTable(sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), Integer.parseInt(tVidYearF.getText()), tVidStudentF.getText()));
++                    container.getTable().setTable(sqlRequests.getNumOfNedForSubject(Integer.parseInt(tNedSubF.getText())));
+                 } catch (IOException ioException) {
+                     ioException.printStackTrace();
+                 } catch (SQLException throwables) {
+                     throwables.printStackTrace();
+                 }
+             }
+-        });*/
++        });
+ 
+         JPanel tabRating = new JPanel();
+         tabRating.add(new JLabel("Прізвище викладача"));
+@@ -196,8 +185,6 @@
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 try {
+-                    checker.checkAndCreate();
+-                    Database.connect();
+                     container.getTable().setTable(sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), Integer.parseInt(tRateYearF.getText())));
+                 } catch (IOException ioException) {
+                     ioException.printStackTrace();
+@@ -228,8 +215,6 @@
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 try {
+-                    checker.checkAndCreate();
+-                    Database.connect();
+                     container.getTable().setTable(sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), Integer.parseInt(tabDebtYearF.getText()), tabDebtTeacherF.getText()));
+                 } catch (IOException ioException) {
+                     ioException.printStackTrace();
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22__Default_Changelist_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22__Default_Changelist_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22__Default_Changelist_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22__Default_Changelist_.xml	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
++++ /dev/null	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
+@@ -1,19 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]" date="1623093963806" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 07.06.2021 22:22 [Default Changelist]" />
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/Entities/Subject.class" />
+-    <option name="AFTER_PATH" value="target/classes/Entities/Subject.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]/Subject.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/Entities/Data_exam.class" />
+-    <option name="AFTER_PATH" value="target/classes/Entities/Data_exam.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]/Data_exam.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/Entities/Group_st.class" />
+-    <option name="AFTER_PATH" value="target/classes/Entities/Group_st.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]/Group_st.class" />
+-  </binary>
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM__Default_Changelist_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM__Default_Changelist_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM__Default_Changelist_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM__Default_Changelist_.xml	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
++++ /dev/null	(revision c8ff9f4da8a3c4443ad00314308427cdff399928)
+@@ -1,49 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]" date="1623082522466" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 07-Jun-21 7:15 PM [Default Changelist]" />
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/mainWindow$1.class" />
+-    <option name="AFTER_PATH" value="target/classes/mainWindow$1.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/mainWindow$1.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/Entities/Teacher.class" />
+-    <option name="AFTER_PATH" value="target/classes/Entities/Teacher.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/Teacher.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/Entities/Mark_vid.class" />
+-    <option name="AFTER_PATH" value="target/classes/Entities/Mark_vid.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/Mark_vid.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/MyParser.class" />
+-    <option name="AFTER_PATH" value="target/classes/MyParser.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/MyParser.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/main.class" />
+-    <option name="AFTER_PATH" value="target/classes/main.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/main.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/getIdsIfExists.class" />
+-    <option name="AFTER_PATH" value="target/classes/getIdsIfExists.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/getIdsIfExists.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/insertStatements.class" />
+-    <option name="AFTER_PATH" value="target/classes/insertStatements.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/insertStatements.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/checker.class" />
+-    <option name="AFTER_PATH" value="target/classes/checker.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/checker.class" />
+-  </binary>
+-  <binary>
+-    <option name="BEFORE_PATH" value="target/classes/mainWindow.class" />
+-    <option name="AFTER_PATH" value="target/classes/mainWindow.class" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/mainWindow.class" />
+-  </binary>
+-</changelist>
+\ No newline at end of file
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_07-Jun-21_7_15_PM_[Default_Changelist]/shelved.patch
+deleted file mode 100644
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_07_06_2021_22_22_[Default_Changelist]/shelved.patch
+deleted file mode 100644
