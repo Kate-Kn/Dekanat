@@ -16,7 +16,7 @@ public class mainWindow  extends JFrame {
     private JList data = new JList();
     DisplayTable myt = new DisplayTable();
     JFrame me = this;
-
+    static JButton btnExportExcel = new JButton();
     public DisplayTable getTable(){
         return myt;
     }
@@ -62,26 +62,51 @@ public class mainWindow  extends JFrame {
         JPanel sideBtnPanel = new JPanel();
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JButton btnExportExcel = new JButton("Експорт у Excel");
+        btnExportExcel = new JButton("Експорт у Excel");
         btnExportExcel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    accessToExcel qExc = new accessToExcel();
-                    qExc.exportFromResultSet(QueryPanel.tempRes);
-                    JOptionPane optionPane = new JOptionPane("Відбувся експорт", JOptionPane.PLAIN_MESSAGE);
-                    JDialog dialog = optionPane.createDialog("Успіх");
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
-                } catch (Exception exc) {
-                    JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
-                    JDialog dialog = optionPane.createDialog("Помилка");
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                fileChooser.setDialogTitle("Директорія для експорту");
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                int result = fileChooser.showOpenDialog(body);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    try {
+                        accessToExcel qExc = new accessToExcel();
+                        qExc.exportFromResultSetWithPath(QueryPanel.tempRes, selectedFile.getPath(), "Sheet");
+                        JOptionPane optionPane = new JOptionPane("Відбувся експорт", JOptionPane.PLAIN_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Успіх");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    } catch (Exception exc) {
+                        JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Помилка");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    }
+                } else {
+                    try {
+                        accessToExcel qExc = new accessToExcel();
+                        qExc.exportFromResultSet(QueryPanel.tempRes);
+                        JOptionPane optionPane = new JOptionPane("Відбувся експорт", JOptionPane.PLAIN_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Успіх");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    } catch (Exception exc) {
+                        JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Помилка");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    }
                 }
+
             }
         });
         btnExportExcel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnExportExcel.setEnabled(false);
         JButton btnDeleteDB = new JButton("Видалити базу");
         btnDeleteDB.addActionListener(new ActionListener() {
             @Override
@@ -122,6 +147,9 @@ public class mainWindow  extends JFrame {
         container2.add(body);
 
         changeFont(container2, new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+    }
+    public static void enableExport () {
+        btnExportExcel.setEnabled(true);
     }
     public static void changeFont ( Component component, Font font )
     {
