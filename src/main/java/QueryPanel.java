@@ -25,7 +25,7 @@ public class QueryPanel extends JPanel
     final   static String NEDOPPANEL = "Недопуски";
     final   static String RATINGPANEL = "Рейтинг";
     final   static String DEBTORSSPANEL   = "Боржники";
-    public ResultSet tempRes;
+    public static ResultSet tempRes;
 
     public QueryPanel(mainWindow container) {
 
