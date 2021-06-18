@@ -37,18 +37,21 @@ public class mainWindow  extends JFrame {
                     try{
                         dbp = checker.checkAndCreate();
                     } catch (Exception ex) {
-                        //...
+                        JOptionPane optionPane = new JOptionPane(ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Failure");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
                     }
-                    JOptionPane.showMessageDialog(null,
-                            "Hi eartherners, your elected file: " + selectedFile.getAbsolutePath(),
-                            "Output",
-                            JOptionPane.PLAIN_MESSAGE);
                     try {
                         MyParser prs = new MyParser(selectedFile.getPath());
                         //System.out.println(sqlRequestsForInterface.getTeachers().toArray());
                         //data = new JList(sqlRequestsForInterface.getTeachers().toArray());
                     } catch (Exception exc) {
                         System.out.println(exc.getMessage());
+                        JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Failure");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
                     }
                 }
             }
@@ -57,11 +60,24 @@ public class mainWindow  extends JFrame {
         JPanel sideBtnPanel = new JPanel();
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JButton btnExportExcel = new JButton("Експорт у Excel");
-        btnExportExcel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton btnDeleteDB = new JButton("Видалити базу");
+        btnDeleteDB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    deleteStatements.deleteDatabase();
+                } catch (IOException | SQLException exc) {
+                    JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Failure");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                }
+            }
+        });
+        btnDeleteDB.setAlignmentX(Component.CENTER_ALIGNMENT);
         sideBtnPanel.add(btnLoadPdf);
         sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
-        sideBtnPanel.add(btnExportExcel);
+        sideBtnPanel.add(btnDeleteDB);
 
         body.setLayout(new BoxLayout(body, BoxLayout.X_AXIS));
 
