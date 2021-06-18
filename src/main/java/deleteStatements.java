@@ -1,7 +1,4 @@
-import Entities.Group_st;
-import Entities.Student;
-import Entities.Subject;
-import Entities.Teacher;
+import Entities.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +25,7 @@ public class deleteStatements{
         String sql = "DELETE FROM student\n" +
                 "WHERE stud_id = ?;";
         PreparedStatement st = Database.connection.prepareStatement (sql);
-        st.setString(1, student.getStud_id());
+        st.setInt(1, student.getStud_id());
         st.executeUpdate();
     }
     public static void deleteSubject(Subject subject) throws IOException, SQLException {
@@ -53,26 +50,20 @@ public class deleteStatements{
         st.setInt(1, tc.getId_teacher());
         st.executeUpdate();
     }
-//    public static void deleteVid(Data_exam de) throws IOException, SQLException {
-//        insertStatements.checkPath();
-//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-//        Connection connection = DriverManager.getConnection(d);
-//        String sql = "DELETE FROM data_exam\n" +
-//                "WHERE id_data_exam = ?;";
-//        PreparedStatement st = connection.prepareStatement (sql);
-//        st.setInt(1, de.getId_data_exam());
-//        st.executeUpdate();
-//    }
-//    public static void deleteBih(Bihunets de) throws IOException, SQLException {
-//        insertStatements.checkPath();
-//        String d = "jdbc:ucanaccess://"+ insertStatements.path;
-//        Connection connection = DriverManager.getConnection(d);
-//        String sql = "DELETE FROM bihunets\n" +
-//                "WHERE id_bih = ?;";
-//        PreparedStatement st = connection.prepareStatement (sql);
-//        st.setInt(1, de.getId_bih());
-//        st.executeUpdate();
-//    }
+    public static void deleteVid(Data_exam de) throws IOException, SQLException {
+        String sql = "DELETE FROM data_exam\n" +
+                "WHERE id_data_exam = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setInt(1, de.getId_data_exam());
+        st.executeUpdate();
+    }
+    public static void deleteBih(Bihunets de) throws IOException, SQLException {
+        String sql = "DELETE FROM bihunets\n" +
+                "WHERE id_bih = ?;";
+        PreparedStatement st = Database.connection.prepareStatement (sql);
+        st.setInt(1, de.getId_bih());
+        st.executeUpdate();
+    }
 //    public static void deleteStFromGroup(Student stu, Group_st g) throws IOException, SQLException {
 //        insertStatements.checkPath();
 //        String d = "jdbc:ucanaccess://"+ insertStatements.path;
