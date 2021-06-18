@@ -77,6 +77,7 @@ public class QueryPanel extends JPanel
                             tempRes = sqlRequestsForInterface.getMarkBih();
                             break;
                     }
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -106,6 +107,7 @@ public class QueryPanel extends JPanel
                     tempRes = sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), toInt(tStYearF.getText()));
                     container.getTable().setTable(tempRes);
                     tempRes = sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), toInt(tStYearF.getText()));
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -135,6 +137,7 @@ public class QueryPanel extends JPanel
                     tempRes = sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), toInt(tReStYearF.getText()), tReStTeacherF.getText());
                     container.getTable().setTable(tempRes);
                     tempRes = sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), toInt(tReStYearF.getText()), tReStTeacherF.getText());
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -167,6 +170,7 @@ public class QueryPanel extends JPanel
                     tempRes = sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), toInt(tVidYearF.getText()), tVidStudentF.getText());
                     container.getTable().setTable(tempRes);
                     tempRes = sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), toInt(tVidYearF.getText()), tVidStudentF.getText());
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -182,9 +186,6 @@ public class QueryPanel extends JPanel
         tabNedop.add(new JLabel("Предмет"));
         JTextField tNedSubF = new JTextField("", 15);
         tabNedop.add(tNedSubF);
-//        tabNedop.add(new JLabel("Прізвище студента"));
-//        JTextField tNedStudF = new JTextField("", 15);
-//        tabNedop.add(tNedStudF);
         tabNedop.add(new JLabel("Прізвище викладача"));
         JTextField tNedTeaF = new JTextField("", 15);
         tabNedop.add(tNedTeaF);
@@ -198,6 +199,7 @@ public class QueryPanel extends JPanel
                     tempRes = sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedTeaF.getText());
                     container.getTable().setTable(tempRes);
                     tempRes = sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedTeaF.getText());
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -230,6 +232,7 @@ public class QueryPanel extends JPanel
                     tempRes = sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), toInt(tRateYearF.getText()));
                     container.getTable().setTable(tempRes);
                     tempRes = sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), toInt(tRateYearF.getText()));
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -262,6 +265,7 @@ public class QueryPanel extends JPanel
                     tempRes = sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), toInt(tabDebtYearF.getText()), tabDebtTeacherF.getText());
                     container.getTable().setTable(tempRes);
                     tempRes = sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), toInt(tabDebtYearF.getText()), tabDebtTeacherF.getText());
+                    mainWindow.enableExport();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
