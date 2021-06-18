@@ -34,6 +34,15 @@ public class accessToExcel {
         workbook.write(outputStream);
         workbook.close();
     }
+    public void exportFromResultSetWithPath( ResultSet result, String path, String sheetName) throws SQLException, IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet(sheetName);
+        writeHeaderLine(result, sheet);
+        writeDataLines(result, workbook, sheet);
+        FileOutputStream outputStream = new FileOutputStream(path);
+        workbook.write(outputStream);
+        workbook.close();
+    }
     public void export(String table) throws SQLException, IOException {
         String excelFilePath = getFileName(table.concat("_Export"));
         String sql = "SELECT *" +
