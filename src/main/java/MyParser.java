@@ -405,7 +405,7 @@ public  class MyParser {
                 //object creation
                 //subject
                 Subject subjecthelp = new Subject(sub, edu, fac);
-                Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
+                Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, " ");
 
                 ArrayList<Student> students = new ArrayList<>();
                 ArrayList<Mark_vid> mark_vids = new ArrayList<>();
@@ -893,7 +893,7 @@ try {
                     System.out.println("bad bihynets nsybject");
                     throw new Exception("Для такого предмету не здавали відомості");
                 }
-                Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
+                Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, " ");
 //
                 ArrayList<Student> students = new ArrayList<>();
                 ArrayList<Mark_bih> mark_bihs = new ArrayList<>();
