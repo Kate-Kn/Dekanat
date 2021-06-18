@@ -124,10 +124,15 @@ public class mainWindow  extends JFrame {
         });
         btnDeleteDB.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton btnHelp = new JButton("Допомога");
+        String helpText = "Нотатки по користуванню:\n1. Кнопка \"Знайти\" працює з порожніми параметрами.\n"
+                + "2. Для початку завантажте ПДФ файл відомості.\n"
+                + "3. При експорті у Excel, якщо закрити діалогове вікно не обравши директорію, експорт відбудется у превизначену директорію.\n"
+                + "4. Експортувати можна результати виконаних запитів.\n"
+                + "Успіхів!";
         btnHelp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane optionPane = new JOptionPane("Тут має бути текст з поясненням до застосунку", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane optionPane = new JOptionPane(helpText, JOptionPane.PLAIN_MESSAGE);
                 JDialog dialog = optionPane.createDialog("Допомога");
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
