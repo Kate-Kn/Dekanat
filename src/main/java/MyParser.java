@@ -80,12 +80,12 @@ public  class MyParser {
             }
             if (tshit.contains(",")) {
 
-             teachzv = StringUtils.substringBetween(teach, ",", ",");
-             teachpos = StringUtils.substringAfterLast(teach, ",");
+                teachpos = StringUtils.substringBetween(teach, ",", ",");
+                teachzv = StringUtils.substringAfterLast(teach, ",");
             }else
             {
-                teachzv = StringUtils.substringAfterLast(teach, ",");
-                teachpos ="";
+                teachpos = StringUtils.substringAfterLast(teach, ",");
+                teachzv ="";
             }
             dat= dat.replaceAll(" ", "")
                 .replaceAll("\n","")
@@ -135,9 +135,9 @@ public  class MyParser {
             sem=sem.replaceAll(" ", "")
                     .replaceAll("\r", "")
                     .replaceAll("_", "")
-                    .replaceAll("д", "1")
+                   // .replaceAll("д", "1")
                     .replaceAll("\n", "");
-            int semI=Integer.parseInt(sem);
+           // int semI=Integer.parseInt(sem);
             credits=credits.replaceAll(" ", "")
                     .replaceAll("\r", "")
                     .replaceAll("_", "")
@@ -341,7 +341,7 @@ public  class MyParser {
                         nevidvid++;
                     }
                 }
-                if(amountOfrows-nevidvid!=ontestI)
+                if(amountOfrows-nevidvid-nedop!=ontestI)
                 {
                     throw new Exception("Не збігається кількість людей у відомості");
                 }
@@ -427,13 +427,13 @@ public  class MyParser {
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
                     Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
-                    try {
+//                    try {
                         mark_vid.validateManual();
-                    }catch (Exception e){
-                        e.printStackTrace();
+//                    }catch (Exception e){
+//                        e.printStackTrace();
 
-                        error = e.getMessage();
-                    }
+//                        error = e.getMessage();
+//                    }
 
                     mark_vids.add(mark_vid);
 
@@ -469,7 +469,7 @@ public  class MyParser {
                     }
                     teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
                     //groupst
-                    Group_st group_st = new Group_st(grouup, styduearI, semI, yearI, subjecthelp.getId_subject());
+                    Group_st group_st = new Group_st(grouup, styduearI, sem, yearI, subjecthelp.getId_subject());
 boolean firatGroup= false;
                     if (getIdsIfExists.getGroupId(group_st) == 0) {
                         try{
@@ -514,13 +514,13 @@ boolean firstdata= false;
                            try { insertStatements.insertStudent(student);
                            }
                            catch (Exception e){
-                               if(firstdata) deleteStatements.deleteDatabase();
+                               if(firstdata) deleteStatements.deleteVid(data_exam);
                                if(firstsub) deleteStatements.deleteSubject(subjecthelp);
                                if(firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
                                if(firatGroup ) deleteStatements.deleteGroup(group_st);
                                for (int d = 0; d<=k;d++)
                                 {
-                                    if(bollst.get(k)==true)
+                                    if(bollst.get(k))
                                     deleteStatements.deleteStudent(students.get(d));
                                 }
                                 throw new Exception("Не можу вписати якогось студента");
@@ -676,9 +676,9 @@ try {
             sem=sem.replaceAll(" ", "")
                     .replaceAll("\r", "")
                     .replaceAll("_", "")
-                    .replaceAll("д", "1")
+                 //   .replaceAll("д", "1")
                     .replaceAll("\n", "");
-            int semI=Integer.parseInt(sem);
+         //   int semI=Integer.parseInt(sem);
             credits=credits.replaceAll(" ", "")
                     .replaceAll("\r", "")
                     .replaceAll("_", "")
@@ -951,7 +951,7 @@ try {
                     }
                     teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
                     //groupst
-                    Group_st group_st = new Group_st(grouup, styduearI, semI, yearI, subjecthelp.getId_subject());
+                    Group_st group_st = new Group_st(grouup, styduearI, sem, yearI, subjecthelp.getId_subject());
 boolean firstGrop=false;
                     if (getIdsIfExists.getGroupId(group_st) == 0) {
                         firstGrop=true;
@@ -1001,7 +1001,7 @@ boolean firstbih = false;
                            try{ insertStatements.insertMarkBih(mark_bih);
                         }
                            catch (Exception e){
-//if(firstbih)deleteStatements.
+if(firstbih) deleteStatements.deleteBih(bihunets);
                         if(firsttrcherinsertion)    deleteStatements.deleteTeacher(teacher);
                            if(firstGrop) deleteStatements.deleteGroup(group_st);
                             for (int d = 0; d<=k;d++)

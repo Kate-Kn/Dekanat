@@ -40,7 +40,7 @@ public class getIdsIfExists {
         st.setString(1, t.getName_group());
         st.setInt(2, t.getYear_study());
         st.setInt(3, t.getId_subject());
-        st.setInt(4, t.getSemester());
+        st.setString(4, t.getSemester());
         ResultSet result = st.executeQuery();
         int id =0;
         while (result.next()) {

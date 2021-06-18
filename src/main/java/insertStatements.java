@@ -58,7 +58,7 @@ public class insertStatements {
         PreparedStatement st = Database.connection.prepareStatement (sql);
         st.setString(1, gr.getName_group());
         st.setInt(2, gr.getYear_study());
-        st.setInt(3, gr.getSemester());
+        st.setString(3, gr.getSemester());
         st.setInt(4, gr.getYear_student());
         st.setInt(5, gr.getId_subject());
         st.executeUpdate();

@@ -7,11 +7,11 @@ public class Group_st {
     int id_group;
     String name_group;
     int year_study;
-    int semester;
+    String semester;
     int year_student;
     int id_subject;
 
-    public Group_st(int id_group, String name_group, int year_study, int semester, int year_student, int id_subject) {
+    public Group_st(int id_group, String name_group, int year_study, String semester, int year_student, int id_subject) {
         this.id_group = id_group;
         this.name_group = name_group;
         this.year_study = year_study;
@@ -20,7 +20,7 @@ public class Group_st {
         this.id_subject = id_subject;
     }
 
-    public Group_st(String name_group, int year_study, int semester, int year_student, int id_subject) {
+    public Group_st(String name_group, int year_study, String semester, int year_student, int id_subject) {
         this.name_group = name_group;
         this.year_study = year_study;
         this.semester = semester;
@@ -52,11 +52,11 @@ public class Group_st {
         this.year_study = year_study;
     }
 
-    public int getSemester() {
+    public String getSemester() {
         return semester;
     }
 
-    public void setSemester(int semester) {
+    public void setSemester(String semester) {
         this.semester = semester;
     }
 
