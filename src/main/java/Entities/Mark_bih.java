@@ -102,31 +102,31 @@ public class Mark_bih {
         }
         if(mark_raz!=mark_check+mark_sem)
         {
-            throw new Exception(Teacher.exeptions[0] + "Invalid sum");
+            throw new Exception( "Неправильна сума");
         }
         if(mark_raz>=91&& !mark_ekts.equals("A"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception( "Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=81 && mark_raz<91 && !mark_ekts.equals("B"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception( "Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=71 && mark_raz<81 && !mark_ekts.equals("C"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception( "Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=65 && mark_raz<71 && !mark_ekts.equals("D"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception( "Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=60 && mark_raz<65 && !mark_ekts.equals("E"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception( "Неправильна оцінка ЄКТС");
         }
         if(mark_ekts.equals("F"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Can't contain F");
+            throw new Exception( "Бігунець не може мати оцінки F");
         }
     }
     //processing after such mistakes must be conducted and saved to gave a list of them

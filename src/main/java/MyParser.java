@@ -75,7 +75,7 @@ public  class MyParser {
             {
                 if(ordinaryStrings.get(l).equals(""))
                 {
-                    throw new Exception("Помилка в шапці");
+                    throw new Exception("Помилка в шапчці");
                 }
             }
             if (tshit.contains(",")) {
@@ -451,7 +451,7 @@ public  class MyParser {
                         try{
                         insertStatements.insertSubject(subjecthelp);}
                         catch (Exception e){
-                            throw new Exception("Не можу вписати предмет");
+                            throw new Exception("Не можна вписати предмет");
                         }
                     }
                     subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
@@ -464,7 +464,7 @@ public  class MyParser {
                         }
                          catch (Exception e){
                             if(firstsub) deleteStatements.deleteSubject(subjecthelp);
-                           throw new Exception("Не можу вписати вчителя");
+                           throw new Exception("Не можна вписати вчителя");
                         }
                     }
                     teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
@@ -479,7 +479,7 @@ boolean firatGroup= false;
                          catch (Exception e){
                              if(firstsub) deleteStatements.deleteSubject(subjecthelp);
                              if (firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
-                        throw new Exception("Не можу вписати групу");
+                        throw new Exception("Не можна вписати групу");
                     }
                     }
                     group_st.setId_group(getIdsIfExists.getGroupId(group_st));
@@ -494,7 +494,7 @@ boolean firstdata= false;
                              if(firstsub) deleteStatements.deleteSubject(subjecthelp);
                              if(firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
                              if(firatGroup ) deleteStatements.deleteGroup(group_st);
-                        throw new Exception("Не можу вписати відомість");
+                        throw new Exception("Не можна вписати відомість");
                     }
                     }
 
@@ -523,7 +523,7 @@ boolean firstdata= false;
                                     if(bollst.get(k))
                                     deleteStatements.deleteStudent(students.get(d));
                                 }
-                                throw new Exception("Не можу вписати якогось студента");
+                                throw new Exception("Не можна вписати якогось студента");
                         }
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
@@ -541,7 +541,7 @@ boolean firstdata= false;
                                    if(bollst.get(k))
                                        deleteStatements.deleteStudent(students.get(d));
                                }
-                        throw new Exception("Не можу вписати якогось студента");
+                        throw new Exception("Не можна вписати оцінки з відомості якогось студента");
                     }
                         }
                         mark_vid.setId_mark_vid(getIdsIfExists.getMarkVid(mark_vid));
@@ -561,7 +561,7 @@ boolean firstdata= false;
 
             System.err.println("видаляю все до дідька!!!");
             error = e.getMessage();
-
+            throw e;
         }
         document.close();
         System.err.println("Помилка "+error);
@@ -891,7 +891,7 @@ try {
                 subjecthelp.setId_subject(getIdsIfExists.getSubjectId(subjecthelp));
                 if (getIdsIfExists.getSubjectId(subjecthelp) == 0) {
                     System.out.println("bad bihynets nsybject");
-                    throw new Exception("bad bihynets nsybject");
+                    throw new Exception("Для такого предмету не здавали відомості");
                 }
                 Teacher teacher = new Teacher(tfirst, tlast, tSecond, teachpos, teachzv, "academ_status xzzz");
 //
@@ -945,7 +945,7 @@ try {
                        try{ insertStatements.insertTeacher(teacher);
                     }
                            catch (Exception e){
-                        throw new Exception("Не можу вписати вчителя з бігунця");
+                        throw new Exception("Не можна вписати вчителя з бігунця");
                     }
                     }
                     teacher.setId_teacher(getIdsIfExists.getTeacherId(teacher));
@@ -960,7 +960,7 @@ boolean firstGrop=false;
 if(firsttrcherinsertion)
                         deleteStatements.deleteTeacher(teacher);
 
-                        throw new Exception("Не можу вписати групу");
+                        throw new Exception("Не можна вписати групу з бігунця");
                     }
                     }
                     group_st.setId_group(getIdsIfExists.getGroupId(group_st));
@@ -975,7 +975,7 @@ boolean firstbih = false;
                             if (firsttrcherinsertion) deleteStatements.deleteTeacher(teacher);
                             if (firstGrop) deleteStatements.deleteGroup(group_st);
 
-                            throw new Exception("Не можу вписати групу з бігунця");
+                            throw new Exception("Не можна вписати бігунець");
                         }
                     }
 
@@ -992,7 +992,7 @@ boolean firstbih = false;
                         Student student = students.get(k);
                         Mark_bih mark_bih = mark_bihs.get(k);
                         if (getIdsIfExists.getStudentId(student) == 0) {
-                            throw new Exception("такий студент не здавав ");
+                            throw new Exception("Є студент, який не здавав цей предмет");
                         }
                         student.setStud_id(getIdsIfExists.getStudentId(student));
                         mark_bih.setId_bih(bihunets.getId_bih());
@@ -1008,7 +1008,7 @@ if(firstbih) deleteStatements.deleteBih(bihunets);
                                 if(boolst.get(d))
                                 deleteStatements.deleteStudent(students.get(d));
                             }
-                            throw new Exception("Не можу вписати оцінки бігунця якогось студента");
+                            throw new Exception("Не можна вписати оцінки бігунця якогось студента");
                         }
                         }
                         mark_bih.setId_mark_bih(getIdsIfExists.getMarkBih(mark_bih));
@@ -1021,6 +1021,7 @@ if(firstbih) deleteStatements.deleteBih(bihunets);
             e.printStackTrace();
             System.err.println("ВИДАЛЯБ!!!");
             error =e.getMessage();
+            throw e;
         }
     }
 }

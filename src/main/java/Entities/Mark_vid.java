@@ -112,23 +112,27 @@ public class Mark_vid {
         }
         if(mark_raz>=91&& !mark_ekts.equals("A"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception( "Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=81 && mark_raz<91 && !mark_ekts.equals("B"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception("Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=71 && mark_raz<81 && !mark_ekts.equals("C"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception("Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=65 && mark_raz<71 && !mark_ekts.equals("D"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception("Неправильна оцінка ЄКТС");
         }
         if(mark_raz>=60 && mark_raz<65 && !mark_ekts.equals("E"))
         {
-            throw new Exception(Teacher.exeptions[0] + "Incorrect ekts");
+            throw new Exception("Неправильна оцінка ЄКТС");
+        }
+        if(mark_raz>=0&& mark_raz<=59 && !mark_ekts.equals("F"))
+        {
+            throw new Exception("Неправильна оцінка ЄКТС");
         }
 
     }
