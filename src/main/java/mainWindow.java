@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -33,6 +32,7 @@ public class mainWindow  extends JFrame {
                 JFileChooser fileChooser = new JFileChooser();
                 FileFilter filter = new FileNameExtensionFilter("PDF File","pdf");
                 fileChooser.setFileFilter(filter);
+                fileChooser.setAcceptAllFileFilterUsed(false);
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(body);
                 if (result == JFileChooser.APPROVE_OPTION) {
@@ -67,16 +67,18 @@ public class mainWindow  extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
+                FileFilter filter = new FileNameExtensionFilter("Excel File","xlsx");
+                fileChooser.setFileFilter(filter);
+                fileChooser.setAcceptAllFileFilterUsed(false);
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setDialogTitle("Директорія для експорту");
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                fileChooser.setAcceptAllFileFilterUsed(false);
-                int result = fileChooser.showOpenDialog(body);
+                int result = fileChooser.showSaveDialog(body);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     try {
                         accessToExcel qExc = new accessToExcel();
-                        qExc.exportFromResultSetWithPath(QueryPanel.tempRes, selectedFile.getPath(), "Sheet");
+                        System.out.println(selectedFile.getPath());
+                        qExc.exportFromResultSetWithPath(QueryPanel.tempRes, selectedFile.getPath()+".xlsx", "Sheet");
                         JOptionPane optionPane = new JOptionPane("Відбувся експорт", JOptionPane.PLAIN_MESSAGE);
                         JDialog dialog = optionPane.createDialog("Успіх");
                         dialog.setAlwaysOnTop(true);
