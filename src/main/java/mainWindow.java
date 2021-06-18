@@ -123,11 +123,24 @@ public class mainWindow  extends JFrame {
             }
         });
         btnDeleteDB.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton btnHelp = new JButton("Допомога");
+        btnHelp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane optionPane = new JOptionPane("Тут має бути текст з поясненням до застосунку", JOptionPane.PLAIN_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Допомога");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            }
+        });
+        btnHelp.setAlignmentX(Component.CENTER_ALIGNMENT);
         sideBtnPanel.add(btnLoadPdf);
         sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         sideBtnPanel.add(btnExportExcel);
         sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         sideBtnPanel.add(btnDeleteDB);
+        sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        sideBtnPanel.add(btnHelp);
 
         body.setLayout(new BoxLayout(body, BoxLayout.X_AXIS));
 
@@ -145,6 +158,7 @@ public class mainWindow  extends JFrame {
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
         container2.add(queryHead);
         container2.add(body);
+
 
         changeFont(container2, new Font(Font.SANS_SERIF, Font.PLAIN, 14));
     }
