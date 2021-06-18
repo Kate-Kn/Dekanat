@@ -558,10 +558,10 @@ boolean firstdata= false;
             }
         }catch (Exception e){
             e.printStackTrace();
-
+            e.getMessage();
             System.err.println("видаляю все до дідька!!!");
             error = e.getMessage();
-            throw e;
+            throw new Exception("Помилка читання файлу "+ e.getMessage());
         }
         document.close();
         System.err.println("Помилка "+error);

@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_18_06_2021_10_40_[Default_Changelist]" date="1624002025269" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_06_2021_10_40_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 18.06.2021 10:40 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="dekanat_database.accdb" />
+    <option name="AFTER_PATH" value="dekanat_database.accdb" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_06_2021_10_40_[Default_Changelist]/dekanat_database.accdb" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/main.class" />
+    <option name="AFTER_PATH" value="target/classes/main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_06_2021_10_40_[Default_Changelist]/main.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/mainWindow$3.class" />
+    <option name="AFTER_PATH" value="target/classes/mainWindow$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_06_2021_10_40_[Default_Changelist]/mainWindow$3.class" />
+  </binary>
+</changelist>

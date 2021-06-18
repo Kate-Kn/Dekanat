@@ -1,0 +1,35 @@
+Index: src/main/java/main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class main {\r\n    public static void main(String[] args) throws Exception {\r\n        deleteStatements.deleteDatabase();\r\n        checker.checkAndCreate();\r\n        //mandatory line\r\n        Database.connect();\r\n        MyParser parser = new MyParser(\"new.pdf\");\r\n        MyParser parser3 = new MyParser(\"dc_good.pdf\");\r\n        MyParser parser55 = new MyParser(\"unix_badamount.pdf\");\r\n        MyParser parser5 = new MyParser(\"unix_good.pdf\");\r\n        MyParser parser6 = new MyParser(\"dc_good.pdf\");\r\n        MyParser parser7= new MyParser(\"holes.pdf\");\r\n\r\n        MyParser parser8 = new MyParser(\"nitbad.pdf\");\r\n          MyParser parser88 = new MyParser(\"nitgoodF.pdf\");\r\n          MyParser parser9 = new MyParser(\"Бігунець.pdf\");\r\n\r\n//\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/main.java	(revision 9f93c0e50c55a0b1d44855c374286593cf2a6b1a)
++++ src/main/java/main.java	(date 1624001664626)
+@@ -4,16 +4,15 @@
+         checker.checkAndCreate();
+         //mandatory line
+         Database.connect();
+-        MyParser parser = new MyParser("new.pdf");
+-        MyParser parser3 = new MyParser("dc_good.pdf");
+-        MyParser parser55 = new MyParser("unix_badamount.pdf");
+-        MyParser parser5 = new MyParser("unix_good.pdf");
+-        MyParser parser6 = new MyParser("dc_good.pdf");
+-        MyParser parser7= new MyParser("holes.pdf");
+-
+-        MyParser parser8 = new MyParser("nitbad.pdf");
+-          MyParser parser88 = new MyParser("nitgoodF.pdf");
+-          MyParser parser9 = new MyParser("Бігунець.pdf");
++//        MyParser parser = new MyParser("new.pdf");
++//        MyParser parser3 = new MyParser("dc_good.pdf");
++//        MyParser parser55 = new MyParser("unix_badamount.pdf");
++//        MyParser parser5 = new MyParser("unix_good.pdf");
++//        MyParser parser6 = new MyParser("dc_good.pdf");
++//        MyParser parser7= new MyParser("holes.pdf");
++//          MyParser parser8 = new MyParser("nitbad.pdf");
++//          MyParser parser88 = new MyParser("nitgoodF.pdf");
++//          MyParser parser9 = new MyParser("Бігунець.pdf");
+ 
+ //
+     }
