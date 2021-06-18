@@ -8,13 +8,8 @@ import javax.swing.text.DocumentFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.*;
-import java.util.Calendar;
-import java.util.Map;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class QueryPanel extends JPanel
 {
@@ -44,34 +39,42 @@ public class QueryPanel extends JPanel
                         case "Студенти":
                             tempRes = sqlRequestsForInterface.getStudents();
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getStudents();
                             break;
                         case "Викладачі":
                             tempRes = sqlRequestsForInterface.getTeachers();
                                     container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getTeachers();
                             break;
                         case "Предмети":
                             tempRes = sqlRequestsForInterface.getSubjects();
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getSubjects();
                             break;
                         case "Групи":
                             tempRes = sqlRequestsForInterface.getGroups();;
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getGroups();;
                             break;
                         case "Відомості":
                             tempRes = sqlRequestsForInterface.getDataExam();
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getDataExam();
                             break;
                         case "Бігунці":
                             tempRes = sqlRequestsForInterface.getBihunets();
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getBihunets();
                             break;
                         case "Оцінки відомостей":
                             tempRes = sqlRequestsForInterface.getMarkVid();
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getMarkVid();
                             break;
                         case "Оцінки бігунців":
                             tempRes = sqlRequestsForInterface.getMarkBih();
                             container.getTable().setTable(tempRes);
+                            tempRes = sqlRequestsForInterface.getMarkBih();
                             break;
                     }
                 } catch (IOException ioException) {
@@ -102,6 +105,7 @@ public class QueryPanel extends JPanel
                 try {
                     tempRes = sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), toInt(tStYearF.getText()));
                     container.getTable().setTable(tempRes);
+                    tempRes = sqlRequests.getStudentsByFieldsInput(tStSubjectF.getText(), tStTeacherF.getText(), toInt(tStYearF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -130,6 +134,7 @@ public class QueryPanel extends JPanel
                 try {
                     tempRes = sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), toInt(tReStYearF.getText()), tReStTeacherF.getText());
                     container.getTable().setTable(tempRes);
+                    tempRes = sqlRequests.getRetakeForFieldsInput(tReStSubjectF.getText(), toInt(tReStYearF.getText()), tReStTeacherF.getText());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -161,6 +166,7 @@ public class QueryPanel extends JPanel
                 try {
                     tempRes = sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), toInt(tVidYearF.getText()), tVidStudentF.getText());
                     container.getTable().setTable(tempRes);
+                    tempRes = sqlRequests.getVidomistByFieldsInput(tVidTeacherF.getText(), tVidSubjectF.getText(), toInt(tVidYearF.getText()), tVidStudentF.getText());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -191,6 +197,7 @@ public class QueryPanel extends JPanel
                 try {
                     tempRes = sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedTeaF.getText());
                     container.getTable().setTable(tempRes);
+                    tempRes = sqlRequests.getNumOfNedInput(toInt(tNedYearF.getText()), tNedSubF.getText(), tNedTeaF.getText());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -222,6 +229,7 @@ public class QueryPanel extends JPanel
                 try {
                     tempRes = sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), toInt(tRateYearF.getText()));
                     container.getTable().setTable(tempRes);
+                    tempRes = sqlRequests.statisticsInput(tRateSubjectF.getText(), tRateTeacherF.getText(), tRateStudentF.getText(), toInt(tRateYearF.getText()));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {
@@ -253,6 +261,7 @@ public class QueryPanel extends JPanel
                 try {
                     tempRes = sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), toInt(tabDebtYearF.getText()), tabDebtTeacherF.getText());
                     container.getTable().setTable(tempRes);
+                    tempRes = sqlRequests.getDebtorByFieldsInput(tabDebtStudentF.getText(), tabDebtSubjectF.getText(), toInt(tabDebtYearF.getText()), tabDebtTeacherF.getText());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } catch (SQLException throwables) {

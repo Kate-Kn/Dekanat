@@ -13,9 +13,10 @@ import java.util.Date;
 
 public class accessToExcel {
     public static void main(String[] args) throws IOException, SQLException {
+        Database.connect();
         accessToExcel exporter = new accessToExcel();
-        exporter.export("student");
-        //exporter.exportFromResultSet(sqlRequests.getNumOfNedInput(1));
+        //exporter.export("student");
+        exporter.exportFromResultSet(sqlRequestsForInterface.getStudents());
     }
     private String getFileName(String baseName) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -33,14 +34,20 @@ public class accessToExcel {
         workbook.write(outputStream);
         workbook.close();
     }
+    public void exportFromResultSetWithPath( ResultSet result, String path, String sheetName) throws SQLException, IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet(sheetName);
+        writeHeaderLine(result, sheet);
+        writeDataLines(result, workbook, sheet);
+        FileOutputStream outputStream = new FileOutputStream(path);
+        workbook.write(outputStream);
+        workbook.close();
+    }
     public void export(String table) throws SQLException, IOException {
-        insertStatements.checkPath();
-        String jdbcURL = "jdbc:ucanaccess://"+insertStatements.path;
         String excelFilePath = getFileName(table.concat("_Export"));
-        Connection connection = DriverManager.getConnection(jdbcURL);
         String sql = "SELECT *" +
                 "FROM ".concat(table);
-       Statement st = connection.createStatement();
+       Statement st = Database.connection.createStatement();
        ResultSet result = st.executeQuery(sql);
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet(table);
