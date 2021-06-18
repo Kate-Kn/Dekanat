@@ -62,6 +62,21 @@ public class mainWindow  extends JFrame {
         JPanel sideBtnPanel = new JPanel();
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton btnExportExcel = new JButton("Експорт у Excel");
+        btnExportExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    deleteStatements.deleteDatabase();
+                    dispatchEvent(new WindowEvent(me, WindowEvent.WINDOW_CLOSING));
+                } catch (IOException | SQLException exc) {
+                    JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Failure");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                }
+            }
+        });
         JButton btnDeleteDB = new JButton("Видалити базу");
         btnDeleteDB.addActionListener(new ActionListener() {
             @Override
