@@ -62,6 +62,22 @@ public class mainWindow  extends JFrame {
         JPanel sideBtnPanel = new JPanel();
         sideBtnPanel.setLayout(new BoxLayout(sideBtnPanel, BoxLayout.Y_AXIS));
         btnLoadPdf.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton btnExportExcel = new JButton("Експорт у Excel");
+        btnExportExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    accessToExcel qExc = new accessToExcel();
+                    qExc.exportFromResultSet(QueryPanel.tempRes);
+                } catch (Exception exc) {
+                    JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Failure");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                }
+            }
+        });
+        btnExportExcel.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton btnDeleteDB = new JButton("Видалити базу");
         btnDeleteDB.addActionListener(new ActionListener() {
             @Override
@@ -69,7 +85,7 @@ public class mainWindow  extends JFrame {
                 try {
                     deleteStatements.deleteDatabase();
                     dispatchEvent(new WindowEvent(me, WindowEvent.WINDOW_CLOSING));
-                } catch (IOException | SQLException exc) {
+                } catch (Exception exc) {
                     JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
                     JDialog dialog = optionPane.createDialog("Failure");
                     dialog.setAlwaysOnTop(true);
@@ -79,6 +95,8 @@ public class mainWindow  extends JFrame {
         });
         btnDeleteDB.setAlignmentX(Component.CENTER_ALIGNMENT);
         sideBtnPanel.add(btnLoadPdf);
+        sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        sideBtnPanel.add(btnExportExcel);
         sideBtnPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         sideBtnPanel.add(btnDeleteDB);
 
