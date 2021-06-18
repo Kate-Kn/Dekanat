@@ -561,6 +561,7 @@ boolean firstdata= false;
 
             System.err.println("видаляю все до дідька!!!");
             error = e.getMessage();
+            throw e;
 
         }
         document.close();
@@ -1021,6 +1022,7 @@ boolean firstbih = false;
             e.printStackTrace();
             System.err.println("ВИДАЛЯБ!!!");
             error =e.getMessage();
+            throw e;
         }
     }
 }
