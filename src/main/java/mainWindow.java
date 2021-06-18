@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -40,18 +42,16 @@ public class mainWindow  extends JFrame {
                         dbp = checker.checkAndCreate();
                     } catch (Exception ex) {
                         JOptionPane optionPane = new JOptionPane(ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-                        JDialog dialog = optionPane.createDialog("Failure");
+                        JDialog dialog = optionPane.createDialog("Помилка");
                         dialog.setAlwaysOnTop(true);
                         dialog.setVisible(true);
                     }
                     try {
                         MyParser prs = new MyParser(selectedFile.getPath());
-                        //System.out.println(sqlRequestsForInterface.getTeachers().toArray());
-                        //data = new JList(sqlRequestsForInterface.getTeachers().toArray());
                     } catch (Exception exc) {
                         System.out.println(exc.getMessage());
                         JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
-                        JDialog dialog = optionPane.createDialog("Failure");
+                        JDialog dialog = optionPane.createDialog("Помилка");
                         dialog.setAlwaysOnTop(true);
                         dialog.setVisible(true);
                     }
@@ -69,9 +69,13 @@ public class mainWindow  extends JFrame {
                 try {
                     accessToExcel qExc = new accessToExcel();
                     qExc.exportFromResultSet(QueryPanel.tempRes);
+                    JOptionPane optionPane = new JOptionPane("Відбувся експорт", JOptionPane.PLAIN_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Успіх");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
                 } catch (Exception exc) {
                     JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
-                    JDialog dialog = optionPane.createDialog("Failure");
+                    JDialog dialog = optionPane.createDialog("Помилка");
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 }
@@ -87,7 +91,7 @@ public class mainWindow  extends JFrame {
                     dispatchEvent(new WindowEvent(me, WindowEvent.WINDOW_CLOSING));
                 } catch (Exception exc) {
                     JOptionPane optionPane = new JOptionPane(exc.getMessage(), JOptionPane.ERROR_MESSAGE);
-                    JDialog dialog = optionPane.createDialog("Failure");
+                    JDialog dialog = optionPane.createDialog("Помилка");
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 }
@@ -104,9 +108,11 @@ public class mainWindow  extends JFrame {
 
         JTable table = new JTable(myt);
         JScrollPane scr = new JScrollPane(table);
+        scr.setBorder(new EmptyBorder(0, 0, 0, 10));
         body.add(scr);
         body.add(sideBtnPanel);
-
+        body.setBorder(new EmptyBorder(0, 10, 0, 10));
+        body.setPreferredSize(new Dimension(1200, 600));
         QueryPanel head = new QueryPanel(this);
         JPanel queryHead = new JPanel();
         queryHead.add(head);
