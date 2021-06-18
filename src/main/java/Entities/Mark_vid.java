@@ -103,10 +103,12 @@ public class Mark_vid {
         {
             throw new Exception(Teacher.exeptions[0] + "Not included mark");
         }
-        if(mark_raz!=mark_check+mark_sem)
-        {
-            System.out.println("bed sum");
-            throw new Exception(Teacher.exeptions[0] + "Invalid sum");
+        if(mark_raz!=0 && mark_check!=0) {
+            if (mark_raz != mark_check + mark_sem) {
+
+                System.out.println("bed sum");
+                throw new Exception(Teacher.exeptions[0] + "Invalid sum");
+            }
         }
         if(mark_raz>=91&& !mark_ekts.equals("A"))
         {

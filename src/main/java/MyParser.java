@@ -80,12 +80,12 @@ public  class MyParser {
             }
             if (tshit.contains(",")) {
 
-             teachzv = StringUtils.substringBetween(teach, ",", ",");
-             teachpos = StringUtils.substringAfterLast(teach, ",");
+                teachpos = StringUtils.substringBetween(teach, ",", ",");
+                teachzv = StringUtils.substringAfterLast(teach, ",");
             }else
             {
-                teachzv = StringUtils.substringAfterLast(teach, ",");
-                teachpos ="";
+                teachpos = StringUtils.substringAfterLast(teach, ",");
+                teachzv ="";
             }
             dat= dat.replaceAll(" ", "")
                 .replaceAll("\n","")
@@ -341,7 +341,7 @@ public  class MyParser {
                         nevidvid++;
                     }
                 }
-                if(amountOfrows-nevidvid!=ontestI)
+                if(amountOfrows-nevidvid-nedop!=ontestI)
                 {
                     throw new Exception("Не збігається кількість людей у відомості");
                 }
@@ -427,13 +427,13 @@ public  class MyParser {
                     int mark2I = Integer.parseInt(mark2);
                     int markrazI = Integer.parseInt(markraz);
                     Mark_vid mark_vid = new Mark_vid(mark1I, mark2I, markrazI, nats, ekts, student.getStud_id(), -1);
-                    try {
+//                    try {
                         mark_vid.validateManual();
-                    }catch (Exception e){
-                        e.printStackTrace();
+//                    }catch (Exception e){
+//                        e.printStackTrace();
 
-                        error = e.getMessage();
-                    }
+//                        error = e.getMessage();
+//                    }
 
                     mark_vids.add(mark_vid);
 
@@ -514,13 +514,13 @@ boolean firstdata= false;
                            try { insertStatements.insertStudent(student);
                            }
                            catch (Exception e){
-                               if(firstdata) deleteStatements.deleteDatabase();
+                               if(firstdata) deleteStatements.deleteVid(data_exam);
                                if(firstsub) deleteStatements.deleteSubject(subjecthelp);
                                if(firstTeachettimeinsertion) deleteStatements.deleteTeacher(teacher);
                                if(firatGroup ) deleteStatements.deleteGroup(group_st);
                                for (int d = 0; d<=k;d++)
                                 {
-                                    if(bollst.get(k)==true)
+                                    if(bollst.get(k))
                                     deleteStatements.deleteStudent(students.get(d));
                                 }
                                 throw new Exception("Не можу вписати якогось студента");
@@ -1000,7 +1000,7 @@ boolean firstbih = false;
                            try{ insertStatements.insertMarkBih(mark_bih);
                         }
                            catch (Exception e){
-//if(firstbih)deleteStatements.
+if(firstbih) deleteStatements.deleteBih(bihunets);
                         if(firsttrcherinsertion)    deleteStatements.deleteTeacher(teacher);
                            if(firstGrop) deleteStatements.deleteGroup(group_st);
                             for (int d = 0; d<=k;d++)
