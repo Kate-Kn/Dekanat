@@ -67,10 +67,10 @@ public class mainWindow  extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
+                FileFilter filter = new FileNameExtensionFilter("Excel File","xlsx");
+                fileChooser.setFileFilter(filter);
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setDialogTitle("Директорія для експорту");
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                fileChooser.setAcceptAllFileFilterUsed(false);
                 int result = fileChooser.showOpenDialog(body);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
